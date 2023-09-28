@@ -1,0 +1,33 @@
+:root{
+    --link-hover : gold;
+}
+
+.main-nav{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    background-color: cadetblue;
+    height: 3rem;
+}
+
+.main-nav li{
+    display: flex;
+    justify-content: center;
+    width: 5rem;
+    height: 100%;
+}
+
+.main-nav li a{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    text-underline: none;
+    color: white;
+}
+
+.main-nav li:hover a{
+    color: var(--link-hover);
+}
