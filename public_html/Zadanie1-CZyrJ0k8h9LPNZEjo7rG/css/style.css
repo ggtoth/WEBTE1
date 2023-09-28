@@ -8,8 +8,14 @@
     --horizontal-li-border-radius : 1rem;
 }
 
+@font-face {
+    font-family: Onest;
+    src: url("../fonts/Onest-VariableFont_wght.ttf");
+}
+
 body{
     background-color: var(--main-color-4);
+    font-family: Onest, serif;
 }
 
 
