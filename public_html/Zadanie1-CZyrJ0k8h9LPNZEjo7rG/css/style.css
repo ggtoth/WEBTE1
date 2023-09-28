@@ -1,6 +1,17 @@
 :root{
-    --link-hover : gold;
+    --main-color-1 : #8CEAED;
+    --main-color-2 : #9DB0B0;
+    --main-color-3 : #5F9EA0FF;
+    --main-color-4 : #D3ECED;
+    --main-color-5 : #416C6E;
+    --border-radius : 0.5rem;
+    --horizontal-li-border-radius : 1rem;
 }
+
+body{
+    background-color: var(--main-color-4);
+}
+
 
 .main-nav{
     display: flex;
@@ -9,25 +20,40 @@
     list-style: none;
     margin: 0;
     padding: 0;
-    background-color: cadetblue;
-    height: 3rem;
+    border-radius: var(--border-radius);
+    background-color: var(--main-color-3);
 }
 
 .main-nav li{
     display: flex;
     justify-content: center;
-    width: 5rem;
-    height: 100%;
+    border-radius: var(--horizontal-li-border-radius);
 }
 
 .main-nav li a{
-    display: flex;
-    align-items: center;
+    display: block;
+    text-align: center;
     text-decoration: none;
     text-underline: none;
+    padding: 1rem;
+    width: 100%;
+    height: 100%;
     color: white;
 }
 
-.main-nav li:hover a{
-    color: var(--link-hover);
+.main-nav li:hover{
+    background-color: var(--main-color-5);
+    background-clip: border-box;
+}
+
+@media screen and (max-width: 600px) {
+    .main-nav{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .main-nav li{
+        width: 100%;
+        border-radius: var(--border-radius);
+    }
 }
