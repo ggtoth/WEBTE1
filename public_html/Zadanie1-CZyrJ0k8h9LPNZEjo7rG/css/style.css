@@ -13,7 +13,7 @@
     font-family: "Onest";
     src: url("../fonts/Onest-VariableFont_wght.ttf");
 }
-
+/* Universal definitions start here */
 body{
     background-color: var(--main-color-4);
     font-family: Onest, serif;
@@ -80,7 +80,59 @@ footer{
     text-align: center;
 }
 
+.page-content{
+    margin: 10px;
+    padding: 10px;
+    background-color: var(--main-color-4);
+    overflow: auto;
+}
+/* Universal definitions end here */
+
+/* Definitions for use at "O mne" start here */
+.index-portrait{
+    float: left;
+    margin: auto;
+    padding: 20px;
+    max-width: 100%;
+    height: auto;
+    width: auto;
+}
+
+.article-text{
+    margin: 10px;
+}
+
+.article-text aside{
+    float: right;
+    background-color: var(--main-color-2);
+    max-width: 25%;
+    padding: 10px;
+}
+
+.article-text aside p{
+    margin: 0;
+}
+
+abbr{
+    text-decoration: none;
+    text-underline: none;
+}
+
+article::after {
+    clear: both;
+    content: "";
+    display: block;
+}
+
+.article-text::after {
+    clear: both;
+    content: "";
+    display: block;
+}
+/* Definitions for use at "O mne" end here */
+
 @media screen and (max-width: 600px) {
+    /* Universal definitions start here */
     body{
         background-image: url("../images/circuit-background-mobile.jpg");
     }
@@ -110,4 +162,11 @@ footer{
         width: 100%;
         height: 100%;
     }
+    /* Universal definitions stop here */
+
+    /* Definitions for use at "O mne" start here */
+    .article-text aside{
+        max-width: 50%;
+    }
+    /* Definitions for use at "O mne" end here */
 }
