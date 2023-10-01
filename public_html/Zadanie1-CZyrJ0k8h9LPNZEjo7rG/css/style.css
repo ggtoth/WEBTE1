@@ -1,4 +1,5 @@
 :root{
+    --default-print-color: white;
     --main-color-1 : #8CEAED;
     --main-color-2 : #9DB0B0;
     --main-color-3 : #5F9EA0FF;
@@ -9,57 +10,104 @@
 }
 
 @font-face {
-    font-family: Onest;
+    font-family: "Onest";
     src: url("../fonts/Onest-VariableFont_wght.ttf");
 }
 
 body{
     background-color: var(--main-color-4);
     font-family: Onest, serif;
+    background-image: url("../images/circuit-background-desktop.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center center;
 }
 
+header{
+    border-radius: var(--border-radius);
+    background-color: var(--main-color-3);
+    padding: 10px 20px;
+    text-align: center;
+}
 
-.main-nav{
+.page-title{
+    float: left;
+    margin-top: 6px;
+}
+
+.page-title a{
+    text-decoration: none;
+    text-underline: none;
+    color: var(--default-print-color);
+}
+
+.main-nav {
     display: flex;
-    justify-content: center;
-    align-content: center;
+    justify-content: right;
+    align-items: center;
     list-style: none;
     margin: 0;
     padding: 0;
-    border-radius: var(--border-radius);
-    background-color: var(--main-color-3);
 }
 
-.main-nav li{
+.main-nav li {
     display: flex;
     justify-content: center;
     border-radius: var(--horizontal-li-border-radius);
 }
 
-.main-nav li a{
-    display: block;
+.main-nav li a {
     text-align: center;
     text-decoration: none;
     text-underline: none;
     padding: 1rem;
-    width: 100%;
-    height: 100%;
-    color: white;
+    color: var(--default-print-color);
 }
 
-.main-nav li:hover{
+.main-nav li:hover {
     background-color: var(--main-color-5);
     background-clip: border-box;
 }
 
+footer{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: var(--main-color-5);
+    color: var(--default-print-color);
+    text-align: center;
+}
+
 @media screen and (max-width: 600px) {
+    body{
+        background-image: url("../images/circuit-background-mobile.jpg");
+    }
+
+    header{
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .page-title{
+        width: 100%;
+        float: none;
+    }
+
     .main-nav{
         flex-direction: column;
         justify-content: center;
         align-items: center;
     }
+
     .main-nav li{
         width: 100%;
         border-radius: var(--border-radius);
+    }
+
+    .main-nav li a{
+        width: 100%;
+        height: 100%;
     }
 }
