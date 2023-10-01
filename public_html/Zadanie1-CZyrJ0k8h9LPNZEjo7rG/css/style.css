@@ -79,7 +79,7 @@ footer{
 }
 
 .page-content{
-    margin: 10px;
+    margin: 2.5%;
     padding: 10px;
     background-color: var(--main-color-4);
     overflow: auto;
@@ -209,7 +209,7 @@ article::after {
 }
 /* Definitions for use at "Zivotopis" end here */
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 700px) {
     /* Universal definitions start here */
     body{
         background-image: url("../images/circuit-background-mobile.jpg");
@@ -244,8 +244,7 @@ article::after {
 
     /* Definitions for use at "O mne" start here */
     .article-text>aside{
-        float: right;
-        max-width: none;
+        max-width: 100px;
     }
     /* Definitions for use at "O mne" end here */
 
