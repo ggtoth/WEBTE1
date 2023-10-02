@@ -272,7 +272,6 @@ article::after {
 /* Definitions for use at "Rozvrh" end here */
 
 /* Definitions for use at "Obrazok" start here */
-
 .interactive-image-container{
     display: block;
     height: auto;
@@ -289,12 +288,33 @@ article::after {
     height: 25px;
     width: 25px;
     border-radius: 50%;
-    background-color: red;
-    display: inline-block;
+    background-color: var(--main-color-4);
+    transition: background-color 1s;
+}
+
+.box>a{
+    text-decoration: none;
+    text-underline: none;
+    text-align: center;
+    color: var(--default-print-color);
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 2s;
 }
 
 .box:hover{
-    background-color: green;
+    padding: 1px;
+    width: max-content;
+    height: max-content;
+    z-index: 10;
+    background-color: var(--main-color-5);
+    border-radius: var(--border-radius);
+}
+
+.box:hover>a{
+    padding: 5px;
+    visibility: visible;
+    opacity: 1;
 }
 
 @media screen and (min-width: 1090px){
@@ -345,47 +365,47 @@ article::after {
 
 @media screen and (min-width: 700px) and (max-width: 1090px){
     .interactive-image-container{
-        width: 1000px;
+        width: 620px;
     }
 
     .display-port{
-        left: 330px;
-        top: 400px;
+        left: 220px;
+        top: 290px;
     }
 
     .ps2-port{
-        left: 205px;
-        top: 345px;
+        left: 130px;
+        top: 245px;
     }
 
     .usb-port{
-        left: 205px;
-        top: 413px;
+        left: 135px;
+        top: 300px;
     }
 
     .hdmi-port{
-        left: 335px;
-        top: 465px;
-    }
-
-    .usb-c-port{
-        left: 455px;
-        top: 465px;
-    }
-
-    .ethernet-port{
-        left: 575px;
-        top: 350px;
-    }
-
-    .aux-port{
-        left: 820px;
+        left: 220px;
         top: 330px;
     }
 
+    .usb-c-port{
+        left: 290px;
+        top: 330px;
+    }
+
+    .ethernet-port{
+        left: 450px;
+        top: 250px;
+    }
+
+    .aux-port{
+        left: 520px;
+        top: 240px;
+    }
+
     .optical-port{
-        left: 800px;
-        top: 455px;
+        left: 510px;
+        top: 320px;
     }
 }
 
@@ -440,8 +460,10 @@ article::after {
     }
 }
 /* Definitions for use at "Obrazok" end here */
+
+/* Universal definitions start here */
 @media screen and (max-width: 700px) {
-    /* Universal definitions start here */
+
     body{
         background-image: url("../images/circuit-background-mobile.jpg");
     }
