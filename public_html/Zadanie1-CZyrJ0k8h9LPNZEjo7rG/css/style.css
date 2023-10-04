@@ -292,18 +292,24 @@ article::after {
     transition: background-color 1s;
 }
 
-.box>a{
-    text-decoration: none;
-    text-underline: none;
-    text-align: center;
-    color: var(--default-print-color);
+.box>.hidden-tooltip{
     visibility: hidden;
     opacity: 0;
     transition: opacity 2s;
 }
 
+.box a{
+    display: block;
+    text-decoration: none;
+    text-align: center;
+    color: var(--default-print-color);
+}
+
+.box h2{
+    color: var(--default-print-color);
+}
+
 .box:hover{
-    padding: 1px;
     width: max-content;
     height: max-content;
     z-index: 10;
@@ -311,8 +317,7 @@ article::after {
     border-radius: var(--border-radius);
 }
 
-.box:hover>a{
-    padding: 5px;
+.box:hover>.hidden-tooltip{
     visibility: visible;
     opacity: 1;
 }
@@ -324,42 +329,42 @@ article::after {
 
     .display-port{
         left: 340px;
-        top: 420px;
+        top: 460px;
     }
 
     .ps2-port{
         left: 210px;
-        top: 350px;
+        top: 400px;
     }
 
     .usb-port{
         left: 210px;
-        top: 420px;
+        top: 470px;
     }
 
     .hdmi-port{
         left: 340px;
-        top: 480px;
+        top: 530px;
     }
 
     .usb-c-port{
         left: 480px;
-        top: 480px;
+        top: 530px;
     }
 
     .ethernet-port{
         left: 590px;
-        top: 350px;
+        top: 400px;
     }
 
     .aux-port{
         left: 830px;
-        top: 350px;
+        top: 400px;
     }
 
     .optical-port{
         left: 820px;
-        top: 470px;
+        top: 520px;
     }
 }
 
@@ -370,42 +375,42 @@ article::after {
 
     .display-port{
         left: 220px;
-        top: 290px;
+        top: 350px;
     }
 
     .ps2-port{
         left: 130px;
-        top: 245px;
+        top: 295px;
     }
 
     .usb-port{
         left: 135px;
-        top: 300px;
+        top: 350px;
     }
 
     .hdmi-port{
         left: 220px;
-        top: 330px;
+        top: 380px;
     }
 
     .usb-c-port{
         left: 290px;
-        top: 330px;
+        top: 385px;
     }
 
     .ethernet-port{
-        left: 450px;
-        top: 250px;
+        left: 370px;
+        top: 310px;
     }
 
     .aux-port{
         left: 520px;
-        top: 240px;
+        top: 300px;
     }
 
     .optical-port{
         left: 510px;
-        top: 320px;
+        top: 380px;
     }
 }
 
@@ -421,42 +426,42 @@ article::after {
 
     .display-port{
         left: 150px;
-        top: 485px;
+        top: 555px;
     }
 
     .ps2-port{
         left: 100px;
-        top: 470px;
+        top: 535px;
     }
 
     .usb-port{
         left: 100px;
-        top: 490px;
+        top: 560px;
     }
 
     .hdmi-port{
         left: 150px;
-        top: 510px;
+        top: 580px;
     }
 
     .usb-c-port{
         left: 195px;
-        top: 510px;
+        top: 580px;
     }
 
     .ethernet-port{
         left: 245px;
-        top: 465px;
+        top: 535px;
     }
 
     .aux-port{
         left: 345px;
-        top: 460px;
+        top: 530px;
     }
 
     .optical-port{
         left: 335px;
-        top: 510px;
+        top: 580px;
     }
 }
 /* Definitions for use at "Obrazok" end here */
