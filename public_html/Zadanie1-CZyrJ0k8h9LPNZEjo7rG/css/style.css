@@ -303,10 +303,13 @@ article::after {
     text-decoration: none;
     text-align: center;
     color: var(--default-print-color);
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .box h2{
     color: var(--default-print-color);
+    margin-bottom: 0;
 }
 
 .box:hover{
