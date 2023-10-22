@@ -1,0 +1,49 @@
+.form-header{
+    display: flex;
+    justify-content: center;
+}
+
+.form-content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    text-align: center;
+}
+
+.form-left-content{
+    width: 50%;
+}
+
+.form-right-content{
+    width: 50%;
+}
+
+.form-user-detail{
+    display: grid;
+    grid-template-columns: auto auto;
+    width: 100%;
+}
+
+.field-container{
+    text-align: left;
+    height: 4rem;
+    margin: 1rem;
+}
+
+.label{
+    height: 20%;
+    width: 100%;
+}
+
+.input-field{
+    height: 80%;
+    width: 100%;
+    font-size: 100%;
+}
+
+@media screen and (max-width: 700px) {
+    .form-content{
+        flex-direction: column;
+    }
+}
