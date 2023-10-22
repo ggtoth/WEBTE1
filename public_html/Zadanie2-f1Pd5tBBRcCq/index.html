@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="sk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Form</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="index.js"></script>
+</head>
+<body>
+    <form action="https://form2mail.hynix.sk/form2mail.php" name="myForm" onsubmit="return validateForm()" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="apikey" value="d0d18ba473ec063455a184a06970d5d5">
+        <input type="hidden" name="from" value="xtothg@stuba.sk">
+        <input type="hidden" name="sender" value="Gergely Tóth">
+        <input type="hidden" name="to" value="xtothg@stuba.sk">
+        <input type="hidden" name="subject" value="Zadanie 2 Gergely Tóth">
+        <input type="hidden" name="redirectOk" value="https://webte1.fei.stuba.sk/~xtothg/Zadanie2-f1Pd5tBBRcCq/success.html">
+        <input type="hidden" name="redirectFalse" value="https://webte1.fei.stuba.sk/~xtothg/Zadanie2-f1Pd5tBBRcCq/fail.html">
+        <article>
+            <div class="form-content">
+                <input type="submit" name="submit" value="submit" id="openBtn">
+            </div>
+        </article>
+    </form>
+</body>
+</html>
