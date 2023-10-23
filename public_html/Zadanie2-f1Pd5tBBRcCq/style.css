@@ -4,31 +4,40 @@
 }
 
 .form-content{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
     text-align: center;
 }
 
 .form-left-content{
+    float: left;
     width: 50%;
 }
 
 .form-right-content{
+    float: right;
     width: 50%;
 }
 
 .form-user-detail{
-    display: grid;
-    grid-template-columns: auto auto;
+    display: flex;
+    flex-wrap: wrap;
     width: 100%;
+}
+
+.form-user-detail:nth-child(2n){
+    flex-basis: 100%;
 }
 
 .field-container{
     text-align: left;
     height: 4rem;
     margin: 1rem;
+}
+
+.radio-container{
+    height: 4rem;
+    margin: 1rem;
+    text-align: center;
+    justify-content: center;
 }
 
 .label{
@@ -40,6 +49,50 @@
     height: 80%;
     width: 100%;
     font-size: 100%;
+}
+
+.select-container{
+    width: 100%;
+    height: 3rem;
+    margin: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.computer-select{
+    width: 100%;
+    height: 3rem;
+    margin: 1rem;
+}
+
+.pc-specifications{
+    width: 0;
+    height: 0;
+    visibility: hidden;
+}
+
+.adress-select-elements{
+    width: 100%;
+    height: 100%;
+}
+.formatted-list{
+    list-style: none;
+    padding: 0;
+    margin: 1rem;
+}
+
+.formatted-list>li{
+    display: flex;
+    justify-content: space-between;
+}
+
+.formatted-list>li:nth-child(odd){
+    background-color: grey;
+}
+
+.formatted-list-left{
+    margin-right: 10px;
 }
 
 @media screen and (max-width: 700px) {

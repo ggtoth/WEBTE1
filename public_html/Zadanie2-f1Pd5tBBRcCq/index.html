@@ -58,12 +58,35 @@
                         <label for="phone-field" class="label" id="phone-label">Telefón</label>
                         <input type="text" name="phone" class="input-field" id="phone-field" maxlength="20" onchange="" pattern="/^(\+[0-9]{1,3})([\s-]?[0-9]){9,9}$/" placeholder="+421 xxx xxx xxx">
                     </div>
-
+                    <div class="select-container">
+                        <select class="adress-select-elements" id="Countries" onchange="countries_onchange(this)">
+                            <option value="">Výber</option>
+                        </select>
+                        <select class="adress-select-elements" id="Regions" onchange="regions_onchange(this)">
+                            <option value="">Výber</option>
+                        </select>
+                        <select class="adress-select-elements" id="Districts">
+                            <option value="">Výber</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="form-right-content">
-                    <h1>asda</h1>
-                    <input type="submit" name="submit" value="submit" id="openBtn">
+                    <div class="select-container">
+                        <select class="computer-select" id="Computers" onchange="computers_onchange(this)">
+                            <option value="">Výber</option>
+                        </select>
+                    </div>
+                    <div class="pc-specifications">
+                        <ul class="formatted-list">
+                            <li><span class="formatted-list-left">Brand</span><span class="formatted-list-right" id="spec-brand"></span></li>
+                            <li><span class="formatted-list-left">Processor</span><span class="formatted-list-right" id="spec-processor"></span></li>
+                            <li><span class="formatted-list-left">RAM</span><span class="formatted-list-right" id="spec-ram"></span></li>
+                            <li><span class="formatted-list-left">Storage</span><span class="formatted-list-right" id="spec-storage"></span></li>
+                            <li><span class="formatted-list-left">Graphics</span><span class="formatted-list-right" id="spec-graphics"></span></li>
+                            <li><span class="formatted-list-left">Price</span><span class="formatted-list-right" id="spec-price"></span></li>
+                        </ul>
+                    </div>
                 </div>
 
             </div>
