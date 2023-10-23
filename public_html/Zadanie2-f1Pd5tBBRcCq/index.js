@@ -227,3 +227,39 @@ function computers_onchange(selectElement){
     document.getElementById("spec-graphics").innerText = pcSpecs["Graphics"];
     document.getElementById("spec-price").innerText = pcSpecs["Price"];
 }
+
+function checkInputText(inputItem){
+    let pattern = new RegExp(inputItem.getAttribute('pattern'));
+    return pattern.test(inputItem.value);
+}
+
+function genericRegexCheck(element){
+    if (element.value.length === 0 && !element.required){
+        element.style.borderColor = 'black';
+        return;
+    }
+    if(!checkInputText(element)){
+        element.style.borderColor = 'red';
+        return;
+    }
+    element.style.borderColor = 'green';
+}
+
+function validateFirstName(element){
+    genericRegexCheck(element);
+}
+
+function validateLastName(element){
+    genericRegexCheck(element);
+}
+
+function validateDate(element){
+    genericRegexCheck(element);
+}
+
+function validatePhone(element){
+
+}
+function validateEmail(element){
+    genericRegexCheck(element);
+}
