@@ -158,8 +158,6 @@ const pcs = {
 
 window.onload = function (){
     let countriesSelect = document.getElementById("Countries");
-    let regionSelect = document.getElementById("Regions");
-    let districtSelect = document.getElementById("Districts");
     for (let dataKey in data) {
         let newOption = new Option(dataKey, dataKey);
         countriesSelect.add(newOption);
@@ -169,6 +167,16 @@ window.onload = function (){
         let newOption = new Option(dataKey, dataKey);
         computersSelect.add(newOption);
     }
+    document.getElementById('first-name-wc-max').innerText = document.getElementById('first-name-field').maxLength;
+    document.getElementById('last-name-wc-max').innerText = document.getElementById('last-name-field').maxLength;
+    document.getElementById('email-wc-max').innerText = document.getElementById('email-field').maxLength;
+    document.getElementById('phone-wc-max').innerText = document.getElementById('phone-field').maxLength;
+
+    document.getElementById('first-name-wc').innerText = "0";
+    document.getElementById('last-name-wc').innerText = "0";
+    document.getElementById('email-wc').innerText = "0";
+    document.getElementById('phone-wc').innerText = "0";
+
 }
 
 function countries_onchange(selectElement){
@@ -212,13 +220,11 @@ function computers_onchange(selectElement){
     let specsClassStyle = document.querySelector(".pc-specifications").style;
     if (selectElement.selectedIndex === 0) {
         specsClassStyle.visibility = 'hidden';
-        specsClassStyle.width = '0';
-        specsClassStyle.height = '0';
+        specsClassStyle.display = 'none';
         return;
     }
     specsClassStyle.visibility = 'visible';
-    specsClassStyle.width = '100%';
-    specsClassStyle.height = 'max-content';
+    specsClassStyle.display = 'block'
     let pcSpecs = pcs[selectElement.value];
     document.getElementById("spec-brand").innerText = pcSpecs["Brand"];
     document.getElementById("spec-processor").innerText = pcSpecs["Processor"];
@@ -234,32 +240,152 @@ function checkInputText(inputItem){
 }
 
 function genericRegexCheck(element){
-    if (element.value.length === 0 && !element.required){
-        element.style.borderColor = 'black';
-        return;
-    }
     if(!checkInputText(element)){
+        element.style.borderColor = 'red';
+        return false;
+    }
+    element.style.borderColor = 'green';
+    return true;
+}
+
+function validateFirstName(element){
+    document.getElementById('first-name-wc').innerText = element.value.length;
+    if(element.value.length === 0){
+        document.getElementById('first-name-alert').style.visibility = 'visible';
+        element.style.borderColor = 'red';
+    }
+    else {
+        document.getElementById('first-name-alert').style.visibility = 'hidden';
+        element.style.borderColor = 'black';
+    }
+    return genericRegexCheck(element);
+}
+
+function validateLastName(element){
+    document.getElementById('last-name-wc').innerText = element.value.length;
+    if(element.value.length === 0){
+        document.getElementById('last-name-alert').style.visibility = 'visible';
+        element.style.borderColor = 'red';
+    }
+    else {
+        document.getElementById('last-name-alert').style.visibility = 'hidden';
+        element.style.borderColor = 'black';
+    }
+    return genericRegexCheck(element);
+}
+
+function validateEmail(element){
+    document.getElementById('email-wc').innerText = element.value.length;
+    if(element.value.length === 0){
+        document.getElementById('email-alert').style.visibility = 'visible';
+    }
+    else {
+        document.getElementById('email-alert').style.visibility = 'hidden';
+    }
+    return genericRegexCheck(element);
+}
+
+function validatePhone(element){
+    document.getElementById('phone-wc').innerText = element.value.length;
+    if(element.value.length === 0){
+        element.style.borderColor = 'black';
+        return false;
+    }
+    return genericRegexCheck(element);
+}
+
+function validateDate(element){
+    if(element.value === ""){
+        return false
+    }
+    let date = new Date(element.value);
+    return date.getUTCFullYear() >= 1900 && date <= (new Date());
+}
+
+function changeDate(element){
+    let ageField = document.getElementById('age-field');
+    if(element.value === ""){
+        document.getElementById('date-alert').style.visibility = 'visible';
+    }
+    else{
+        document.getElementById('date-alert').style.visibility = 'hidden';
+    }
+    if(!validateDate(element)){
+        ageField.value = "";
         element.style.borderColor = 'red';
         return;
     }
     element.style.borderColor = 'green';
+    let inputDate = new Date(element.value);
+    let age = new Date(new Date() - inputDate);
+    ageField.value = age.getUTCFullYear() - 1970;
 }
 
-function validateFirstName(element){
-    genericRegexCheck(element);
+function getGender(){
+    if (document.getElementById('female').checked){
+        return "Žena";
+    }
+    else if(document.getElementById('male').checked){
+        return "Muž";
+    }
+    return "Iné";
 }
 
-function validateLastName(element){
-    genericRegexCheck(element);
+function validateAddress(districts){
+    if (districts.selectedIndex === 0){
+        return false;
+    }
 }
 
-function validateDate(element){
-    genericRegexCheck(element);
-}
+(function() {
+    emailjs.init('N0SAp5RgZ3S01lT7X');
+})();
 
-function validatePhone(element){
+function validateForm() {
+    let firstName = document.getElementById('first-name-field');
+    let lastName = document.getElementById('last-name-field');
+    let birthDate = document.getElementById('birth-date-field');
+    let email = document.getElementById('email-field');
+    let phone = document.getElementById('phone-field');
+    let country = document.getElementById('Countries');
+    let region = document.getElementById('Regions');
+    let district = document.getElementById('Districts');
+    let computer = document.getElementById('Computers');
+    let gender = getGender();
 
-}
-function validateEmail(element){
-    genericRegexCheck(element);
+    if(!(validateFirstName(firstName) || validateLastName(lastName) || changeDate(birthDate)
+    || validateEmail(email))) return false;
+
+    let message =
+                    "Krstné meno: " + firstName.value +
+        "<br>" +    "Priezvisko: " + lastName.value +
+        "<br>" +    "Dátum narodenia: " + birthDate.value +
+        "<br>" +    "Email: " + email.value;
+
+    if (validatePhone(phone)){
+        message +=  "<br>" + "Telefón: " + phone.value;
+    }
+
+    if (validateAddress()){
+
+    }
+    /*
+        "Štát: " + country.value + "<br>" +
+        "Kraj: " + region.value + "<br>" +
+        "Okres: " + district.value + "<br>" +
+        "Počítač: " + computer.value + "<br>" +
+        "Pohlavie: " + gender
+    ;
+*/
+    emailjs.send("service_2024fsw","template_smtfp4j",{
+        to_email: "xtothg@stuba.sk",
+        message: message,
+        html: true
+    }).then(function() {
+            console.log('SUCCESS!');
+        }, function(error) {
+            console.log('FAILED...', error);
+        return false;
+        });
+    return false;
 }
