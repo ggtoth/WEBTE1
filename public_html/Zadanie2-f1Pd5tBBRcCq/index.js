@@ -189,6 +189,7 @@ window.onload = function (){
     document.getElementById('phone-wc').innerText = "0";
     document.getElementById('address-wc').innerText = "0";
 
+    document.getElementById('submit').addEventListener('click', validateForm);
 }
 
 function countries_onchange(selectElement){
@@ -502,7 +503,8 @@ function validateForm() {
     let summary = document.getElementById('summary');
     summary.innerHTML = message;
     summary.classList.remove('hidden');
-    return;
+    let form = document.getElementById('form');
+    form.classList.add('hidden');
 
     emailjs.send("service_2024fsw","template_smtfp4j",{
         to_email: "xtothg@stuba.sk",
@@ -512,7 +514,5 @@ function validateForm() {
             console.log('SUCCESS!');
         }, function(error) {
             console.log('FAILED...', error);
-        return false;
         });
-    return false;
 }
