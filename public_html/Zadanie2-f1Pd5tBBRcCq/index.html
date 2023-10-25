@@ -11,7 +11,7 @@
     <script src="index.js"></script>
 </head>
 <body>
-    <form name="order-form" onsubmit="return validateForm()">
+    <form name="order-form">
         <article>
             <div class="form-header">
                 <h1>Objednávka pre master-pc</h1>
@@ -91,7 +91,7 @@
                             <input type="tel" name="phone" class="input-field" id="phone-field" maxlength="13" oninput="validatePhone(this)" placeholder="+421 xxx xxx xxx">
                         </div>
                     </div>
-                    <div class="select-container">
+                    <div class="select-container" id="address-select-container">
                         <label for="Countries"></label>
                         <label for="Regions"></label>
                         <label for="Districts"></label>
@@ -101,18 +101,27 @@
                         <select class="address-select-elements" id="Regions" onchange="regions_onchange(this)">
                             <option value="">Výber</option>
                         </select>
-                        <select class="address-select-elements" id="Districts">
+                        <select class="address-select-elements" id="Districts" onchange="districts_onchange(this)">
                             <option value="">Výber</option>
                         </select>
                     </div>
                     <div class="field-container address-container">
                         <label for="address-field" class="label" id="address-label">Adresa</label>
-                        <input type="text" name="age" class="input-field" id="address-field">
+                        <span class="character-count-container" id="address-wc-container">
+                                <span id="address-wc"></span>
+                                /
+                                <span id="address-wc-max"></span>
+                            </span>
+                        <input type="text" name="address" class="input-field" id="address-field" maxlength="20" oninput="validateAddress(this)">
                     </div>
+                    <div class="field-container">
+                        <span class="hidden-alert" id="address-alert">*Je povinné pole</span>
+                    </div>
+
                 </div>
 
                 <div class="form-right-content">
-                    <div class="select-container">
+                    <div class="select-container" id="computers-select-container">
                         <label for="Computers"></label>
                         <select class="computer-select" id="Computers" onchange="computers_onchange(this)">
                             <option value="">Výber</option>
@@ -147,19 +156,20 @@
                         </div>
                     </div>
                     <div class="hidden-container" id="hidden-other-container">
-                        <label for="other-text-area" class="label">Výber iné</label>
+                        <label for="other-text-area" class="label"></label>
                         <textarea class="text-area" id="other-text-area" name="other-text-area" rows="5" cols="40"></textarea>
                     </div>
-                    <input type="button" class="name-button" value="Show" onclick="revealName()">
+                    <input type="button" class="form-button" value="Show" onclick="revealName()">
                     <div class="hidden-container" id="hidden-name-container">
                         <label for="name-area" class="label"></label>
                         <textarea class="text-area" id="name-area" name="other-text-area" rows="1" cols="15" readonly>Gergely Tóth</textarea>
                     </div>
-                    <input type="submit" name="submit" value="Submit" id="submit" class="submit-button">
+                    <input type="submit" name="submit" value="Submit" id="submit" class="form-button" onclick="validateForm()">
                 </div>
 
             </div>
         </article>
     </form>
+    <div class="hidden" id="summary"></div>
 </body>
 </html>

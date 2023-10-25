@@ -166,8 +166,6 @@ const super_pc = {
     }
 }
 
-let secret_enable = false;
-
 window.onload = function (){
     let countriesSelect = document.getElementById("Countries");
     for (let dataKey in data) {
@@ -183,11 +181,13 @@ window.onload = function (){
     document.getElementById('last-name-wc-max').innerText = document.getElementById('last-name-field').maxLength;
     document.getElementById('email-wc-max').innerText = document.getElementById('email-field').maxLength;
     document.getElementById('phone-wc-max').innerText = document.getElementById('phone-field').maxLength;
+    document.getElementById('address-wc-max').innerText = document.getElementById('address-field').maxLength;
 
     document.getElementById('first-name-wc').innerText = "0";
     document.getElementById('last-name-wc').innerText = "0";
     document.getElementById('email-wc').innerText = "0";
     document.getElementById('phone-wc').innerText = "0";
+    document.getElementById('address-wc').innerText = "0";
 
 }
 
@@ -199,9 +199,7 @@ function countries_onchange(selectElement){
         regions.options.remove(1);
     }
     districts.selectedIndex = 0;
-    while (districts.options.length > 1){
-        districts.options.remove(1);
-    }
+    regions_onchange(regions);
     if(selectElement.selectedIndex === 0){
         return;
     }
@@ -215,6 +213,7 @@ function regions_onchange(selectElement){
     let countries = document.getElementById("Countries");
     let districts = document.getElementById("Districts");
     districts.selectedIndex = 0;
+    validateAddressSelection(districts);
     while (districts.options.length > 1){
         districts.options.remove(1);
     }
@@ -228,8 +227,16 @@ function regions_onchange(selectElement){
     }
 }
 
+function districts_onchange(selectElement){
+    validateAddressSelection(selectElement);
+    validateAddress(document.getElementById('address-field'));
+}
+
 function computers_onchange(selectElement){
     let specsClassStyle = document.querySelector(".pc-specifications").style;
+    if (!secret_remove_flag)
+        validateComputerSelection(selectElement);
+    else secret_remove_flag = false;
     if (selectElement.selectedIndex === 0) {
         specsClassStyle.visibility = 'hidden';
         specsClassStyle.display = 'none';
@@ -297,7 +304,40 @@ function validateEmail(element){
     else {
         document.getElementById('email-alert').style.visibility = 'hidden';
     }
-    return genericRegexCheck(element, "^([a-z0-9\-\_\.]*[a-z0-9])@([^\-\_\.][a-z0-9\-\_]*\.)([a-z0-9\-\_]{2,4})$");
+    return genericRegexCheck(element, '^([a-z0-9\\-\\_\\.]*[a-z0-9])@([^\\-\\_\\.][a-z0-9\\-\\_]*\\.)([a-z0-9\\-\\_]{2,4})$');
+}
+
+function validateComputerSelection(computerSelect){
+    let container = document.getElementById('computers-select-container');
+    if (computerSelect.selectedIndex === 0){
+        container.style.borderColor = 'red';
+        return false;
+    }
+    container.style.borderColor = 'green';
+    return true;
+}
+
+function validateAddressSelection(districts){
+    let addressSelect = document.getElementById('address-select-container');
+    validateAddress(document.getElementById('address-field'));
+    if(districts.selectedIndex === 0){
+        addressSelect.style.borderColor = 'red';
+        return false;
+    }
+    addressSelect.style.borderColor = 'green';
+    return true;
+}
+
+function validateAddress(element){
+    document.getElementById('address-wc').innerText = element.value.length;
+    let districts = document.getElementById('Districts');
+    if (districts.selectedIndex === 0 || element.value.length === 0){
+        document.getElementById('address-alert').style.visibility = 'visible';
+    }
+    else {
+        document.getElementById('address-alert').style.visibility = 'hidden';
+    }
+    return genericRegexCheck(element, "[A-Za-zÀ-úČ-ž,/]+$");
 }
 
 function validatePhone(element){
@@ -306,7 +346,7 @@ function validatePhone(element){
         element.style.borderColor = 'black';
         return false;
     }
-    return genericRegexCheck(element, "^(\+[0-9]{12,12})$");
+    return genericRegexCheck(element, "^(\\+[0-9]{12,12})$");
 }
 
 function validateDate(element){
@@ -349,45 +389,35 @@ function getGender(){
     return "";
 }
 
-function validateAddress(districts){
-    if (districts.selectedIndex === 0){
-        return false;
-    }
-}
-
-function secretOption(){
-    let computers =  document.getElementById('Computers');
-    if (!secret_enable) {
+let secret_enable = false;
+let secret_remove_flag = false;
+function secretOption() {
+    let computers = document.getElementById('Computers');
+    if (!secret_enable || getGender() === "Iné") {
         computers.options.add(
             new Option("Secret PC", "Secret PC")
         )
         secret_enable = true;
 
-    }
-    else{
+    } else {
+        secret_remove_flag = computers.selectedIndex !== computers.options.length - 1;
         computers.options.remove(computers.options.length - 1);
         secret_enable = false;
         computers_onchange(computers);
     }
 }
 
-function get_checkboxes(){
-    let rgb = document.getElementById('checkbox-rgb');
-    let xStorage = document.getElementById('checkbox-extra-storage');
-    let xRam = document.getElementById('checkbox-extra-ram');
-    let other = document.getElementById('checkbox-other');
-
-}
-
 function other_checkbox_onchange(element){
-    let textarea = document.getElementById('hidden-other-container');
+    let container = document.getElementById('hidden-other-container');
+    let textarea = document.getElementById('other-text-area');
     if (element.checked) {
-        textarea.style.display = 'flex';
-        textarea.style.visibility = 'visible';
+        container.style.display = 'block';
+        container.style.visibility = 'visible';
         return;
     }
-    textarea.style.display = '';
-    textarea.style.visibility = '';
+    textarea.value = '';
+    container.style.display = '';
+    container.style.visibility = '';
 
 }
 
@@ -418,33 +448,62 @@ function validateForm() {
     let country = document.getElementById('Countries');
     let region = document.getElementById('Regions');
     let district = document.getElementById('Districts');
+    let address = document.getElementById('address-field');
     let computer = document.getElementById('Computers');
     let gender = getGender();
+    let rgb = document.getElementById('checkbox-rgb');
+    let xStorage = document.getElementById('checkbox-extra-storage');
+    let xRam = document.getElementById('checkbox-extra-ram');
+    let other = document.getElementById('checkbox-other');
+    let textArea = document.getElementById('other-text-area');
 
     if(!(validateFirstName(firstName) || validateLastName(lastName) || changeDate(birthDate)
-    || validateEmail(email))) return false;
+    || validateEmail(email) || validateAddress(address) || validateAddressSelection(district)
+    || validateComputerSelection(computer))) return false;
 
     let message =
-                    "Krstné meno: " + firstName.value +
-        "<br>" +    "Priezvisko: " + lastName.value +
-        "<br>" +    "Dátum narodenia: " + birthDate.value +
-        "<br>" +    "Email: " + email.value;
+                    "<b>Krstné meno: </b>" + firstName.value +
+        "<br>" +    "<b>Priezvisko: </b>" + lastName.value +
+        "<br>" +    "<b>Dátum narodenia: </b>" + birthDate.value +
+        "<br>" +    "<b>Email: </b>" + email.value +
+        "<br>" +    "<b>Štát: </b>" + country.options[country.selectedIndex].value +
+        "<br>" +    "<b>Kraj: </b>" + region.options[country.selectedIndex].value +
+        "<br>" +    "<b>Okres: </b>" + district.options[country.selectedIndex].value +
+        "<br>" +    "<b>Adresa: </b>" + address.value +
+        "<br>" +    "<b>Počitač: </b>" + computer.options[computer.selectedIndex].value;
+
 
     if (validatePhone(phone)){
-        message +=  "<br>" + "Telefón: " + phone.value;
+        message +=  "<br>" + "<b>Telefón: </b>" + phone.value;
     }
 
-    if (validateAddress()){
-
+    if (gender !== ""){
+        message +=  "<br>" + "<b>Pohlavie: </b>" + gender;
     }
-    /*
-        "Štát: " + country.value + "<br>" +
-        "Kraj: " + region.value + "<br>" +
-        "Okres: " + district.value + "<br>" +
-        "Počítač: " + computer.value + "<br>" +
-        "Pohlavie: " + gender
-    ;
-*/
+
+    message +=  "<br>" + "<b>Extra: </b>";
+
+    if(rgb.checked){
+        message +=  "<br>" + " " + rgb.name;
+    }
+
+    if(xStorage.checked){
+        message +=  "<br>" + " " + xStorage.name;
+    }
+
+    if(xRam.checked){
+        message +=  "<br>" + " " + xRam.name;
+    }
+
+    if(other.checked){
+        message +=  "<br>" + "<b>Ostatné inštrukcie: </b>" + textArea.value;
+    }
+
+    let summary = document.getElementById('summary');
+    summary.innerHTML = message;
+    summary.classList.remove('hidden');
+    return;
+
     emailjs.send("service_2024fsw","template_smtfp4j",{
         to_email: "xtothg@stuba.sk",
         message: message,
