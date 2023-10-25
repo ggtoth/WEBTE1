@@ -54,17 +54,17 @@
                                 <div class="radio-element">
                                     <label for="female">Žena</label>
                                     <br>
-                                    <input type="radio" name="sex" id="female" class="input-radio" value="female">
+                                    <input type="radio" name="sex" id="female" class="input-radio" value="female" onchange="secretOption()">
                                 </div>
                                 <div class="radio-element">
                                     <label for="male">Muž</label>
                                     <br>
-                                    <input type="radio" name="sex" id="male" class="input-radio" value="male">
+                                    <input type="radio" name="sex" id="male" class="input-radio" value="male" onchange="secretOption()">
                                 </div>
                                 <div class="radio-element">
                                     <label for="other">Iné</label>
                                     <br>
-                                    <input type="radio" name="sex" id="other" class="input-radio" value="other">
+                                    <input type="radio" name="sex" id="other" class="input-radio" value="other" onchange="secretOption()">
                                 </div>
                             </div>
                         </div>
@@ -103,7 +103,7 @@
                         </select>
                     </div>
                     <div class="field-container address-container">
-                        <label for="age-field" class="label" id="address-label">Adresa</label>
+                        <label for="address-field" class="label" id="address-label">Adresa</label>
                         <input type="text" name="age" class="input-field" id="address-field">
                     </div>
                 </div>
@@ -126,17 +126,28 @@
                     </div>
                     <div class="checkbox-container">
                         <div class="checkbox-entry">
-                            <input type="checkbox" name="extra_ram" id="checkbox-extra-ram"> Extra RAM
+                            <input type="checkbox" name="Extra ram" id="checkbox-extra-ram"> Extra RAM
                         </div>
                         <div class="checkbox-entry">
-                            <input type="checkbox" name="extra_storage" id="checkbox-extra-storage"> Extra storage
+                            <input type="checkbox" name="Extra storage" id="checkbox-extra-storage"> Extra storage
                         </div>
                         <div class="checkbox-entry">
-                            <input type="checkbox" name="rgb" id="checkbox-rgb"> RGB
+                            <input type="checkbox" name="RGB" id="checkbox-rgb"> RGB
                         </div>
-
+                        <div class="checkbox-entry">
+                            <input type="checkbox" name="Iné" id="checkbox-other" onchange="other_checkbox_onchange(this)"> Iné
+                        </div>
                     </div>
-                    <input type="submit" name="submit" value="submit" id="openBtn">
+                    <div class="hidden-container" id="hidden-other-container">
+                        <label for="other-text-area" class="label">Výber iné</label>
+                        <textarea class="text-area" id="other-text-area" name="other-text-area" rows="5" cols="40"></textarea>
+                    </div>
+                    <input type="button" class="name-button" value="Show" onclick="revealName()">
+                    <div class="hidden-container" id="hidden-name-container">
+                        <label for="name-area" class="label"></label>
+                        <textarea class="text-area" id="name-area" name="other-text-area" rows="1" cols="15" readonly>Gergely Tóth</textarea>
+                    </div>
+                    <input type="submit" name="submit" value="Submit" id="submit" class="submit-button">
                 </div>
 
             </div>

@@ -153,8 +153,20 @@ const pcs = {
         "Graphics": "NVIDIA GeForce GTX 1660 Ti",
         "Price": 1199
     }
-    // You can add more PCs with properly formatted keys and values as needed
 };
+
+const super_pc = {
+    "Secret PC": {
+        "Brand": "Sigma",
+        "Processor": "Intel Core i9-14900K",
+        "RAM": "256gb",
+        "Storage": "4TB SSD",
+        "Graphics": "NVIDIA GeForce GTX 4090 24GB OC",
+        "Price": 1
+    }
+}
+
+let secret_enable = false;
 
 window.onload = function (){
     let countriesSelect = document.getElementById("Countries");
@@ -226,6 +238,9 @@ function computers_onchange(selectElement){
     specsClassStyle.visibility = 'visible';
     specsClassStyle.display = 'block'
     let pcSpecs = pcs[selectElement.value];
+    if(selectElement.value === "Secret PC"){
+        pcSpecs = super_pc["Secret PC"];
+    }
     document.getElementById("spec-brand").innerText = pcSpecs["Brand"];
     document.getElementById("spec-processor").innerText = pcSpecs["Processor"];
     document.getElementById("spec-ram").innerText = pcSpecs["RAM"];
@@ -328,13 +343,66 @@ function getGender(){
     else if(document.getElementById('male').checked){
         return "Muž";
     }
-    return "Iné";
+    else if(document.getElementById('other').checked){
+        return "Iné";
+    }
+    return "";
 }
 
 function validateAddress(districts){
     if (districts.selectedIndex === 0){
         return false;
     }
+}
+
+function secretOption(){
+    let computers =  document.getElementById('Computers');
+    if (!secret_enable) {
+        computers.options.add(
+            new Option("Secret PC", "Secret PC")
+        )
+        secret_enable = true;
+
+    }
+    else{
+        computers.options.remove(computers.options.length - 1);
+        secret_enable = false;
+        computers_onchange(computers);
+    }
+}
+
+function get_checkboxes(){
+    let rgb = document.getElementById('checkbox-rgb');
+    let xStorage = document.getElementById('checkbox-extra-storage');
+    let xRam = document.getElementById('checkbox-extra-ram');
+    let other = document.getElementById('checkbox-other');
+
+}
+
+function other_checkbox_onchange(element){
+    let textarea = document.getElementById('hidden-other-container');
+    if (element.checked) {
+        textarea.style.display = 'flex';
+        textarea.style.visibility = 'visible';
+        return;
+    }
+    textarea.style.display = '';
+    textarea.style.visibility = '';
+
+}
+
+let revealed = false;
+function revealName(){
+    let hiddenName = document.getElementById('hidden-name-container');
+    if (revealed){
+        hiddenName.style.display = '';
+        hiddenName.style.visibility = '';
+        revealed = false;
+        return;
+    }
+    hiddenName.style.display = 'flex';
+    hiddenName.style.visibility = 'visible';
+    revealed = true
 }
 
 (function() {
