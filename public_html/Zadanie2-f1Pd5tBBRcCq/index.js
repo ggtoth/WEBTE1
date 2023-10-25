@@ -249,13 +249,13 @@ function computers_onchange(selectElement){
     document.getElementById("spec-price").innerText = pcSpecs["Price"];
 }
 
-function checkInputText(inputItem){
-    let pattern = new RegExp(inputItem.getAttribute('pattern'));
+function checkInputText(inputItem, regex){
+    let pattern = new RegExp(regex);
     return pattern.test(inputItem.value);
 }
 
-function genericRegexCheck(element){
-    if(!checkInputText(element)){
+function genericRegexCheck(element, regex){
+    if(!checkInputText(element, regex)){
         element.style.borderColor = 'red';
         return false;
     }
@@ -273,7 +273,7 @@ function validateFirstName(element){
         document.getElementById('first-name-alert').style.visibility = 'hidden';
         element.style.borderColor = 'black';
     }
-    return genericRegexCheck(element);
+    return genericRegexCheck(element, "^[A-zÀ-úČ-ž]+$");
 }
 
 function validateLastName(element){
@@ -286,7 +286,7 @@ function validateLastName(element){
         document.getElementById('last-name-alert').style.visibility = 'hidden';
         element.style.borderColor = 'black';
     }
-    return genericRegexCheck(element);
+    return genericRegexCheck(element, "^[A-Za-zÀ-úČ-ž]+$");
 }
 
 function validateEmail(element){
@@ -297,7 +297,7 @@ function validateEmail(element){
     else {
         document.getElementById('email-alert').style.visibility = 'hidden';
     }
-    return genericRegexCheck(element);
+    return genericRegexCheck(element, "^([a-z0-9\-\_\.]*[a-z0-9])@([^\-\_\.][a-z0-9\-\_]*\.)([a-z0-9\-\_]{2,4})$");
 }
 
 function validatePhone(element){
@@ -306,7 +306,7 @@ function validatePhone(element){
         element.style.borderColor = 'black';
         return false;
     }
-    return genericRegexCheck(element);
+    return genericRegexCheck(element, "^(\+[0-9]{12,12})$");
 }
 
 function validateDate(element){
