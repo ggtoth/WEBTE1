@@ -187,6 +187,21 @@ select:focus{
     z-index: 9999;
 }
 
+.all-button{
+    background-color: #416C6E;
+    border: 0.25rem black solid;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 100%;
+}
+
+.all-button:hover{
+    background-color: #9DB0B0;
+    color: black;
+}
+
 .form-button{
     width: calc(100% - 2rem);
     margin: 1rem;
@@ -195,14 +210,17 @@ select:focus{
 
 .summary-button{
     width: calc(50% - 1rem);
+    border-width: 0.1rem;
 }
 
 .cancel-button{
     float: left;
+    background-color: lightcoral;
 }
 
 .submit-button {
     float: right;
+    background-color: lightgreen;
 }
 
 @media screen and (max-width: 768px) {

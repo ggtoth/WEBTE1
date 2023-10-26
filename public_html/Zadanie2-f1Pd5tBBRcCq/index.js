@@ -492,8 +492,8 @@ function validateForm() {
 
     let summaryHeader  = "<h1> Objednávka info </h1>";
 
-    let summarySubmit = "<input type=\"button\" class=\"summary-button cancel-button\" value=\"Späť\" id='cancel'>";
-    let summaryCancel = "<input type=\"button\" class=\"summary-button submit-button\" value=\"Objednať\" id='send'>";
+    let summarySubmit = "<input type=\"button\" class=\"summary-button all-button cancel-button\" value=\"Späť\" id='cancel'>";
+    let summaryCancel = "<input type=\"button\" class=\"summary-button all-button submit-button\" value=\"Objednať\" id='send'>";
 
     message =
         "<p>"  +    "<b>Krstné meno: </b>" + firstName.value +
