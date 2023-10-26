@@ -12,7 +12,20 @@
     border: 1px solid #ccc;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 9999;
-    filter: blur(5px);
+}
+
+.summary-button{
+    width: calc(50% - 1rem);
+    margin: 0.5rem;
+    height: 2rem;
+}
+
+.cancel-button{
+    float: left;
+}
+
+.submit-button{
+    float: right;
 }
 
 .form-header{
@@ -174,7 +187,7 @@ select:focus{
 }
 
 .form-button{
-    width: 100%;
+    width: calc(100% - 2rem);
     margin: 1rem;
     height: 3rem;
 }
