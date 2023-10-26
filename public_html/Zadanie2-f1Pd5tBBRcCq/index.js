@@ -273,12 +273,15 @@ function genericRegexCheck(element, regex){
 
 function validateFirstName(element){
     document.getElementById('first-name-wc').innerText = element.value.length;
+    let alert = document.getElementById('first-name-alert');
     if(element.value.length === 0){
-        document.getElementById('first-name-alert').style.visibility = 'visible';
+        alert.style.visibility = 'visible';
+        alert.style.display = 'block';
         element.style.borderColor = 'red';
     }
     else {
-        document.getElementById('first-name-alert').style.visibility = 'hidden';
+        alert.style.visibility = 'hidden';
+        alert.style.display = 'none';
         element.style.borderColor = 'black';
     }
     return genericRegexCheck(element, "^[A-zÀ-úČ-ž]+$");
@@ -286,12 +289,15 @@ function validateFirstName(element){
 
 function validateLastName(element){
     document.getElementById('last-name-wc').innerText = element.value.length;
+    let alert = document.getElementById('last-name-alert');
     if(element.value.length === 0){
-        document.getElementById('last-name-alert').style.visibility = 'visible';
+        alert.style.visibility = 'visible';
+        alert.style.display = 'block';
         element.style.borderColor = 'red';
     }
     else {
-        document.getElementById('last-name-alert').style.visibility = 'hidden';
+        alert.style.visibility = 'hidden';
+        alert.style.display = 'none';
         element.style.borderColor = 'black';
     }
     return genericRegexCheck(element, "^[A-Za-zÀ-úČ-ž]+$");
@@ -299,12 +305,16 @@ function validateLastName(element){
 
 function validateEmail(element){
     document.getElementById('email-wc').innerText = element.value.length;
+    let alert = document.getElementById('email-alert');
     if(element.value.length === 0){
-        document.getElementById('email-alert').style.visibility = 'visible';
+        alert.style.visibility = 'visible';
+        alert.style.display = 'block';
         element.style.borderColor = 'red';
     }
     else {
-        document.getElementById('email-alert').style.visibility = 'hidden';
+        alert.style.visibility = 'hidden';
+        alert.style.display = 'none';
+        element.style.borderColor = 'black';
     }
     return genericRegexCheck(element, '^([a-z0-9\\-\\_\\.]*[a-z0-9])@([^\\-\\_\\.][a-z0-9\\-\\_]*\\.)([a-z0-9\\-\\_]{2,4})$');
 }
@@ -332,12 +342,17 @@ function validateAddressSelection(districts){
 
 function validateAddress(element){
     document.getElementById('address-wc').innerText = element.value.length;
+    let alert = document.getElementById('address-alert');
     let districts = document.getElementById('Districts');
     if (districts.selectedIndex === 0 || element.value.length === 0){
-        document.getElementById('address-alert').style.visibility = 'visible';
+        alert.style.visibility = 'visible';
+        alert.style.display = 'block';
+        element.style.borderColor = 'red';
     }
     else {
-        document.getElementById('address-alert').style.visibility = 'hidden';
+        alert.style.visibility = 'hidden';
+        alert.style.display = 'none';
+        element.style.borderColor = 'black';
     }
     return genericRegexCheck(element, "[A-Za-zÀ-úČ-ž,/]+$");
 }
@@ -549,7 +564,7 @@ function sendEmail(){
     }).then(function() {
         cleanUp();
         console.log('SUCCESS!');
-        window.location.replace("https://webte1.fei.stuba.sk/~xtothg/Zadanie2-f1Pd5tBBRcCq/succes.html");
+        window.location.replace("https://webte1.fei.stuba.sk/~xtothg/Zadanie2-f1Pd5tBBRcCq/success.html");
     }, function(error) {
         cleanUp();
         console.log('FAILED...', error);

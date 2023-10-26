@@ -2,30 +2,14 @@
     display: none;
 }
 
-#summary {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 20px;
-    background-color: white;
-    border: 1px solid #ccc;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 9999;
+body{
+    background-color: #8CEAED;
 }
 
-.summary-button{
-    width: calc(50% - 1rem);
-    margin: 0.5rem;
-    height: 2rem;
-}
-
-.cancel-button{
-    float: left;
-}
-
-.submit-button{
-    float: right;
+form{
+    background-color: #9DB0B0;
+    border: black 0.5rem solid;
+    border-radius: 0.5rem;
 }
 
 .form-header{
@@ -147,7 +131,8 @@ select:focus{
     list-style: none;
     padding: 0;
     margin: 1rem;
-    border: black 0.15vw solid;
+    border: black 0.25vw solid;
+    border-radius: 0.25vw;
 }
 
 .formatted-list>li{
@@ -160,7 +145,11 @@ select:focus{
 }
 
 .formatted-list-left{
-    margin-right: 10px;
+    margin-left: 0.25rem;
+}
+
+.formatted-list-right{
+    margin-right: 0.25rem;
 }
 
 .checkbox-container{
@@ -186,10 +175,34 @@ select:focus{
     max-height: 8rem;
 }
 
+#summary {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+}
+
 .form-button{
     width: calc(100% - 2rem);
     margin: 1rem;
     height: 3rem;
+}
+
+.summary-button{
+    width: calc(50% - 1rem);
+}
+
+.cancel-button{
+    float: left;
+}
+
+.submit-button {
+    float: right;
 }
 
 @media screen and (max-width: 768px) {
