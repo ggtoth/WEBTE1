@@ -166,12 +166,12 @@ select:focus{
 .hidden-container{
     display: none;
     visibility: hidden;
-    width: 100%;
+    width: calc(100% - 2rem - 0.5rem);
     margin: 1rem;
 }
 
 .text-area{
-    max-width: calc(100% - 2rem);
+    max-width: 100%;
     max-height: 8rem;
 }
 
