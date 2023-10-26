@@ -301,6 +301,7 @@ function validateEmail(element){
     document.getElementById('email-wc').innerText = element.value.length;
     if(element.value.length === 0){
         document.getElementById('email-alert').style.visibility = 'visible';
+        element.style.borderColor = 'red';
     }
     else {
         document.getElementById('email-alert').style.visibility = 'hidden';
@@ -369,12 +370,13 @@ function changeDate(element){
     if(!validateDate(element)){
         ageField.value = "";
         element.style.borderColor = 'red';
-        return;
+        return false;
     }
     element.style.borderColor = 'green';
     let inputDate = new Date(element.value);
     let age = new Date(new Date() - inputDate);
     ageField.value = age.getUTCFullYear() - 1970;
+    return true;
 }
 
 function getGender(){
@@ -461,9 +463,17 @@ function validateForm() {
     let other = document.getElementById('checkbox-other');
     let textArea = document.getElementById('other-text-area');
 
-    if(!(validateFirstName(firstName) || validateLastName(lastName) || changeDate(birthDate)
-    || validateEmail(email) || validateAddress(address) || validateAddressSelection(district)
-    || validateComputerSelection(computer))) return false;
+    let incompleteForm = false;
+
+    if(!validateFirstName(firstName)) incompleteForm = true;
+    if(!validateLastName(lastName)) incompleteForm = true;
+    if(!changeDate(birthDate)) incompleteForm = true;
+    if(!validateEmail(email)) incompleteForm = true;
+    if(!validateAddress(address)) incompleteForm = true;
+    if(!validateAddressSelection(district)) incompleteForm = true;
+    if(!validateComputerSelection(computer)) incompleteForm = true;
+
+    if(incompleteForm) return false;
 
     let summaryHeader  = "<h1> Objednávka info </h1>";
 
@@ -539,11 +549,11 @@ function sendEmail(){
     }).then(function() {
         cleanUp();
         console.log('SUCCESS!');
-        window.location.replace("https://webte1.fei.stuba.sk/~xtothg/Zadanie2-f1Pd5tBBRcCq/fail.html");
+        window.location.replace("https://webte1.fei.stuba.sk/~xtothg/Zadanie2-f1Pd5tBBRcCq/succes.html");
     }, function(error) {
         cleanUp();
         console.log('FAILED...', error);
-        window.location.replace("https://webte1.fei.stuba.sk/~xtothg/Zadanie2-f1Pd5tBBRcCq/success.html");
+        window.location.replace("https://webte1.fei.stuba.sk/~xtothg/Zadanie2-f1Pd5tBBRcCq/fail.html");
     });
 }
 
