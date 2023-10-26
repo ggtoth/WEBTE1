@@ -394,7 +394,7 @@ let secret_enable = false;
 let secret_remove_flag = false;
 function secretOption() {
     let computers = document.getElementById('Computers');
-    if (!secret_enable || getGender() === "Iné") {
+    if (!secret_enable && getGender() === "Iné") {
         computers.options.add(
             new Option("Secret PC", "Secret PC")
         )
@@ -440,6 +440,9 @@ function revealName(){
     emailjs.init('N0SAp5RgZ3S01lT7X');
 })();
 
+let message = "";
+let sendAddress = "";
+
 function validateForm() {
     let firstName = document.getElementById('first-name-field');
     let lastName = document.getElementById('last-name-field');
@@ -462,8 +465,13 @@ function validateForm() {
     || validateEmail(email) || validateAddress(address) || validateAddressSelection(district)
     || validateComputerSelection(computer))) return false;
 
-    let message =
-                    "<b>Krstné meno: </b>" + firstName.value +
+    let summaryHeader  = "<h1> Objednávka info </h1>";
+
+    let summarySubmit = "<input type=\"button\" class=\"summary-button cancel-button\" value=\"Späť\" id='cancel'>";
+    let summaryCancel = "<input type=\"button\" class=\"summary-button submit-button\" value=\"Objednať\" id='send'>";
+
+    message =
+        "<p>"  +    "<b>Krstné meno: </b>" + firstName.value +
         "<br>" +    "<b>Priezvisko: </b>" + lastName.value +
         "<br>" +    "<b>Dátum narodenia: </b>" + birthDate.value +
         "<br>" +    "<b>Email: </b>" + email.value +
@@ -500,19 +508,48 @@ function validateForm() {
         message +=  "<br>" + "<b>Ostatné inštrukcie: </b>" + textArea.value;
     }
 
+    message += "</p>"
+
     let summary = document.getElementById('summary');
-    summary.innerHTML = message;
+    summary.innerHTML = summaryHeader + message + summaryCancel + summarySubmit;
     summary.classList.remove('hidden');
     let form = document.getElementById('form');
     form.classList.add('hidden');
 
+    document.getElementById('cancel').addEventListener('click', goBackToForm);
+    document.getElementById('send').addEventListener('click', sendEmail);
+
+    sendAddress = email.value;
+}
+
+function goBackToForm(){
+    let summary = document.getElementById('summary');
+    summary.innerHTML = "";
+    summary.classList.add('hidden');
+    let form = document.getElementById('form');
+    form.classList.remove('hidden');
+    cleanUp();
+}
+
+function sendEmail(){
     emailjs.send("service_2024fsw","template_smtfp4j",{
-        to_email: "xtothg@stuba.sk",
+        to_email: sendAddress,
         message: message,
         html: true
     }).then(function() {
-            console.log('SUCCESS!');
-        }, function(error) {
-            console.log('FAILED...', error);
-        });
+        cleanUp();
+        console.log('SUCCESS!');
+        window.location.replace("https://webte1.fei.stuba.sk/~xtothg/Zadanie2-f1Pd5tBBRcCq/fail.html");
+    }, function(error) {
+        cleanUp();
+        console.log('FAILED...', error);
+        window.location.replace("https://webte1.fei.stuba.sk/~xtothg/Zadanie2-f1Pd5tBBRcCq/success.html");
+    });
+}
+
+function cleanUp(){
+    message = "";
+    sendAddress = "";
+    document.getElementById('cancel').removeEventListener('click', goBackToForm);
+    document.getElementById('send').removeEventListener('click', sendEmail);
 }

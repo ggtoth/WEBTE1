@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+          content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Form</title>
     <link rel="stylesheet" href="style.css">
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script src="index.js"></script>
 </head>
 <body>
-    <form name="order-form" id="form">
+    <form name="order-form" id="form" onsubmit="return false">
         <article>
             <div class="form-header">
-                <h1>Objednávka pre master-pc</h1>
+                <h1>Objednávka pre Master-PC</h1>
             </div>
             <div class="form-content">
                 <div class="form-left-content">
@@ -164,12 +164,13 @@
                         <label for="name-area" class="label"></label>
                         <textarea class="text-area" id="name-area" name="other-text-area" rows="1" cols="15" readonly>Gergely Tóth</textarea>
                     </div>
-                    <input type="submit" name="submit" value="Submit" id="submit" class="form-button">
+                    <input type="button" name="submit" value="Submit" id="submit" class="form-button">
                 </div>
 
             </div>
         </article>
     </form>
-    <div class="hidden" id="summary"></div>
+    <div class="hidden" id="summary">
+    </div>
 </body>
 </html>
