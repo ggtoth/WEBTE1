@@ -48,7 +48,7 @@ const gradeColors = [
     'rgba(128, 128, 128, 0.7)', // Add more colors as needed
 ];
 
-function getGradeData(data){
+function getGradeDataByGrade(data){
     let gradeData = [];
 
     let i = 0;
@@ -66,7 +66,7 @@ function getGradeData(data){
     return gradeData;
 }
 
-function getGradeDataOpposite(data){
+function getGradeDataByYear(data){
     let gradeData = [];
     let i = 0;
     for(const element of data){
@@ -99,49 +99,60 @@ function getChartConfig(labels, datasets, type){
 function addChart(container, chartData){
     let canvas = document.createElement('canvas');
     canvas.classList.add('chart-canvas');
-    canvas.id = 'chart';
 
     const ctx = canvas.getContext('2d');
     new Chart(ctx, chartData);
 
+    if(currentChartType === 'pie'){
+        let individualContainer = document.createElement('div');
+        individualContainer.classList.add('individual-container');
+        individualContainer.appendChild(canvas);
+        container.appendChild(individualContainer);
+        return;
+    }
     container.appendChild(canvas);
 }
 
 let currentChartType;
 
 let container;
-let chartConfig;
 let data;
-let gradeData;
 
 function loadBar(){
     if (currentChartType === 'bar') return;
-    container.innerHTML = '';
-    chartConfig = getChartConfig(data.map(entry => entry.year), gradeData, 'bar');
     currentChartType = 'bar';
+    container.innerHTML = '';
+    let gradeData = getGradeDataByGrade(data);
+    let chartConfig = getChartConfig(data.map(entry => entry.year), gradeData, 'bar');
     addChart(container, chartConfig);
 }
 
 function loadPie(){
     if (currentChartType === 'pie') return;
-    container.innerHTML = '';
-    chartConfig = getChartConfig(gradeData.map(entry => entry.label), getGradeDataOpposite(data), 'pie');
     currentChartType = 'pie';
-    addChart(container, chartConfig);
+    container.innerHTML = '';
+    let gradeData = getGradeDataByYear(data);
+    console.log(data);
+    console.log(gradeData);
+    for (const index in gradeData){
+        let chartConfig = getChartConfig(Object.keys(data[index].grades), [gradeData[index]], 'pie');
+        addChart(container, chartConfig);
+    }
 }
 
 function loadLine(){
     if (currentChartType === 'line') return;
-    container.innerHTML = '';
-    chartConfig = getChartConfig(data.map(entry => entry.year), gradeData, 'line');
     currentChartType = 'line';
+    container.innerHTML = '';
+    let gradeData = getGradeDataByGrade(data);
+    let chartConfig = getChartConfig(data.map(entry => entry.year), gradeData, 'line');
     addChart(container, chartConfig);
 }
 
 window.onload = function () {
     let xmlDOM = parseXMLFile("./z03.xml");
     data = organizeXMLData(xmlDOM);
-    gradeData = getGradeData(data);
+
     container = document.getElementById('chart-container');
 
     let barButton = document.getElementById('bar-button');
@@ -151,8 +162,7 @@ window.onload = function () {
     barButton.addEventListener('click', loadBar);
     pieButton.addEventListener('click', loadPie);
     lineButton.addEventListener('click', loadLine);
-    console.log(gradeData)
-    loadBar();
+    loadPie();
 }
 
 window.onresize = function (){
