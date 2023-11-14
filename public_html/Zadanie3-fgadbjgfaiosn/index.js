@@ -101,16 +101,17 @@ function addChart(container, chartData){
     canvas.classList.add('chart-canvas');
 
     const ctx = canvas.getContext('2d');
-    new Chart(ctx, chartData);
+    let chart = new Chart(ctx, chartData);
 
     if(currentChartType === 'pie'){
         let individualContainer = document.createElement('div');
         individualContainer.classList.add('individual-container');
         individualContainer.appendChild(canvas);
         container.appendChild(individualContainer);
-        return;
+        return chart;
     }
     container.appendChild(canvas);
+    return chart;
 }
 
 let currentChartType;
@@ -158,6 +159,7 @@ function createButton(value){
 
 function createChartDiv(){
     let div = document.createElement('div');
+
     chartContainer = document.createElement('div');
     chartContainer.classList.add('chart-container')
 
@@ -165,8 +167,8 @@ function createChartDiv(){
     buttonContainer.classList.add('button-container');
 
     let barButton = createButton('Bar chart');
-    let pieButton = createButton('Bar chart');
-    let lineButton = createButton('Bar chart');
+    let pieButton = createButton('Pie chart');
+    let lineButton = createButton('Line chart');
 
     buttonContainer.appendChild(barButton);
     buttonContainer.appendChild(pieButton);
@@ -174,8 +176,6 @@ function createChartDiv(){
 
     div.appendChild(chartContainer);
     div.appendChild(buttonContainer);
-
-    document.body.appendChild(div);
 
     barButton.addEventListener('click', loadBar);
     pieButton.addEventListener('click', loadPie);
@@ -185,14 +185,88 @@ function createChartDiv(){
     return div
 }
 
+let trigChart;
+
+function createSinusGraph(container){
+    container.innerHTML = '';
+    let chartConfig = getChartConfig([], serverData, 'line');
+    trigChart = addChart(container, chartConfig);
+}
+
+const serverUrl = 'https://old.iolab.sk/evaluation/sse/sse.php'
+let stopped = false;
+let serverData = [
+    {
+        label: "Sine",
+        data: []
+    },
+    {
+        label: "Cosine",
+        data: []
+    }
+];
+
+
+var eventSource = new EventSource(serverUrl);
+
+eventSource.onmessage = function(event) {
+    // Process the received data
+    if (!stopped) {
+        let responseData = JSON.parse(event.data);
+        serverData[0].data.push(responseData.y1 * amplitude);
+        serverData[1].data.push(responseData.y2 * amplitude);
+        trigChart.data.labels.push(serverData[0].data.length - 1);
+        trigChart.update();
+    }
+}
+
+eventSource.onerror = function(event) {
+    console.error("Error occurred:", event);
+};
+
+function stop(){
+    stopped = true;
+}
+
+function start(){
+    stopped = false;
+}
+
+let amplitude = 1;
+let slider;
+function changeAmplitude(){
+    amplitude = slider.value;
+}
+
 function createSinusDiv(){
     let div = document.createElement('div');
 
+    let sinusContainer = document.createElement('div');
+    sinusContainer.classList.add('sinus-container')
+
+    let buttonContainer = document.createElement('div');
+    buttonContainer.classList.add('button-container');
+
+    let stopButton = createButton('Stop');
+
+    buttonContainer.appendChild(stopButton);
+
+    slider = document.createElement('range-slider');
+    slider.addEventListener('valueChange', changeAmplitude);
+
+    div.appendChild(sinusContainer);
+    div.appendChild(buttonContainer);
+    div.appendChild(slider)
+
+    stopButton.addEventListener('click', stop);
+
+    createSinusGraph(sinusContainer);
     return div;
 }
 
 function changeMode(){
     if (currentMode === 'grade'){
+        start();
         document.body.removeChild(mainDiv);
         mainDiv = sinusModeDiv;
         document.body.appendChild(mainDiv);
@@ -200,6 +274,7 @@ function changeMode(){
         currentMode = 'sinus';
     }
     else if(currentMode === 'sinus'){
+        stop();
         document.body.removeChild(mainDiv)
         mainDiv = gradeModeDiv;
         document.body.appendChild(mainDiv);
@@ -228,9 +303,10 @@ window.onload = function () {
     gradeModeDiv = createChartDiv();
     sinusModeDiv = createSinusDiv();
 
-    mainDiv = gradeModeDiv;
+    mainDiv = sinusModeDiv;
     document.body.appendChild(mainDiv);
-    currentMode = 'grade'
+    currentMode = 'sinus'
+    start();
 }
 
 window.onresize = function (){
