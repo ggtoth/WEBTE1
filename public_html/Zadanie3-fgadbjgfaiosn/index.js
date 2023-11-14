@@ -206,7 +206,6 @@ let serverData = [
     }
 ];
 
-
 var eventSource = new EventSource(serverUrl);
 
 eventSource.onmessage = function(event) {
@@ -224,18 +223,62 @@ eventSource.onerror = function(event) {
     console.error("Error occurred:", event);
 };
 
+let absoluteStop = false;
+function fullStop(){
+    stop();
+    absoluteStop = true;
+
+    trigChart.options.plugins.zoom.zoom.wheel.enabled = true;
+    trigChart.options.plugins.zoom.zoom.pinch.enabled = true;
+
+    trigChart.update();
+}
+
 function stop(){
     stopped = true;
 }
 
 function start(){
+    if (absoluteStop) return;
     stopped = false;
 }
 
 let amplitude = 1;
-let slider;
-function changeAmplitude(){
-    amplitude = slider.value;
+function changeAmplitude(event){
+    amplitude = event.detail.value;
+}
+
+let currentSine = false;
+function handleSine(){
+    currentSine = !currentSine;
+    trigChart.data.datasets[0].hidden = currentSine;
+    trigChart.update();
+}
+
+let currentCosine = false;
+function handleCosine(){
+    currentCosine = !currentCosine;
+    trigChart.data.datasets[1].hidden = currentCosine;
+    trigChart.update();
+}
+
+function createCheckboxEntry(labelText, checked){
+    let container = document.createElement('div');
+    container.classList.add('checkbox-entry');
+
+    let sineCheck = document.createElement('input');
+    sineCheck.type = 'checkbox';
+    sineCheck.checked = checked;
+    sineCheck.id = labelText;
+
+    let label = document.createElement('label');
+    label.innerText = labelText;
+    label.setAttribute('for', sineCheck.id);
+
+    container.appendChild(sineCheck);
+    container.appendChild(label);
+
+    return container;
 }
 
 function createSinusDiv(){
@@ -249,16 +292,28 @@ function createSinusDiv(){
 
     let stopButton = createButton('Stop');
 
-    buttonContainer.appendChild(stopButton);
-
-    slider = document.createElement('range-slider');
+    let slider = document.createElement('range-slider');
     slider.addEventListener('valueChange', changeAmplitude);
+
+    let checkboxContainer = document.createElement('div');
+
+    let sineCheck = createCheckboxEntry('Sine', true);
+    let cosineCheck = createCheckboxEntry('Cosine', true);
+
+    sineCheck.addEventListener('change', handleSine);
+    cosineCheck.addEventListener('change', handleCosine);
+
+    checkboxContainer.appendChild(sineCheck);
+    checkboxContainer.appendChild(cosineCheck);
+
+    buttonContainer.appendChild(stopButton);
+    buttonContainer.appendChild(slider);
+    buttonContainer.appendChild(checkboxContainer);
 
     div.appendChild(sinusContainer);
     div.appendChild(buttonContainer);
-    div.appendChild(slider)
 
-    stopButton.addEventListener('click', stop);
+    stopButton.addEventListener('click', fullStop);
 
     createSinusGraph(sinusContainer);
     return div;
@@ -305,7 +360,7 @@ window.onload = function () {
 
     mainDiv = sinusModeDiv;
     document.body.appendChild(mainDiv);
-    currentMode = 'sinus'
+    currentMode = 'sinus';
     start();
 }
 
