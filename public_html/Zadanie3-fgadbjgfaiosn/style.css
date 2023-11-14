@@ -9,15 +9,15 @@
     width: 100%;
     height: auto;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
     flex-direction: row;
+    flex-wrap: wrap;
     padding: 0;
 }
 
 .individual-container{
     width: calc(100% / 3);
-    float: left;
 }
 
 .button-container{

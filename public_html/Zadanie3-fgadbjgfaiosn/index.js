@@ -115,54 +115,122 @@ function addChart(container, chartData){
 
 let currentChartType;
 
-let container;
+let chartContainer;
 let data;
 
 function loadBar(){
     if (currentChartType === 'bar') return;
     currentChartType = 'bar';
-    container.innerHTML = '';
+    chartContainer.innerHTML = '';
     let gradeData = getGradeDataByGrade(data);
     let chartConfig = getChartConfig(data.map(entry => entry.year), gradeData, 'bar');
-    addChart(container, chartConfig);
+    addChart(chartContainer, chartConfig);
 }
 
 function loadPie(){
     if (currentChartType === 'pie') return;
     currentChartType = 'pie';
-    container.innerHTML = '';
+    chartContainer.innerHTML = '';
     let gradeData = getGradeDataByYear(data);
     console.log(data);
     console.log(gradeData);
     for (const index in gradeData){
         let chartConfig = getChartConfig(Object.keys(data[index].grades), [gradeData[index]], 'pie');
-        addChart(container, chartConfig);
+        addChart(chartContainer, chartConfig);
     }
 }
 
 function loadLine(){
     if (currentChartType === 'line') return;
     currentChartType = 'line';
-    container.innerHTML = '';
+    chartContainer.innerHTML = '';
     let gradeData = getGradeDataByGrade(data);
     let chartConfig = getChartConfig(data.map(entry => entry.year), gradeData, 'line');
-    addChart(container, chartConfig);
+    addChart(chartContainer, chartConfig);
 }
 
-window.onload = function () {
-    let xmlDOM = parseXMLFile("./z03.xml");
-    data = organizeXMLData(xmlDOM);
+function createButton(value){
+    let button = document.createElement('input');
+    button.type = 'button';
+    button.value = value;
+    return button;
+}
 
-    container = document.getElementById('chart-container');
+function createChartDiv(){
+    let div = document.createElement('div');
+    chartContainer = document.createElement('div');
+    chartContainer.classList.add('chart-container')
 
-    let barButton = document.getElementById('bar-button');
-    let pieButton = document.getElementById('pie-button');
-    let lineButton = document.getElementById('line-button');
+    let buttonContainer = document.createElement('div');
+    buttonContainer.classList.add('button-container');
+
+    let barButton = createButton('Bar chart');
+    let pieButton = createButton('Bar chart');
+    let lineButton = createButton('Bar chart');
+
+    buttonContainer.appendChild(barButton);
+    buttonContainer.appendChild(pieButton);
+    buttonContainer.appendChild(lineButton);
+
+    div.appendChild(chartContainer);
+    div.appendChild(buttonContainer);
+
+    document.body.appendChild(div);
 
     barButton.addEventListener('click', loadBar);
     pieButton.addEventListener('click', loadPie);
     lineButton.addEventListener('click', loadLine);
     loadPie();
+
+    return div
+}
+
+function createSinusDiv(){
+    let div = document.createElement('div');
+
+    return div;
+}
+
+function changeMode(){
+    if (currentMode === 'grade'){
+        document.body.removeChild(mainDiv);
+        mainDiv = sinusModeDiv;
+        document.body.appendChild(mainDiv);
+
+        currentMode = 'sinus';
+    }
+    else if(currentMode === 'sinus'){
+        document.body.removeChild(mainDiv)
+        mainDiv = gradeModeDiv;
+        document.body.appendChild(mainDiv);
+        currentMode = 'grade';
+    }
+}
+
+let mainDiv;
+let gradeModeDiv;
+let sinusModeDiv;
+let currentMode;
+
+window.onload = function () {
+    let xmlDOM = parseXMLFile("./z03.xml");
+    data = organizeXMLData(xmlDOM);
+
+    let buttonContainer = document.createElement('div');
+    buttonContainer.classList.add('button-container');
+
+    let modeButton = createButton('Change mode');
+    modeButton.addEventListener('click', changeMode);
+
+    buttonContainer.appendChild(modeButton);
+    document.body.appendChild(buttonContainer);
+
+    gradeModeDiv = createChartDiv();
+    sinusModeDiv = createSinusDiv();
+
+    mainDiv = gradeModeDiv;
+    document.body.appendChild(mainDiv);
+    currentMode = 'grade'
 }
 
 window.onresize = function (){
