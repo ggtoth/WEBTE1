@@ -119,6 +119,9 @@ let data;
 let axis = 'x'
 
 function loadBar() {
+    if (currentChartType === 'pie'){
+        loadLine();
+    }
     chartContainer.innerHTML = '';
     let gradeData = getGradeDataByGrade(data);
     let chartConfig = {
