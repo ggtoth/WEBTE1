@@ -3,7 +3,9 @@ class RangeSlider extends HTMLElement {
         super();
 
         this.attachShadow({ mode: 'open'});
+    }
 
+    connectedCallback() {
         this.min = this.getAttribute('minimal') ? this.getAttribute('minimal') : 0;
         this.max = this.getAttribute('maximal') ? this.getAttribute('maximal') : 3;
         this.value = this.getAttribute('value') ? this.getAttribute('value') : 1;
@@ -48,30 +50,33 @@ class RangeSlider extends HTMLElement {
                  }
                  
                 .custom-range {
-                  -webkit-appearance: none; /* Override default CSS styles */
+                  -webkit-appearance: none;
                   appearance: none;
-                  width: 100%; /* Full-width */
-                  height: 15px; /* Specified height */
-                  background: #d3d3d3; /* Grey background */
-                  outline: none; /* Remove outline */
+                  width: 100%;
+                  height: 15px;
+                  border-radius: 5px; 
+                  background: white;
+                  border: solid grey 1px;
+                  outline: none;
                   opacity: 1;
                   margin: 10px 0px;
                 }
                 
                 .custom-range::-webkit-slider-thumb {
-                  -webkit-appearance: none; /* Override default look */
+                  -webkit-appearance: none; 
                   appearance: none;
-                  width: 50px; /* Set a specific slider handle width */
-                  height: 25px; /* Slider handle height */
+                  width: 50px;
+                  height: 25px;
                   border-radius: 5px;
-                  background: grey; /* Green background */
+                  border: solid grey 1px;
+                  background: #e8e6e6;
                   cursor: pointer;
                 }
                 
                 .custom-range::-moz-range-thumb {
-                  width: 25px; /* Set a specific slider handle width */
-                  height: 25px; /* Slider handle height */
-                  background: grey; /* Green background */
+                  width: 25px;
+                  height: 25px;
+                  background: #d3d3d3; 
                   cursor: pointer;
                 }
                 
@@ -85,6 +90,14 @@ class RangeSlider extends HTMLElement {
                   top: 50%;
                   left: 50%;
                   transform: translate(-50%, -50%);
+                  user-select: none;
+                  pointer-events: none;
+                }
+                
+                .custom-number{
+                    background: #e8e6e6;
+                    border-radius: 5px;
+                    border: solid grey 1px;
                 }
         `;
 
@@ -93,6 +106,7 @@ class RangeSlider extends HTMLElement {
 
         this.inputTypeNumber.addEventListener('input', () => this.handleNumber());
         this.inputTypeRange.addEventListener('input', () => this.handleRange());
+        this.update();
     }
 
     handleNumber(){
@@ -115,11 +129,18 @@ class RangeSlider extends HTMLElement {
         this.inputTypeNumber.value = this.value;
         this.rangeSpan.innerText = this.value;
 
+        const val = (this.value - this.min) / (this.max - this.min);
+        this.rangeSpan.style.left =  `calc(${val * 100}% - ${(val * 50) - 25}px)`;
+
         this.broadcast();
     }
 
     broadcast(){
         this.dispatchEvent(new CustomEvent('valueChange', { detail: { value: this.value } }))
+    }
+
+    clearShadowRoot() {
+        this.shadowRoot.innerHTML = '';
     }
 }
 

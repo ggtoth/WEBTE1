@@ -89,10 +89,20 @@ function getChartConfig(labels, datasets, type){
         data: {
             labels: labels,
             datasets: datasets,
-            options: {
-                responsive: true,
-            }
         },
+        options: {
+            responsive: true,
+            indexAxis: 'y',
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    beginAtZero: true,
+                },
+                y: {
+                    beginAtZero: true,
+                },
+            },
+        }
     }
 }
 
@@ -124,7 +134,26 @@ function loadBar(){
     currentChartType = 'bar';
     chartContainer.innerHTML = '';
     let gradeData = getGradeDataByGrade(data);
-    let chartConfig = getChartConfig(data.map(entry => entry.year), gradeData, 'bar');
+    let chartConfig = {
+        type: 'bar',
+        data: {
+            labels: data.map(entry => entry.year),
+            datasets: gradeData,
+        },
+        options: {
+            responsive: true,
+            indexAxis: 'x',
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    beginAtZero: true,
+                },
+                y: {
+                    beginAtZero: true,
+                },
+            },
+        }
+    }
     addChart(chartContainer, chartConfig);
 }
 
@@ -180,7 +209,7 @@ function createChartDiv(){
     barButton.addEventListener('click', loadBar);
     pieButton.addEventListener('click', loadPie);
     lineButton.addEventListener('click', loadLine);
-    loadPie();
+    loadBar();
 
     return div
 }
@@ -330,6 +359,7 @@ function changeMode(){
     }
     else if(currentMode === 'sinus'){
         stop();
+        mainDiv.getElementsByTagName('range-slider')[0].clearShadowRoot();
         document.body.removeChild(mainDiv)
         mainDiv = gradeModeDiv;
         document.body.appendChild(mainDiv);
@@ -358,10 +388,9 @@ window.onload = function () {
     gradeModeDiv = createChartDiv();
     sinusModeDiv = createSinusDiv();
 
-    mainDiv = sinusModeDiv;
+    mainDiv = gradeModeDiv;
     document.body.appendChild(mainDiv);
-    currentMode = 'sinus';
-    start();
+    currentMode = 'grade';
 }
 
 window.onresize = function (){
