@@ -133,7 +133,7 @@ function loadBar(){
         options: {
             responsive: true,
             indexAxis: axis,
-            maintainAspectRatio: false,
+            maintainAspectRatio: true,
             scales: {
                 x: {
                     beginAtZero: true,
@@ -148,7 +148,6 @@ function loadBar(){
 }
 
 function loadPie(){
-    if (currentChartType === 'pie') return;
     currentChartType = 'pie';
     chartContainer.innerHTML = '';
     let gradeData = getGradeDataByYear(data);
@@ -161,7 +160,6 @@ function loadPie(){
 }
 
 function loadLine(){
-    if (currentChartType === 'line') return;
     currentChartType = 'line';
     chartContainer.innerHTML = '';
     let gradeData = getGradeDataByGrade(data);
@@ -188,6 +186,10 @@ function createChartDiv(){
     let barButton = createButton('Bar chart');
     let pieButton = createButton('Pie chart');
     let lineButton = createButton('Line chart');
+
+    barButton.classList.add('custom-button');
+    pieButton.classList.add('custom-button');
+    lineButton.classList.add('custom-button');
 
     buttonContainer.appendChild(barButton);
     buttonContainer.appendChild(pieButton);
@@ -313,6 +315,8 @@ function createSinusDiv(){
 
     let stopButton = createButton('Stop');
 
+    stopButton.classList.add('custom-button');
+
     let slider = document.createElement('range-slider');
     slider.addEventListener('valueChange', changeAmplitude);
 
@@ -405,19 +409,20 @@ window.onload = function () {
     start();
 }
 
-function changeOrientation(){
+function changeOrientation(orientation){
+    if (orientation){
+        axis = 'y';
+    }
+    else {
+        axis = 'x';
+    }
     if (currentChartType === 'bar'){
         currentChartType = 'horizontalBar';
-        axis = 'y';
         loadBar();
     }
     else if (currentChartType === 'horizontalBar'){
         currentChartType = 'bar';
-        axis = 'x';
         loadBar();
-    }
-    else {
-
     }
 }
 
@@ -425,7 +430,7 @@ window.onresize = function (){
     let old = smallScreen;
     smallScreen = window.innerWidth < 500;
     if (old !== smallScreen){
-        changeOrientation();
+        changeOrientation(smallScreen);
     }
     for (let id in Chart.instances) {
         Chart.instances[id].resize();
