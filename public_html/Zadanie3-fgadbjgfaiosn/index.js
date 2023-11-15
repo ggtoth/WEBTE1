@@ -121,7 +121,7 @@ let data;
 let axis = 'x'
 
 function loadBar() {
-    if (currentChartType === 'pie'){
+    if (currentChartType === 'pie') {
         loadLine();
     }
     currentChartType = 'bar';
@@ -438,7 +438,7 @@ function changeOrientation(orientation) {
     } else {
         axis = 'x';
     }
-    if (old !== axis){
+    if (old !== axis) {
         if (currentChartType === 'bar') {
             currentChartType = 'horizontalBar';
             loadBar();
@@ -451,7 +451,7 @@ function changeOrientation(orientation) {
 
 window.onresize = function () {
     let old = smallScreen;
-    smallScreen = window.innerWidth < 500;
+    smallScreen = window.innerWidth < 575;
     if (old !== smallScreen) {
         changeOrientation(smallScreen);
     }
