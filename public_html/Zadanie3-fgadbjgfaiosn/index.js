@@ -153,8 +153,6 @@ function loadPie() {
     currentChartType = 'pie';
     chartContainer.innerHTML = '';
     let gradeData = getGradeDataByYear(data);
-    console.log(data);
-    console.log(gradeData);
 
     for (const index in gradeData) {
         let chartConfig = {
@@ -239,11 +237,11 @@ const serverUrl = 'https://old.iolab.sk/evaluation/sse/sse.php'
 let stopped = false;
 let serverData = [
     {
-        label: "Sine",
+        label: "Sinus",
         data: []
     },
     {
-        label: "Cosine",
+        label: "Kosinus",
         data: []
     }
 ];
@@ -336,7 +334,7 @@ function createSinusDiv() {
     let buttonContainer = document.createElement('div');
     buttonContainer.classList.add('button-container');
 
-    let stopButton = createButton('Stop');
+    let stopButton = createButton('Koniec');
 
     stopButton.classList.add('custom-button');
 
@@ -345,8 +343,8 @@ function createSinusDiv() {
 
     let checkboxContainer = document.createElement('div');
 
-    let sineCheck = createCheckboxEntry('Sine', true);
-    let cosineCheck = createCheckboxEntry('Cosine', true);
+    let sineCheck = createCheckboxEntry('Sinus', true);
+    let cosineCheck = createCheckboxEntry('Kosinus', true);
 
     sineCheck.addEventListener('change', handleSine);
     cosineCheck.addEventListener('change', handleCosine);
