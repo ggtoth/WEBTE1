@@ -124,6 +124,7 @@ function loadBar() {
     if (currentChartType === 'pie'){
         loadLine();
     }
+    currentChartType = 'bar';
     chartContainer.innerHTML = '';
     let gradeData = getGradeDataByGrade(data);
     let chartConfig = {
@@ -431,17 +432,20 @@ window.onload = function () {
 }
 
 function changeOrientation(orientation) {
+    let old = axis;
     if (orientation) {
         axis = 'y';
     } else {
         axis = 'x';
     }
-    if (currentChartType === 'bar') {
-        currentChartType = 'horizontalBar';
-        loadBar();
-    } else if (currentChartType === 'horizontalBar') {
-        currentChartType = 'bar';
-        loadBar();
+    if (old !== axis){
+        if (currentChartType === 'bar') {
+            currentChartType = 'horizontalBar';
+            loadBar();
+        } else if (currentChartType === 'horizontalBar') {
+            currentChartType = 'bar';
+            loadBar();
+        }
     }
 }
 
