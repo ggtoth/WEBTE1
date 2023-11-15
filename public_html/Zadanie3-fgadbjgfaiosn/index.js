@@ -104,8 +104,10 @@ function addChart(container, chartData) {
     if (currentChartType === 'pie') {
         let individualContainer = document.createElement('div');
         individualContainer.classList.add('individual-container');
+
         individualContainer.appendChild(canvas);
         container.appendChild(individualContainer);
+
         return chart;
     }
     container.appendChild(canvas);
@@ -153,8 +155,25 @@ function loadPie() {
     let gradeData = getGradeDataByYear(data);
     console.log(data);
     console.log(gradeData);
+
     for (const index in gradeData) {
-        let chartConfig = getChartConfig(Object.keys(data[index].grades), [gradeData[index]], 'pie');
+        let chartConfig = {
+            type: 'pie',
+            data: {
+                labels: Object.keys(data[index].grades),
+                datasets: [gradeData[index]],
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: gradeData[index].label
+                    }
+                }
+            }
+        };
         addChart(chartContainer, chartConfig);
     }
 }
