@@ -340,43 +340,56 @@ function createSinusDiv(){
     return div;
 }
 
-function changeMode(){
-    if (currentMode === 'grade'){
-        start();
-        document.body.removeChild(mainDiv);
-        mainDiv = sinusModeDiv;
-        document.body.appendChild(mainDiv);
-
-        currentMode = 'sinus';
-    }
-    else if(currentMode === 'sinus'){
-        stop();
+function cleanDiv(){
+    if (currentMode === 'trig'){
         mainDiv.getElementsByTagName('range-slider')[0].clearShadowRoot();
-        document.body.removeChild(mainDiv)
-        mainDiv = gradeModeDiv;
-        document.body.appendChild(mainDiv);
-        currentMode = 'grade';
     }
+    appRoot.removeChild(mainDiv);
 }
 
+function handleGradeMode(){
+    if (currentMode === 'grade') return;
+    gradesLink.classList.add('active');
+    trigLink.classList.remove('active');
+    cleanDiv();
+    mainDiv = gradeModeDiv;
+    appRoot.appendChild(mainDiv);
+
+    currentMode = 'grade';
+}
+
+function handleTrigMode(){
+    if (currentMode === 'trig') return;
+    trigLink.classList.add('active');
+    gradesLink.classList.remove('active');
+    cleanDiv();
+    mainDiv = sinusModeDiv;
+    appRoot.appendChild(mainDiv);
+    currentMode = 'trig';
+}
+
+let appRoot;
 let mainDiv;
 let gradeModeDiv;
 let sinusModeDiv;
 let currentMode;
 let smallScreen = false;
+let gradesLink;
+let trigLink;
 
 window.onload = function () {
     let xmlDOM = parseXMLFile("./z03.xml");
     data = organizeXMLData(xmlDOM);
 
+    appRoot = document.getElementById("appRoot");
+
     let buttonContainer = document.createElement('div');
     buttonContainer.classList.add('button-container');
 
-    let modeButton = createButton('Change mode');
-    modeButton.addEventListener('click', changeMode);
-
-    buttonContainer.appendChild(modeButton);
-    document.body.appendChild(buttonContainer);
+    gradesLink = document.getElementById('grades-link');
+    trigLink = document.getElementById('trig-link');
+    gradesLink.addEventListener('click', handleGradeMode);
+    trigLink.addEventListener('click', handleTrigMode);
 
     smallScreen = window.innerWidth < 500;
     if (smallScreen){
@@ -385,11 +398,11 @@ window.onload = function () {
 
     gradeModeDiv = createChartDiv();
     sinusModeDiv = createSinusDiv();
-
     mainDiv = gradeModeDiv;
-    document.body.appendChild(mainDiv);
-    currentMode = 'grade';
 
+    appRoot.appendChild(mainDiv);
+    currentMode = 'grade';
+    start();
 }
 
 function changeOrientation(){
@@ -402,6 +415,9 @@ function changeOrientation(){
         currentChartType = 'bar';
         axis = 'x';
         loadBar();
+    }
+    else {
+
     }
 }
 
