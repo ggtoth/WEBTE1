@@ -92,16 +92,7 @@ function getChartConfig(labels, datasets, type){
         },
         options: {
             responsive: true,
-            indexAxis: 'y',
             maintainAspectRatio: false,
-            scales: {
-                x: {
-                    beginAtZero: true,
-                },
-                y: {
-                    beginAtZero: true,
-                },
-            },
         }
     }
 }
@@ -128,10 +119,9 @@ let currentChartType;
 
 let chartContainer;
 let data;
+let axis = 'x'
 
 function loadBar(){
-    if (currentChartType === 'bar') return;
-    currentChartType = 'bar';
     chartContainer.innerHTML = '';
     let gradeData = getGradeDataByGrade(data);
     let chartConfig = {
@@ -142,7 +132,7 @@ function loadBar(){
         },
         options: {
             responsive: true,
-            indexAxis: 'x',
+            indexAxis: axis,
             maintainAspectRatio: false,
             scales: {
                 x: {
@@ -209,6 +199,8 @@ function createChartDiv(){
     barButton.addEventListener('click', loadBar);
     pieButton.addEventListener('click', loadPie);
     lineButton.addEventListener('click', loadLine);
+
+    currentChartType = 'bar';
     loadBar();
 
     return div
@@ -371,6 +363,7 @@ let mainDiv;
 let gradeModeDiv;
 let sinusModeDiv;
 let currentMode;
+let smallScreen = false;
 
 window.onload = function () {
     let xmlDOM = parseXMLFile("./z03.xml");
@@ -385,15 +378,39 @@ window.onload = function () {
     buttonContainer.appendChild(modeButton);
     document.body.appendChild(buttonContainer);
 
+    smallScreen = window.innerWidth < 500;
+    if (smallScreen){
+        axis = 'y';
+    }
+
     gradeModeDiv = createChartDiv();
     sinusModeDiv = createSinusDiv();
 
     mainDiv = gradeModeDiv;
     document.body.appendChild(mainDiv);
     currentMode = 'grade';
+
+}
+
+function changeOrientation(){
+    if (currentChartType === 'bar'){
+        currentChartType = 'horizontalBar';
+        axis = 'y';
+        loadBar();
+    }
+    else if (currentChartType === 'horizontalBar'){
+        currentChartType = 'bar';
+        axis = 'x';
+        loadBar();
+    }
 }
 
 window.onresize = function (){
+    let old = smallScreen;
+    smallScreen = window.innerWidth < 500;
+    if (old !== smallScreen){
+        changeOrientation();
+    }
     for (let id in Chart.instances) {
         Chart.instances[id].resize();
     }
