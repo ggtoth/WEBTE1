@@ -2,7 +2,7 @@ class RangeSlider extends HTMLElement {
     constructor() {
         super();
 
-        this.attachShadow({ mode: 'open'});
+        this.attachShadow({mode: 'open'});
     }
 
     connectedCallback() {
@@ -22,7 +22,7 @@ class RangeSlider extends HTMLElement {
         this.inputTypeRange.type = 'range';
         this.inputTypeRange.className = 'custom-range';
         this.inputTypeRange.min = this.min;
-        this.inputTypeRange.max =  this.max;
+        this.inputTypeRange.max = this.max;
         this.inputTypeRange.step = 0.01;
         this.inputTypeRange.value = this.value;
 
@@ -109,34 +109,34 @@ class RangeSlider extends HTMLElement {
         this.update();
     }
 
-    handleNumber(){
+    handleNumber() {
         this.value = this.inputTypeNumber.value;
-        if(this.value > this.max){
+        if (this.value > this.max) {
             this.value = this.max;
-        }
-        else if(this.value < this.min){
+        } else if (this.value < this.min) {
             this.value = this.min
         }
         this.update();
     }
-    handleRange(){
+
+    handleRange() {
         this.value = this.inputTypeRange.value;
         this.update();
     }
 
-    update(){
+    update() {
         this.inputTypeRange.value = this.value;
         this.inputTypeNumber.value = this.value;
         this.rangeSpan.innerText = this.value;
 
         const val = (this.value - this.min) / (this.max - this.min);
-        this.rangeSpan.style.left =  `calc(${val * 100}% - ${(val * 50) - 25}px)`;
+        this.rangeSpan.style.left = `calc(${val * 100}% - ${(val * 50) - 25}px)`;
 
         this.broadcast();
     }
 
-    broadcast(){
-        this.dispatchEvent(new CustomEvent('valueChange', { detail: { value: this.value } }))
+    broadcast() {
+        this.dispatchEvent(new CustomEvent('valueChange', {detail: {value: this.value}}))
     }
 
     clearShadowRoot() {

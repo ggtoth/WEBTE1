@@ -5,8 +5,7 @@ function parseXMLFile(filename) {
 
     if (xhr.status === 200) {
         const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(xhr.responseText, 'application/xml');
-        return xmlDoc;
+        return parser.parseFromString(xhr.responseText, 'application/xml');
     } else {
         console.error('Error fetching the XML file. Status:', xhr.status);
         return null;
@@ -48,13 +47,12 @@ const gradeColors = [
     'rgba(128, 128, 128, 0.7)', // Add more colors as needed
 ];
 
-function getGradeDataByGrade(data){
+function getGradeDataByGrade(data) {
     let gradeData = [];
 
-    let i = 0;
-    for (const key of Object.keys(data[0].grades)){
+    for (const key of Object.keys(data[0].grades)) {
         let helper = [];
-        for (const element of data){
+        for (const element of data) {
             helper.push(element.grades[key]);
         }
         gradeData.push({
@@ -66,12 +64,11 @@ function getGradeDataByGrade(data){
     return gradeData;
 }
 
-function getGradeDataByYear(data){
+function getGradeDataByYear(data) {
     let gradeData = [];
-    let i = 0;
-    for(const element of data){
+    for (const element of data) {
         let helper = [];
-        for (const key of Object.keys(data[0].grades)){
+        for (const key of Object.keys(data[0].grades)) {
             helper.push(element.grades[key]);
         }
         gradeData.push({
@@ -83,7 +80,7 @@ function getGradeDataByYear(data){
     return gradeData;
 }
 
-function getChartConfig(labels, datasets, type){
+function getChartConfig(labels, datasets, type) {
     return {
         type: type,
         data: {
@@ -97,14 +94,14 @@ function getChartConfig(labels, datasets, type){
     }
 }
 
-function addChart(container, chartData){
+function addChart(container, chartData) {
     let canvas = document.createElement('canvas');
     canvas.classList.add('chart-canvas');
 
     const ctx = canvas.getContext('2d');
     let chart = new Chart(ctx, chartData);
 
-    if(currentChartType === 'pie'){
+    if (currentChartType === 'pie') {
         let individualContainer = document.createElement('div');
         individualContainer.classList.add('individual-container');
         individualContainer.appendChild(canvas);
@@ -121,7 +118,7 @@ let chartContainer;
 let data;
 let axis = 'x'
 
-function loadBar(){
+function loadBar() {
     chartContainer.innerHTML = '';
     let gradeData = getGradeDataByGrade(data);
     let chartConfig = {
@@ -147,19 +144,19 @@ function loadBar(){
     addChart(chartContainer, chartConfig);
 }
 
-function loadPie(){
+function loadPie() {
     currentChartType = 'pie';
     chartContainer.innerHTML = '';
     let gradeData = getGradeDataByYear(data);
     console.log(data);
     console.log(gradeData);
-    for (const index in gradeData){
+    for (const index in gradeData) {
         let chartConfig = getChartConfig(Object.keys(data[index].grades), [gradeData[index]], 'pie');
         addChart(chartContainer, chartConfig);
     }
 }
 
-function loadLine(){
+function loadLine() {
     currentChartType = 'line';
     chartContainer.innerHTML = '';
     let gradeData = getGradeDataByGrade(data);
@@ -167,14 +164,14 @@ function loadLine(){
     addChart(chartContainer, chartConfig);
 }
 
-function createButton(value){
+function createButton(value) {
     let button = document.createElement('input');
     button.type = 'button';
     button.value = value;
     return button;
 }
 
-function createChartDiv(){
+function createChartDiv() {
     let div = document.createElement('div');
 
     chartContainer = document.createElement('div');
@@ -210,7 +207,7 @@ function createChartDiv(){
 
 let trigChart;
 
-function createSinusGraph(container){
+function createSinusGraph(container) {
     container.innerHTML = '';
     let chartConfig = getChartConfig([], serverData, 'line');
     trigChart = addChart(container, chartConfig);
@@ -231,7 +228,7 @@ let serverData = [
 
 var eventSource = new EventSource(serverUrl);
 
-eventSource.onmessage = function(event) {
+eventSource.onmessage = function (event) {
     // Process the received data
     if (!stopped) {
         let responseData = JSON.parse(event.data);
@@ -242,12 +239,13 @@ eventSource.onmessage = function(event) {
     }
 }
 
-eventSource.onerror = function(event) {
+eventSource.onerror = function (event) {
     console.error("Error occurred:", event);
 };
 
 let absoluteStop = false;
-function fullStop(){
+
+function fullStop() {
     stop();
     absoluteStop = true;
 
@@ -257,35 +255,38 @@ function fullStop(){
     trigChart.update();
 }
 
-function stop(){
+function stop() {
     stopped = true;
 }
 
-function start(){
+function start() {
     if (absoluteStop) return;
     stopped = false;
 }
 
 let amplitude = 1;
-function changeAmplitude(event){
+
+function changeAmplitude(event) {
     amplitude = event.detail.value;
 }
 
 let currentSine = false;
-function handleSine(){
+
+function handleSine() {
     currentSine = !currentSine;
     trigChart.data.datasets[0].hidden = currentSine;
     trigChart.update();
 }
 
 let currentCosine = false;
-function handleCosine(){
+
+function handleCosine() {
     currentCosine = !currentCosine;
     trigChart.data.datasets[1].hidden = currentCosine;
     trigChart.update();
 }
 
-function createCheckboxEntry(labelText, checked){
+function createCheckboxEntry(labelText, checked) {
     let container = document.createElement('div');
     container.classList.add('checkbox-entry');
 
@@ -304,7 +305,7 @@ function createCheckboxEntry(labelText, checked){
     return container;
 }
 
-function createSinusDiv(){
+function createSinusDiv() {
     let div = document.createElement('div');
 
     let sinusContainer = document.createElement('div');
@@ -344,14 +345,14 @@ function createSinusDiv(){
     return div;
 }
 
-function cleanDiv(){
-    if (currentMode === 'trig'){
+function cleanDiv() {
+    if (currentMode === 'trig') {
         mainDiv.getElementsByTagName('range-slider')[0].clearShadowRoot();
     }
     appRoot.removeChild(mainDiv);
 }
 
-function handleGradeMode(){
+function handleGradeMode() {
     if (currentMode === 'grade') return;
     gradesLink.classList.add('active');
     trigLink.classList.remove('active');
@@ -362,7 +363,7 @@ function handleGradeMode(){
     currentMode = 'grade';
 }
 
-function handleTrigMode(){
+function handleTrigMode() {
     if (currentMode === 'trig') return;
     trigLink.classList.add('active');
     gradesLink.classList.remove('active');
@@ -396,7 +397,7 @@ window.onload = function () {
     trigLink.addEventListener('click', handleTrigMode);
 
     smallScreen = window.innerWidth < 500;
-    if (smallScreen){
+    if (smallScreen) {
         axis = 'y';
     }
 
@@ -409,27 +410,25 @@ window.onload = function () {
     start();
 }
 
-function changeOrientation(orientation){
-    if (orientation){
+function changeOrientation(orientation) {
+    if (orientation) {
         axis = 'y';
-    }
-    else {
+    } else {
         axis = 'x';
     }
-    if (currentChartType === 'bar'){
+    if (currentChartType === 'bar') {
         currentChartType = 'horizontalBar';
         loadBar();
-    }
-    else if (currentChartType === 'horizontalBar'){
+    } else if (currentChartType === 'horizontalBar') {
         currentChartType = 'bar';
         loadBar();
     }
 }
 
-window.onresize = function (){
+window.onresize = function () {
     let old = smallScreen;
     smallScreen = window.innerWidth < 500;
-    if (old !== smallScreen){
+    if (old !== smallScreen) {
         changeOrientation(smallScreen);
     }
     for (let id in Chart.instances) {
