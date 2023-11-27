@@ -41,13 +41,18 @@
 <div class="modal hidden" id="modal">
     <div class="modal-inner">
         <div class="modal-content" id="modal-content">
-            <img src="" alt="" class="modal-image" id="modal-image">
+            <div class="modal-navigation">
+                <button type="button" class="custom-button" id="modal-prev" value="">Prev</button>
+                <img src="" alt="" class="modal-image" id="modal-image">
+                <button type="button" class="custom-button" id="modal-next" value="">Next</button>
+            </div>
+            <button type="button" class="custom-button" id="modal-autoplay" value="">Toggle Autoplay</button>
             <h2 id="modal-title"></h2>
             <p id="modal-description"></p>
             <p id="modal-date"></p>
             <p id="modal-coordinates"></p>
         </div>
-        <div class="exit-button" id="modal-close-button">
+        <div class="exit-button" id="modal-close">
             <span>&times;</span>
         </div>
     </div>
