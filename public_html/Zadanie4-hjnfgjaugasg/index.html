@@ -32,6 +32,25 @@
     </div>
 </nav>
 
-<div class="container" id="appRoot"></div>
+<div class="page-content" id="page-content">
+    <div class="gallery-container" id="gallery">
+        <input type="text" placeholder="Write Keyword" id="gallery-filter">
+        <div class="images-container" id="images-container"></div>
+    </div>
+</div>
+<div class="modal hidden" id="modal">
+    <div class="modal-inner">
+        <div class="modal-content" id="modal-content">
+            <img src="" alt="" class="modal-image" id="modal-image">
+            <h2 id="modal-title"></h2>
+            <p id="modal-description"></p>
+            <p id="modal-date"></p>
+            <p id="modal-coordinates"></p>
+        </div>
+        <div class="exit-button" id="modal-close-button">
+            <span>&times;</span>
+        </div>
+    </div>
+</div>
 </body>
 </html>
