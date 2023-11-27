@@ -71,6 +71,7 @@ function removeModal(event){
     let modal = document.getElementById('modal');
     Array.from(document.body.children).forEach(item => item !== modal && item.classList.remove('blur'));
     modal.classList.add('hidden');
+    handleAutoplay();
 }
 
 function decrementImage(){
