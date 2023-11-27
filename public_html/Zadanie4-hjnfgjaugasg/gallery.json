@@ -1,0 +1,104 @@
+{
+  "galleryImages": [
+    {
+      "relativePath": "./images/IMG_20220907_095043094_HDR.jpg",
+      "date": "2022-09-07",
+      "title": "Velky Choc Mountaintop 1",
+      "description": "My uncle posing on Velky Choc.",
+      "gpsCoordinates": {
+        "latitude": 49.15108299524753,
+        "longitude": 19.342601511369736
+      }
+    },
+    {
+      "relativePath": "./images/IMG_20220907_101702902.jpg",
+      "date": "2022-09-07",
+      "title": "Velky Choc Mountaintop 2",
+      "description": "View from mountaintop.",
+      "gpsCoordinates": {
+        "latitude": 49.15108299524753,
+        "longitude": 19.342601511369736
+      }
+    },
+    {
+      "relativePath": "./images/IMG_20220911_140052652.jpg",
+      "date": "2022-09-11",
+      "title": "Dachstein Wiener",
+      "description": "Wiener from Dachstein Panoramarestaurant",
+      "gpsCoordinates": {
+        "latitude": 47.467975398050605,
+        "longitude": 13.626249107174631
+      }
+    },
+    {
+      "relativePath": "./images/IMG_20220911_150543332_HDR.jpg",
+      "date": "2022-09-11",
+      "title": "Icecave 1",
+      "description": "Picture from Eispalast Dachstein",
+      "gpsCoordinates": {
+        "latitude": 47.46932644038085,
+        "longitude": 13.62500056217863
+      }
+    },
+    {
+      "relativePath": "./images/IMG_20220911_150632208.jpg",
+      "date": "2022-09-11",
+      "title": "Icecave 2",
+      "description": "Picture from Eispalast Dachstein",
+      "gpsCoordinates": {
+        "latitude": 47.46932644038085,
+        "longitude": 13.62500056217863
+      }
+    },
+    {
+      "relativePath": "./images/IMG_20220911_150512534.jpg",
+      "date": "2022-09-11",
+      "title": "Icecave 3",
+      "description": "Picture from Eispalast Dachstein",
+      "gpsCoordinates": {
+        "latitude": 47.46932644038085,
+        "longitude": 13.62500056217863
+      }
+    },
+    {
+      "relativePath": "./images/IMG_20220912_140526997_HDR.jpg",
+      "date": "2022-09-12",
+      "title": "Planai Schladming Bergbahn/Hill climber",
+      "description": "Going up the mountain.",
+      "gpsCoordinates": {
+        "latitude": 47.380270515375855,
+        "longitude": 13.711132315786402
+      }
+    },
+    {
+      "relativePath": "./images/IMG_20220912_143817778.jpg",
+      "date": "2022-09-12",
+      "title": "Planai 1",
+      "description": "View from mountaintop.",
+      "gpsCoordinates": {
+        "latitude": 47.369090881400645,
+        "longitude": 13.726291356849782
+      }
+    },
+    {
+      "relativePath": "./images/IMG_20220912_143823579.jpg",
+      "date": "2022-09-12",
+      "title": "Planai 2",
+      "description": "View from mountaintop.",
+      "gpsCoordinates": {
+        "latitude": 47.369090881400645,
+        "longitude": 13.726291356849782
+      }
+    },
+    {
+      "relativePath": "./images/IMG_20230313_175631467.jpg",
+      "date": "2023-03-13",
+      "title": "Nivy Sunset",
+      "description": "View from mountaintop.",
+      "gpsCoordinates": {
+        "latitude": 48.145419253633506,
+        "longitude": 17.13241249352025
+      }
+    }
+  ]
+}
