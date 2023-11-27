@@ -25,11 +25,17 @@ function filterHandle(event){
 }
 
 function getElementByRelativePath(relativePath) {
-    const foundElement = data.galleryImages.find(image => image.relativePath === relativePath);
+    const foundElement = currentSelection.galleryImages.find(image => image.relativePath === relativePath);
     return foundElement || null;
 }
 
-function loadModal(modal, imageData){
+function getIndexByRelativePath(relativePath) {
+    const index = currentSelection.galleryImages.findIndex(image => image.relativePath === relativePath);
+    return index !== -1 ? index : null;
+}
+
+
+function updateModal(imageData){
     let image = document.getElementById('modal-image');
     image.setAttribute('src', imageData.relativePath);
     image.setAttribute('alt', imageData.description);
@@ -53,7 +59,7 @@ function showModal(event){
     let modal = document.getElementById('modal');
     Array.from(document.body.children).forEach(item => item !== modal && item.classList.add('blur'));
     let imageData = getElementByRelativePath(event.currentTarget.getAttribute('src'));
-    loadModal(modal, imageData);
+    updateModal(imageData);
     modal.classList.remove('hidden');
 }
 
@@ -63,13 +69,46 @@ function removeModal(event){
     modal.classList.add('hidden');
 }
 
+function decrementImage(){
+    let image = document.getElementById('modal-image');
+    let index = getIndexByRelativePath(image.getAttribute('src'))
+    index = index <= 0 ? currentSelection.galleryImages.length - 1 : index - 1;
+    updateModal(currentSelection.galleryImages[index]);
+}
+
+function incrementImage(){
+    let image = document.getElementById('modal-image');
+    console.log(image);
+    let index = getIndexByRelativePath(image.getAttribute('src'))
+    index = index >= currentSelection.galleryImages.length - 1 ? 0 : index + 1;
+    updateModal(currentSelection.galleryImages[index]);
+}
+
+function handlePrev(){
+    decrementImage();
+}
+
+function handleNext() {
+    incrementImage();
+}
+
+function handleAutoplay(){
+    autoPlayToggle = !autoPlayToggle;
+    if (autoPlayToggle){
+        autoPlayIntervalHandler = setInterval(incrementImage, 3000);
+    }
+    else {
+        clearInterval(autoPlayIntervalHandler);
+    }
+}
+
 function loadGallery(){
     let filter = document.getElementById('gallery-filter');
     filter.addEventListener('input', filterHandle);
 
     let imageContainer = document.getElementById('images-container');
 
-    data.galleryImages.forEach(function(image){
+    currentSelection.galleryImages.forEach(function(image){
        let imageFrame = document.createElement('div');
        imageFrame.classList.add('thumbnail');
 
@@ -85,21 +124,30 @@ function loadGallery(){
 }
 
 let data;
+let currentSelection
+let autoPlayToggle = false;
+let autoPlayIntervalHandler;
 window.onload = function(){
-    document.querySelectorAll('.navbar-nav .nav-item')
-        .forEach(function (li){
-            li.addEventListener('click', handleNavClick);
-    });
-
-    let closeButton = document.getElementById('modal-close-button');
-    closeButton.addEventListener('click', removeModal);
-
     fetch('./gallery.json')
         .then(response => response.json())
-        .then(file => {
-            data = file;
-            console.log(data);
+        .then(content => {
+            data = content;
+            currentSelection = content;
             loadGallery();
         })
         .catch(error => console.error('Error fetching JSON:', error));
+
+    document.querySelectorAll('.navbar-nav .nav-item')
+        .forEach(function (li){
+            li.addEventListener('click', handleNavClick);
+        });
+
+    let closeButton = document.getElementById('modal-close');
+    let prevButton = document.getElementById('modal-prev');
+    let nextButton = document.getElementById('modal-next');
+    let autoPlayButton = document.getElementById('modal-autoplay');
+    closeButton.addEventListener('click', removeModal);
+    prevButton.addEventListener('click', handlePrev);
+    nextButton.addEventListener('click', handleNext);
+    autoPlayButton.addEventListener('click', handleAutoplay);
 }
