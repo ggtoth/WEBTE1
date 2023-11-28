@@ -12,16 +12,22 @@ function removeActiveClass() {
 function handleNavClick(event){
     removeActiveClass();
     event.currentTarget.classList.add('active');
+
     removeModal();
+    currentSelection = data.galleryImages;
+
     let gallery = document.getElementById('gallery-view');
     let map = document.getElementById('map-view');
+
     if (event.currentTarget === document.getElementById('gallery-link')){
         gallery.classList.remove('hidden');
         map.classList.add('hidden');
+        loadGallery();
     }
     else if(event.currentTarget === document.getElementById('map-link')){
         gallery.classList.add('hidden');
         map.classList.remove('hidden');
+        loadMap();
     }
 }
 
@@ -40,12 +46,12 @@ function filterHandle(event){
 }
 
 function getElementByRelativePath(relativePath) {
-    const foundElement = currentSelection.galleryImages.find(image => image.relativePath === relativePath);
+    const foundElement = currentSelection.find(image => image.relativePath === relativePath);
     return foundElement || null;
 }
 
 function getIndexByRelativePath(relativePath) {
-    const index = currentSelection.galleryImages.findIndex(image => image.relativePath === relativePath);
+    const index = currentSelection.findIndex(image => image.relativePath === relativePath);
     return index !== -1 ? index : null;
 }
 
@@ -70,38 +76,61 @@ function updateModal(imageData){
     coords.innerText = `${truncateDecimal(imageData.gpsCoordinates.latitude, 3)}°N, ${truncateDecimal(imageData.gpsCoordinates.longitude, 3)}°E`
 }
 
-function showModal(event){
+function showModal(){
     let modal = document.getElementById('modal');
-    Array.from(document.body.children).forEach(item => item !== modal && item.classList.add('blur'));
-    let imageData = getElementByRelativePath(event.currentTarget.getAttribute('src'));
-    updateModal(imageData);
-    modal.classList.remove('hidden');
     let cover = document.getElementById('cover');
+
+    modal.classList.remove('hidden');
     cover.classList.remove('hidden')
+
+    Array.from(document.body.children).forEach(item => item !== modal && item.classList.add('blur'));
 }
 
 function removeModal(){
     let modal = document.getElementById('modal');
-    Array.from(document.body.children).forEach(item => item !== modal && item.classList.remove('blur'));
-    modal.classList.add('hidden');
-    if(autoPlayToggle) handleAutoplay();
     let cover = document.getElementById('cover');
+
+    modal.classList.add('hidden');
     cover.classList.add('hidden')
+
+    Array.from(document.body.children).forEach(item => item !== modal && item.classList.remove('blur'));
+
+    if(autoPlayToggle) handleAutoplay();
+}
+
+function handleGalleryClick(event){
+    let imageData = getElementByRelativePath(event.currentTarget.getAttribute('src'));
+    updateModal(imageData);
+    showModal();
+}
+
+function restrictSelectionByCoordinate(lat, long){
+    currentSelection = [];
+    data.galleryImages.forEach(function (item){
+        if(item.gpsCoordinates.latitude === lat && item.gpsCoordinates.longitude === long){
+            currentSelection.push(item);
+        }
+    });
+}
+
+function handleMarkerClick(event){
+    restrictSelectionByCoordinate(event.latlng.lat, event.latlng.lng)
+    updateModal(currentSelection[0]);
+    showModal();
 }
 
 function decrementImage(){
     let image = document.getElementById('modal-image');
     let index = getIndexByRelativePath(image.getAttribute('src'))
-    index = index <= 0 ? currentSelection.galleryImages.length - 1 : index - 1;
-    updateModal(currentSelection.galleryImages[index]);
+    index = index <= 0 ? currentSelection.length - 1 : index - 1;
+    updateModal(currentSelection[index]);
 }
 
 function incrementImage(){
     let image = document.getElementById('modal-image');
-    console.log(image);
     let index = getIndexByRelativePath(image.getAttribute('src'))
-    index = index >= currentSelection.galleryImages.length - 1 ? 0 : index + 1;
-    updateModal(currentSelection.galleryImages[index]);
+    index = index >= currentSelection.length - 1 ? 0 : index + 1;
+    updateModal(currentSelection[index]);
 }
 
 function handlePrev(){
@@ -127,8 +156,9 @@ function loadGallery(){
     filter.addEventListener('input', filterHandle);
 
     let imageContainer = document.getElementById('images-container');
+    imageContainer.innerHTML = '';
 
-    currentSelection.galleryImages.forEach(function(image){
+    data.galleryImages.forEach(function(image){
        let imageFrame = document.createElement('div');
        imageFrame.classList.add('thumbnail');
 
@@ -136,7 +166,7 @@ function loadGallery(){
        imageElement.src = image.relativePath;
        imageElement.alt = `${image.title} ${image.description}`;
        imageElement.classList.add('thumbnail-image');
-       imageElement.addEventListener('click', showModal);
+       imageElement.addEventListener('click', handleGalleryClick);
 
        imageFrame.appendChild(imageElement);
        imageContainer.appendChild(imageFrame);
@@ -148,29 +178,29 @@ function loadMap(){
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
-    markers = [];
+
+    let markerGroup = new L.MarkerClusterGroup();
     data.galleryImages.forEach(function (item){
-        markers.push(L.marker([item.gpsCoordinates.latitude, item.gpsCoordinates.longitude]).addTo(map));
+        let marker = L.marker([item.gpsCoordinates.latitude, item.gpsCoordinates.longitude])
+        marker.addEventListener('click', handleMarkerClick);
+        markerGroup.addLayer(marker);
     });
+    map.addLayer(markerGroup);
 }
 
 let data;
 let currentSelection
 let autoPlayToggle = false;
 let autoPlayIntervalHandler;
-let markers = [];
 window.onload = function(){
     fetch('./gallery.json')
         .then(response => response.json())
         .then(content => {
             data = content;
-            currentSelection = content;
-            //let gallery = document.getElementById('gallery-view');
-            //gallery.classList.remove('hidden');
-            let map = document.getElementById('map-view');
-            map.classList.remove('hidden')
+            currentSelection = content.galleryImages;
+            let gallery = document.getElementById('gallery-view');
+            gallery.classList.remove('hidden');
             loadGallery();
-            loadMap();
         })
         .catch(error => console.error('Error fetching JSON:', error));
 
