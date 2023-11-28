@@ -106,17 +106,19 @@ function handleGalleryClick(event){
     showModal();
 }
 
-function restrictSelectionByCoordinate(lat, long){
+function restrictSelectionByCoordinate(marker){
     currentSelection = [];
+    let imageOfMarker = mapMarkers.find(item => item["marker"] === marker)["image"];
     data.galleryImages.forEach(function (item){
-        if(item.gpsCoordinates.latitude === lat && item.gpsCoordinates.longitude === long){
+        if(item.gpsCoordinates.latitude === imageOfMarker.gpsCoordinates.latitude
+            && item.gpsCoordinates.longitude === imageOfMarker.gpsCoordinates.longitude){
             currentSelection.push(item);
         }
     });
 }
 
 function handleMarkerClick(event){
-    restrictSelectionByCoordinate(event.latlng.lat, event.latlng.lng)
+    restrictSelectionByCoordinate(event.target);
     updateModal(currentSelection[0]);
     showModal();
 }
@@ -210,6 +212,10 @@ function loadMap(){
         let marker = L.marker([item.gpsCoordinates.latitude, item.gpsCoordinates.longitude])
         marker.addEventListener('click', handleMarkerClick);
         markerGroup.addLayer(marker);
+        mapMarkers.push({
+            "marker": marker,
+            "image": item
+        })
     });
     map.addLayer(markerGroup);
 }
@@ -218,6 +224,7 @@ let data;
 let currentSelection
 let autoPlayToggle = false;
 let autoPlayIntervalHandler;
+let mapMarkers = [];
 window.onload = function(){
     fetch('./gallery.json')
         .then(response => response.json())
