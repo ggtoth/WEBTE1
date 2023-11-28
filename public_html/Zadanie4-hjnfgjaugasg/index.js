@@ -33,15 +33,18 @@ function handleNavClick(event){
 
 function filterHandle(event){
     let sstring = event.target.value.toLowerCase();
-    let photos = Array.from(document.querySelectorAll('.thumbnail-image'));
+    currentSelection = [];
 
-    photos.forEach(photo => {
-        if (!photo.alt.toLowerCase().includes(sstring)) {
-            photo.parentElement.style.display = "none";
-
-        } else {
-            photo.parentElement.style = "";
-        }
+    galleryImages.forEach(function(item){
+       if (item["image"].title.toLowerCase().includes(sstring)
+           || item["image"].description.toLowerCase().includes(sstring))
+       {
+           item["galleryElement"].parentElement.style.display = "";
+           currentSelection.push(item["image"]);
+       }
+       else{
+           item["galleryElement"].parentElement.style.display = "none";
+       }
     });
 }
 
@@ -101,18 +104,18 @@ function removeModal(){
 }
 
 function handleGalleryClick(event){
-    let imageData = getElementByRelativePath(event.currentTarget.getAttribute('src'));
-    updateModal(imageData);
+    let imageData = galleryImages.find(item => item["galleryElement"] === event.currentTarget);
+    updateModal(imageData["image"]);
     showModal();
 }
 
 function restrictSelectionByCoordinate(marker){
     currentSelection = [];
     let imageOfMarker = mapMarkers.find(item => item["marker"] === marker)["image"];
-    data.galleryImages.forEach(function (item){
-        if(item.gpsCoordinates.latitude === imageOfMarker.gpsCoordinates.latitude
-            && item.gpsCoordinates.longitude === imageOfMarker.gpsCoordinates.longitude){
-            currentSelection.push(item);
+    galleryImages.forEach(function (item){
+        if(item["image"].gpsCoordinates.latitude === imageOfMarker.gpsCoordinates.latitude
+            && item["image"].gpsCoordinates.longitude === imageOfMarker.gpsCoordinates.longitude){
+            currentSelection.push(item["image"]);
         }
     });
 }
@@ -192,12 +195,16 @@ function loadGallery(){
 
        let imageElement = document.createElement('img');
        imageElement.src = image.relativePath;
-       imageElement.alt = `${image.title} ${image.description}`;
+       imageElement.alt = `${image.title} - ${image.description}`;
        imageElement.classList.add('thumbnail-image');
        imageElement.addEventListener('click', handleGalleryClick);
 
        imageFrame.appendChild(imageElement);
        imageContainer.appendChild(imageFrame);
+       galleryImages.push({
+           "galleryElement": imageElement,
+           "image": image
+       });
     });
 }
 
@@ -225,6 +232,7 @@ let currentSelection
 let autoPlayToggle = false;
 let autoPlayIntervalHandler;
 let mapMarkers = [];
+let galleryImages = [];
 window.onload = function(){
     fetch('./gallery.json')
         .then(response => response.json())
