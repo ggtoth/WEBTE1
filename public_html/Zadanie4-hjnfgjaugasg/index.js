@@ -228,7 +228,6 @@ function handleRoute(){
         routeControl.on('routesfound', function (event) {
             let totalDistance = event.routes[0].summary.totalDistance / 1000;
 
-            console.log('Total Distance: ' + totalDistance + ' meters');
             let distanceSpan = document.getElementById('distance-span');
             distanceSpan.innerText = `Total distance: ${totalDistance} km`;
             distanceSpan.classList.remove('hidden');
