@@ -13,8 +13,8 @@ function handleNavClick(event){
     removeActiveClass();
     event.currentTarget.classList.add('active');
     removeModal();
-    let gallery = document.getElementById('gallery');
-    let map = document.getElementById('map');
+    let gallery = document.getElementById('gallery-view');
+    let map = document.getElementById('map-view');
     if (event.currentTarget === document.getElementById('gallery-link')){
         gallery.classList.remove('hidden');
         map.classList.add('hidden');
@@ -143,19 +143,34 @@ function loadGallery(){
     });
 }
 
+function loadMap(){
+    let map = L.map('map').setView([51.505, -0.09], 4);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    markers = [];
+    data.galleryImages.forEach(function (item){
+        markers.push(L.marker([item.gpsCoordinates.latitude, item.gpsCoordinates.longitude]).addTo(map));
+    });
+}
+
 let data;
 let currentSelection
 let autoPlayToggle = false;
 let autoPlayIntervalHandler;
+let markers = [];
 window.onload = function(){
     fetch('./gallery.json')
         .then(response => response.json())
         .then(content => {
             data = content;
             currentSelection = content;
+            //let gallery = document.getElementById('gallery-view');
+            //gallery.classList.remove('hidden');
+            let map = document.getElementById('map-view');
+            map.classList.remove('hidden')
             loadGallery();
-            let gallery = document.getElementById('gallery');
-            gallery.classList.remove('hidden');
+            loadMap();
         })
         .catch(error => console.error('Error fetching JSON:', error));
 

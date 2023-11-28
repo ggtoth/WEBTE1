@@ -10,6 +10,12 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -33,11 +39,13 @@
 </nav>
 
 <div class="page-content" id="page-content">
-    <div class="gallery-container hidden" id="gallery">
+    <div class="gallery-view-container hidden" id="gallery-view">
         <input type="text" placeholder="Write Keyword" id="gallery-filter">
         <div class="images-container" id="images-container"></div>
     </div>
-    <div class="map-container hidden" id="map"></div>
+    <div class="map-view-container hidden" id="map-view">
+        <div id="map"></div>
+    </div>
 </div>
 <div class="cover hidden" id="cover"></div>
 <div class="modal hidden" id="modal">
