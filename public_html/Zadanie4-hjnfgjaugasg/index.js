@@ -77,6 +77,8 @@ function updateModal(imageData){
 }
 
 function showModal(){
+    currentSelection.length === 1 ? hideNavigation() : showNavigation();
+
     let modal = document.getElementById('modal');
     let cover = document.getElementById('cover');
 
@@ -149,6 +151,30 @@ function handleAutoplay(){
     else {
         clearInterval(autoPlayIntervalHandler);
     }
+}
+
+function hideNavigation(){
+    let prevButton = document.getElementById('modal-prev');
+    let nextButton = document.getElementById('modal-next');
+    let autoPlayButton = document.getElementById('modal-autoplay');
+    let modalImage = document.getElementById('modal-image');
+
+    prevButton.style.display = 'none';
+    nextButton.style.display = 'none';
+    autoPlayButton.style.display = 'none';
+    modalImage.style.width = '90%';
+}
+
+function showNavigation(){
+    let prevButton = document.getElementById('modal-prev');
+    let nextButton = document.getElementById('modal-next');
+    let autoPlayButton = document.getElementById('modal-autoplay');
+    let modalImage = document.getElementById('modal-image');
+
+    prevButton.style.display = '';
+    nextButton.style.display = '';
+    autoPlayButton.style.display = '';
+    modalImage.style.width = '';
 }
 
 function loadGallery(){
