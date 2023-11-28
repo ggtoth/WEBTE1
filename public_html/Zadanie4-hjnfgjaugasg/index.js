@@ -10,29 +10,47 @@ function removeActiveClass() {
 }
 
 function handleNavClick(event){
-    removeActiveClass();
-    event.currentTarget.classList.add('active');
-
-    removeModal();
     currentSelection = data.galleryImages;
 
-    let gallery = document.getElementById('gallery-view');
-    let map = document.getElementById('map-view');
-
     if (event.currentTarget === document.getElementById('gallery-link')){
-        gallery.classList.remove('hidden');
-        map.classList.add('hidden');
-        loadGallery();
+        changeToGallery(event.currentTarget);
     }
     else if(event.currentTarget === document.getElementById('map-link')){
-        gallery.classList.add('hidden');
-        map.classList.remove('hidden');
-        loadMap();
+        changeToMap(event.currentTarget);
     }
 }
 
-function filterHandle(event){
-    let sstring = event.target.value.toLowerCase();
+function hideContent(){
+    let content = document.getElementById("page-content");
+    Array.from(content.children).forEach(function (item){
+        item.classList.add('hidden');
+    });
+}
+
+function changeToGallery(link){
+    removeActiveClass();
+    link.classList.add('active');
+    removeModal();
+    hideContent();
+
+    let gallery = document.getElementById('gallery-view');
+    gallery.classList.remove('hidden');
+    loadGallery();
+    updateFilter(document.getElementById('gallery-filter').value);
+}
+
+function changeToMap(link){
+    removeActiveClass();
+    link.classList.add('active');
+    removeModal();
+    hideContent();
+
+    let map = document.getElementById('map-view');
+    map.classList.remove('hidden');
+    loadMap();
+}
+
+function updateFilter(sstring){
     currentSelection = [];
 
     galleryImages.forEach(function(item){
@@ -48,9 +66,13 @@ function filterHandle(event){
     });
 }
 
-function getElementByRelativePath(relativePath) {
-    const foundElement = currentSelection.find(image => image.relativePath === relativePath);
-    return foundElement || null;
+function filterHandle(event){
+    if (showingLocationGallery){
+        showingLocationGallery = false;
+        currentSelection = data.galleryImages;
+        loadGallery();
+    }
+    updateFilter(event.target.value);
 }
 
 function getIndexByRelativePath(relativePath) {
@@ -112,7 +134,7 @@ function handleGalleryClick(event){
 function restrictSelectionByCoordinate(marker){
     currentSelection = [];
     let imageOfMarker = mapMarkers.find(item => item["marker"] === marker)["image"];
-    galleryImages.forEach(function (item){
+    mapMarkers.forEach(function (item){
         if(item["image"].gpsCoordinates.latitude === imageOfMarker.gpsCoordinates.latitude
             && item["image"].gpsCoordinates.longitude === imageOfMarker.gpsCoordinates.longitude){
             currentSelection.push(item["image"]);
@@ -121,9 +143,17 @@ function restrictSelectionByCoordinate(marker){
 }
 
 function handleMarkerClick(event){
+    currentSelection = data.galleryImages
     restrictSelectionByCoordinate(event.target);
-    updateModal(currentSelection[0]);
-    showModal();
+    if (currentSelection.length === 1){
+        updateModal(currentSelection[0]);
+        showModal();
+    }
+    else{
+        showingLocationGallery = true;
+        document.getElementById('gallery-filter').value = '';
+        changeToGallery(document.getElementById('gallery-link'));
+    }
 }
 
 function decrementImage(){
@@ -182,14 +212,35 @@ function showNavigation(){
     modalImage.style.width = '';
 }
 
+function handleRoute(){
+    routeToggle = !routeToggle;
+    if (routeToggle){
+        let waypoints = [];
+        mapMarkers.forEach(function (item){
+           waypoints.push([item["image"].gpsCoordinates.latitude, item["image"].gpsCoordinates.longitude])
+        });
+        routeControl = L.Routing.control({
+            waypoints: waypoints,
+            routeWhileDragging: true,
+            createMarker: function (waypointIndex, waypoint, numberOfWaypoints) {
+                return null;
+            }
+        }).addTo(map);
+    }
+    else{
+        map.removeControl(routeControl);
+    }
+}
+
 function loadGallery(){
     let filter = document.getElementById('gallery-filter');
     filter.addEventListener('input', filterHandle);
 
     let imageContainer = document.getElementById('images-container');
-    imageContainer.innerHTML = '';
+    imageContainer.innerHTML = '  ';
 
-    data.galleryImages.forEach(function(image){
+    galleryImages = [];
+    currentSelection.forEach(function(image){
        let imageFrame = document.createElement('div');
        imageFrame.classList.add('thumbnail');
 
@@ -209,7 +260,8 @@ function loadGallery(){
 }
 
 function loadMap(){
-    let map = L.map('map').setView([51.505, -0.09], 4);
+    if(map !== null) return;
+    map = L.map('map').setView([51.505, -0.09], 4);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
@@ -231,9 +283,14 @@ let data;
 let currentSelection
 let autoPlayToggle = false;
 let autoPlayIntervalHandler;
+let map = null;
 let mapMarkers = [];
 let galleryImages = [];
+let routeToggle = false;
+let routeControl;
+let showingLocationGallery = false;
 window.onload = function(){
+
     fetch('./gallery.json')
         .then(response => response.json())
         .then(content => {
@@ -255,9 +312,12 @@ window.onload = function(){
     let prevButton = document.getElementById('modal-prev');
     let nextButton = document.getElementById('modal-next');
     let autoPlayButton = document.getElementById('modal-autoplay');
+    let routeToggle = document.getElementById('route-toogle');
+
     closeButton.addEventListener('click', removeModal);
     clickOutsideBox.addEventListener('click', removeModal);
     prevButton.addEventListener('click', handlePrev);
     nextButton.addEventListener('click', handleNext);
     autoPlayButton.addEventListener('click', handleAutoplay);
+    routeToggle.addEventListener('click', handleRoute);
 }
