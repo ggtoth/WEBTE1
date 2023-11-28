@@ -150,6 +150,16 @@
     height: 40rem;
 }
 
+.map-view-inner-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+}
+
 @media screen and (max-width: 1000px) {
     .modal-navigation {
         flex-direction: column;

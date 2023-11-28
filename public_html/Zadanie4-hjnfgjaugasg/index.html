@@ -18,8 +18,8 @@
             crossorigin=""></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/MarkerCluster.Default.css" integrity="sha512-6ZCLMiYwTeli2rVh3XAPxy3YoR5fVxGdH/pz+KMCzRY2M65Emgkw00Yqmhh8qLGeYQ3LbVZGdmOX9KUjSKr0TA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.5.3/leaflet.markercluster.js" integrity="sha512-OFs3W4DIZ5ZkrDhBFtsCP6JXtMEDGmhl0QPlmWYBJay40TT1n3gt2Xuw8Pf/iezgW9CdabjkNChRqozl/YADmg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet" href="leaflet-routing-machine.css" />
-    <script src="leaflet-routing-machine.js"></script>
+    <link rel="stylesheet" href="plugins/leaflet-routing-machine.css" />
+    <script src="plugins/leaflet-routing-machine.js"></script>
 
 </head>
 <body>
@@ -46,11 +46,15 @@
 <div class="page-content" id="page-content">
     <div class="gallery-view-container hidden" id="gallery-view">
         <input type="text" placeholder="Write Keyword" id="gallery-filter">
+        <label for="gallery-filter hidden"></label>
         <div class="images-container" id="images-container"></div>
     </div>
     <div class="map-view-container hidden" id="map-view">
-        <div id="map"></div>
-        <button type="button" class="custom-button" id="route-toogle" value="">Toggle Route</button>
+        <div class="map-view-inner-container">
+            <div id="map"></div>
+            <button type="button" class="custom-button" id="route-toogle" value="">Toggle Route</button>
+            <span class="hidden" id="distance-span">0</span>
+        </div>
     </div>
 </div>
 <div class="cover hidden" id="cover"></div>

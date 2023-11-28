@@ -10,7 +10,7 @@ function removeActiveClass() {
 }
 
 function handleNavClick(event){
-    currentSelection = data.galleryImages;
+    currentSelection = data;
 
     if (event.currentTarget === document.getElementById('gallery-link')){
         changeToGallery(event.currentTarget);
@@ -44,9 +44,8 @@ function changeToMap(link){
     link.classList.add('active');
     removeModal();
     hideContent();
-
-    let map = document.getElementById('map-view');
-    map.classList.remove('hidden');
+    let mapElement = document.getElementById('map-view');
+    mapElement.classList.remove('hidden');
     loadMap();
 }
 
@@ -69,7 +68,7 @@ function updateFilter(sstring){
 function filterHandle(event){
     if (showingLocationGallery){
         showingLocationGallery = false;
-        currentSelection = data.galleryImages;
+        currentSelection = data;
         loadGallery();
     }
     updateFilter(event.target.value);
@@ -143,7 +142,7 @@ function restrictSelectionByCoordinate(marker){
 }
 
 function handleMarkerClick(event){
-    currentSelection = data.galleryImages
+    currentSelection = data;
     restrictSelectionByCoordinate(event.target);
     if (currentSelection.length === 1){
         updateModal(currentSelection[0]);
@@ -226,10 +225,21 @@ function handleRoute(){
                 return null;
             }
         }).addTo(map);
+        routeControl.on('routesfound', function (event) {
+            let totalDistance = event.routes[0].summary.totalDistance / 1000;
+
+            console.log('Total Distance: ' + totalDistance + ' meters');
+            let distanceSpan = document.getElementById('distance-span');
+            distanceSpan.innerText = `Total distance: ${totalDistance} km`;
+            distanceSpan.classList.remove('hidden');
+        });
     }
     else{
         map.removeControl(routeControl);
+        let distanceSpan = document.getElementById('distance-span');
+        distanceSpan.classList.add('hidden');
     }
+
 }
 
 function loadGallery(){
@@ -260,14 +270,17 @@ function loadGallery(){
 }
 
 function loadMap(){
-    if(map !== null) return;
+    if(map !== null){
+        map.invalidateSize();
+        return
+    }
     map = L.map('map').setView([51.505, -0.09], 4);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
     let markerGroup = new L.MarkerClusterGroup();
-    data.galleryImages.forEach(function (item){
+    data.forEach(function (item){
         let marker = L.marker([item.gpsCoordinates.latitude, item.gpsCoordinates.longitude])
         marker.addEventListener('click', handleMarkerClick);
         markerGroup.addLayer(marker);
@@ -294,8 +307,14 @@ window.onload = function(){
     fetch('./gallery.json')
         .then(response => response.json())
         .then(content => {
-            data = content;
-            currentSelection = content.galleryImages;
+            content.galleryImages.sort()
+            data = content.galleryImages.sort((a, b) => {
+                const dateA = new Date(a.date);
+                const dateB = new Date(b.date);
+
+                return dateA - dateB;
+            });
+            currentSelection = data;
             let gallery = document.getElementById('gallery-view');
             gallery.classList.remove('hidden');
             loadGallery();
