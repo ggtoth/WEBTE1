@@ -12,6 +12,17 @@ function removeActiveClass() {
 function handleNavClick(event){
     removeActiveClass();
     event.currentTarget.classList.add('active');
+    removeModal();
+    let gallery = document.getElementById('gallery');
+    let map = document.getElementById('map');
+    if (event.currentTarget === document.getElementById('gallery-link')){
+        gallery.classList.remove('hidden');
+        map.classList.add('hidden');
+    }
+    else if(event.currentTarget === document.getElementById('map-link')){
+        gallery.classList.add('hidden');
+        map.classList.remove('hidden');
+    }
 }
 
 function filterHandle(event){
@@ -65,13 +76,17 @@ function showModal(event){
     let imageData = getElementByRelativePath(event.currentTarget.getAttribute('src'));
     updateModal(imageData);
     modal.classList.remove('hidden');
+    let cover = document.getElementById('cover');
+    cover.classList.remove('hidden')
 }
 
-function removeModal(event){
+function removeModal(){
     let modal = document.getElementById('modal');
     Array.from(document.body.children).forEach(item => item !== modal && item.classList.remove('blur'));
     modal.classList.add('hidden');
-    handleAutoplay();
+    if(autoPlayToggle) handleAutoplay();
+    let cover = document.getElementById('cover');
+    cover.classList.add('hidden')
 }
 
 function decrementImage(){
@@ -139,6 +154,8 @@ window.onload = function(){
             data = content;
             currentSelection = content;
             loadGallery();
+            let gallery = document.getElementById('gallery');
+            gallery.classList.remove('hidden');
         })
         .catch(error => console.error('Error fetching JSON:', error));
 
@@ -148,10 +165,12 @@ window.onload = function(){
         });
 
     let closeButton = document.getElementById('modal-close');
+    let clickOutsideBox = document.getElementById('cover');
     let prevButton = document.getElementById('modal-prev');
     let nextButton = document.getElementById('modal-next');
     let autoPlayButton = document.getElementById('modal-autoplay');
     closeButton.addEventListener('click', removeModal);
+    clickOutsideBox.addEventListener('click', removeModal);
     prevButton.addEventListener('click', handlePrev);
     nextButton.addEventListener('click', handleNext);
     autoPlayButton.addEventListener('click', handleAutoplay);
