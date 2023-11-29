@@ -52,8 +52,8 @@ function updateFilter(sstring) {
     currentSelection = [];
 
     galleryImages.forEach(function (item) {
-        if (item["image"].title.toLowerCase().includes(sstring)
-            || item["image"].description.toLowerCase().includes(sstring)) {
+        if (item["image"].title.toLowerCase().includes(sstring.toLowerCase())
+            || item["image"].description.toLowerCase().includes(sstring.toLowerCase())) {
             item["galleryElement"].parentElement.style.display = "";
             currentSelection.push(item["image"]);
         } else {
@@ -68,7 +68,7 @@ function filterHandle(event) {
         currentSelection = data;
         loadGallery();
     }
-    updateFilter(event.target.value.toLowerCase());
+    updateFilter(event.target.value);
 }
 
 function handleFilterReset() {
