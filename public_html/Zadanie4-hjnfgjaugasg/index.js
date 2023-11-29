@@ -71,7 +71,7 @@ function filterHandle(event){
         currentSelection = data;
         loadGallery();
     }
-    updateFilter(event.target.value);
+    updateFilter(event.target.value.toLowerCase());
 }
 
 function handleFilterReset(){
