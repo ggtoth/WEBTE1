@@ -5,8 +5,22 @@
 
 .gallery-view-container{
     display: flex;
-    flex-wrap: nowrap;
-    flex-direction: column;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+#gallery-filter{
+    width: 90%;
+    height: 2rem;
+}
+
+#gallery-filter-reset{
+    width: 10%;
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 .images-container {

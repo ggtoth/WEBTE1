@@ -74,6 +74,16 @@ function filterHandle(event){
     updateFilter(event.target.value);
 }
 
+function handleFilterReset(){
+    if (showingLocationGallery){
+        showingLocationGallery = false;
+        currentSelection = data;
+        loadGallery();
+    }
+    document.getElementById('gallery-filter').value = '';
+    updateFilter('');
+}
+
 function getIndexByRelativePath(relativePath) {
     const index = currentSelection.findIndex(image => image.relativePath === relativePath);
     return index !== -1 ? index : null;
@@ -331,6 +341,7 @@ window.onload = function(){
     let nextButton = document.getElementById('modal-next');
     let autoPlayButton = document.getElementById('modal-autoplay');
     let routeToggle = document.getElementById('route-toogle');
+    let filterReset = document.getElementById('gallery-filter-reset');
 
     closeButton.addEventListener('click', removeModal);
     clickOutsideBox.addEventListener('click', removeModal);
@@ -338,6 +349,7 @@ window.onload = function(){
     nextButton.addEventListener('click', handleNext);
     autoPlayButton.addEventListener('click', handleAutoplay);
     routeToggle.addEventListener('click', handleRoute);
+    filterReset.addEventListener('click', handleFilterReset);
 }
 
 document.addEventListener('keydown', function (event) {
