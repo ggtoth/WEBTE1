@@ -48,8 +48,9 @@
 
 .modal{
     display: block;
-    width: 90%;
+    width: 80%;
     height: auto;
+    max-height: 100%;
     top: 50%;
     left: 50%;
     translate: -50% -50%;
@@ -160,8 +161,12 @@
     text-align: center;
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1050px) {
     .modal-navigation {
         flex-direction: column;
+    }
+
+    .modal{
+        width: 90%;
     }
 }
