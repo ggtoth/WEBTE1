@@ -4,30 +4,29 @@ function truncateDecimal(number, decimalPlaces) {
 
 function removeActiveClass() {
     let liElements = document.querySelectorAll('.navbar-nav .nav-item');
-    liElements.forEach(function(li) {
+    liElements.forEach(function (li) {
         li.classList.remove('active');
     });
 }
 
-function handleNavClick(event){
+function handleNavClick(event) {
     currentSelection = data;
 
-    if (event.currentTarget === document.getElementById('gallery-link')){
+    if (event.currentTarget === document.getElementById('gallery-link')) {
         changeToGallery(event.currentTarget);
-    }
-    else if(event.currentTarget === document.getElementById('map-link')){
+    } else if (event.currentTarget === document.getElementById('map-link')) {
         changeToMap(event.currentTarget);
     }
 }
 
-function hideContent(){
+function hideContent() {
     let content = document.getElementById("page-content");
-    Array.from(content.children).forEach(function (item){
+    Array.from(content.children).forEach(function (item) {
         item.classList.add('hidden');
     });
 }
 
-function changeToGallery(link){
+function changeToGallery(link) {
     removeActiveClass();
     link.classList.add('active');
     removeModal();
@@ -39,7 +38,7 @@ function changeToGallery(link){
     updateFilter(document.getElementById('gallery-filter').value);
 }
 
-function changeToMap(link){
+function changeToMap(link) {
     removeActiveClass();
     link.classList.add('active');
     removeModal();
@@ -49,24 +48,22 @@ function changeToMap(link){
     loadMap();
 }
 
-function updateFilter(sstring){
+function updateFilter(sstring) {
     currentSelection = [];
 
-    galleryImages.forEach(function(item){
-       if (item["image"].title.toLowerCase().includes(sstring)
-           || item["image"].description.toLowerCase().includes(sstring))
-       {
-           item["galleryElement"].parentElement.style.display = "";
-           currentSelection.push(item["image"]);
-       }
-       else{
-           item["galleryElement"].parentElement.style.display = "none";
-       }
+    galleryImages.forEach(function (item) {
+        if (item["image"].title.toLowerCase().includes(sstring)
+            || item["image"].description.toLowerCase().includes(sstring)) {
+            item["galleryElement"].parentElement.style.display = "";
+            currentSelection.push(item["image"]);
+        } else {
+            item["galleryElement"].parentElement.style.display = "none";
+        }
     });
 }
 
-function filterHandle(event){
-    if (showingLocationGallery){
+function filterHandle(event) {
+    if (showingLocationGallery) {
         showingLocationGallery = false;
         currentSelection = data;
         loadGallery();
@@ -74,8 +71,8 @@ function filterHandle(event){
     updateFilter(event.target.value.toLowerCase());
 }
 
-function handleFilterReset(){
-    if (showingLocationGallery){
+function handleFilterReset() {
+    if (showingLocationGallery) {
         showingLocationGallery = false;
         currentSelection = data;
         loadGallery();
@@ -90,7 +87,7 @@ function getIndexByRelativePath(relativePath) {
 }
 
 
-function updateModal(imageData){
+function updateModal(imageData) {
     let image = document.getElementById('modal-image');
     image.setAttribute('src', imageData.relativePath);
     image.setAttribute('alt', imageData.description);
@@ -110,7 +107,7 @@ function updateModal(imageData){
     coords.innerText = `${truncateDecimal(imageData.gpsCoordinates.latitude, 3)}°N, ${truncateDecimal(imageData.gpsCoordinates.longitude, 3)}°E`
 }
 
-function showModal(){
+function showModal() {
     currentSelection.length === 1 ? hideNavigation() : showNavigation();
 
     let modal = document.getElementById('modal');
@@ -122,7 +119,7 @@ function showModal(){
     Array.from(document.body.children).forEach(item => item !== modal && item.classList.add('blur'));
 }
 
-function removeModal(){
+function removeModal() {
     let modal = document.getElementById('modal');
     let cover = document.getElementById('cover');
 
@@ -131,55 +128,54 @@ function removeModal(){
 
     Array.from(document.body.children).forEach(item => item !== modal && item.classList.remove('blur'));
 
-    if(autoPlayToggle) handleAutoplay();
+    if (autoPlayToggle) handleAutoplay();
 }
 
-function handleGalleryClick(event){
+function handleGalleryClick(event) {
     let imageData = galleryImages.find(item => item["galleryElement"] === event.currentTarget);
     updateModal(imageData["image"]);
     showModal();
 }
 
-function restrictSelectionByCoordinate(marker){
+function restrictSelectionByCoordinate(marker) {
     currentSelection = [];
     let imageOfMarker = mapMarkers.find(item => item["marker"] === marker)["image"];
-    mapMarkers.forEach(function (item){
-        if(item["image"].gpsCoordinates.latitude === imageOfMarker.gpsCoordinates.latitude
-            && item["image"].gpsCoordinates.longitude === imageOfMarker.gpsCoordinates.longitude){
+    mapMarkers.forEach(function (item) {
+        if (item["image"].gpsCoordinates.latitude === imageOfMarker.gpsCoordinates.latitude
+            && item["image"].gpsCoordinates.longitude === imageOfMarker.gpsCoordinates.longitude) {
             currentSelection.push(item["image"]);
         }
     });
 }
 
-function handleMarkerClick(event){
+function handleMarkerClick(event) {
     currentSelection = data;
     restrictSelectionByCoordinate(event.target);
-    if (currentSelection.length === 1){
+    if (currentSelection.length === 1) {
         updateModal(currentSelection[0]);
         showModal();
-    }
-    else{
+    } else {
         showingLocationGallery = true;
         document.getElementById('gallery-filter').value = '';
         changeToGallery(document.getElementById('gallery-link'));
     }
 }
 
-function decrementImage(){
+function decrementImage() {
     let image = document.getElementById('modal-image');
     let index = getIndexByRelativePath(image.getAttribute('src'))
     index = index <= 0 ? currentSelection.length - 1 : index - 1;
     updateModal(currentSelection[index]);
 }
 
-function incrementImage(){
+function incrementImage() {
     let image = document.getElementById('modal-image');
     let index = getIndexByRelativePath(image.getAttribute('src'))
     index = index >= currentSelection.length - 1 ? 0 : index + 1;
     updateModal(currentSelection[index]);
 }
 
-function handlePrev(){
+function handlePrev() {
     decrementImage();
 }
 
@@ -187,17 +183,16 @@ function handleNext() {
     incrementImage();
 }
 
-function handleAutoplay(){
+function handleAutoplay() {
     autoPlayToggle = !autoPlayToggle;
-    if (autoPlayToggle){
+    if (autoPlayToggle) {
         autoPlayIntervalHandler = setInterval(incrementImage, 3000);
-    }
-    else {
+    } else {
         clearInterval(autoPlayIntervalHandler);
     }
 }
 
-function hideNavigation(){
+function hideNavigation() {
     let prevButton = document.getElementById('modal-prev');
     let nextButton = document.getElementById('modal-next');
     let autoPlayButton = document.getElementById('modal-autoplay');
@@ -209,7 +204,7 @@ function hideNavigation(){
     modalImage.style.width = '90%';
 }
 
-function showNavigation(){
+function showNavigation() {
     let prevButton = document.getElementById('modal-prev');
     let nextButton = document.getElementById('modal-next');
     let autoPlayButton = document.getElementById('modal-autoplay');
@@ -221,12 +216,12 @@ function showNavigation(){
     modalImage.style.width = '';
 }
 
-function handleRoute(){
+function handleRoute() {
     routeToggle = !routeToggle;
-    if (routeToggle){
+    if (routeToggle) {
         let waypoints = [];
-        mapMarkers.forEach(function (item){
-           waypoints.push([item["image"].gpsCoordinates.latitude, item["image"].gpsCoordinates.longitude])
+        mapMarkers.forEach(function (item) {
+            waypoints.push([item["image"].gpsCoordinates.latitude, item["image"].gpsCoordinates.longitude])
         });
         routeControl = L.Routing.control({
             waypoints: waypoints,
@@ -242,8 +237,7 @@ function handleRoute(){
             distanceSpan.innerText = `Total distance: ${truncateDecimal(totalDistance, 2)} km`;
             distanceSpan.classList.remove('hidden');
         });
-    }
-    else{
+    } else {
         map.removeControl(routeControl);
         let distanceSpan = document.getElementById('distance-span');
         distanceSpan.classList.add('hidden');
@@ -251,7 +245,7 @@ function handleRoute(){
 
 }
 
-function loadGallery(){
+function loadGallery() {
     let filter = document.getElementById('gallery-filter');
     filter.addEventListener('input', filterHandle);
 
@@ -259,27 +253,27 @@ function loadGallery(){
     imageContainer.innerHTML = '  ';
 
     galleryImages = [];
-    currentSelection.forEach(function(image){
-       let imageFrame = document.createElement('div');
-       imageFrame.classList.add('thumbnail');
+    currentSelection.forEach(function (image) {
+        let imageFrame = document.createElement('div');
+        imageFrame.classList.add('thumbnail');
 
-       let imageElement = document.createElement('img');
-       imageElement.src = image.relativePath;
-       imageElement.alt = `${image.title} - ${image.description}`;
-       imageElement.classList.add('thumbnail-image');
-       imageElement.addEventListener('click', handleGalleryClick);
+        let imageElement = document.createElement('img');
+        imageElement.src = image.relativePath;
+        imageElement.alt = `${image.title} - ${image.description}`;
+        imageElement.classList.add('thumbnail-image');
+        imageElement.addEventListener('click', handleGalleryClick);
 
-       imageFrame.appendChild(imageElement);
-       imageContainer.appendChild(imageFrame);
-       galleryImages.push({
-           "galleryElement": imageElement,
-           "image": image
-       });
+        imageFrame.appendChild(imageElement);
+        imageContainer.appendChild(imageFrame);
+        galleryImages.push({
+            "galleryElement": imageElement,
+            "image": image
+        });
     });
 }
 
-function loadMap(){
-    if(map !== null){
+function loadMap() {
+    if (map !== null) {
         map.invalidateSize();
         return
     }
@@ -289,7 +283,7 @@ function loadMap(){
     }).addTo(map);
 
     let markerGroup = new L.MarkerClusterGroup();
-    data.forEach(function (item){
+    data.forEach(function (item) {
         let marker = L.marker([item.gpsCoordinates.latitude, item.gpsCoordinates.longitude])
         marker.addEventListener('click', handleMarkerClick);
         markerGroup.addLayer(marker);
@@ -311,7 +305,7 @@ let galleryImages = [];
 let routeToggle = false;
 let routeControl;
 let showingLocationGallery = false;
-window.onload = function(){
+window.onload = function () {
 
     fetch('./gallery.json')
         .then(response => response.json())
@@ -331,7 +325,7 @@ window.onload = function(){
         .catch(error => console.error('Error fetching JSON:', error));
 
     document.querySelectorAll('.navbar-nav .nav-item')
-        .forEach(function (li){
+        .forEach(function (li) {
             li.addEventListener('click', handleNavClick);
         });
 

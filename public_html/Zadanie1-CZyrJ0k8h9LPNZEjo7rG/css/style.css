@@ -1,23 +1,24 @@
-:root{
+:root {
     --default-print-color: white;
-    --main-color-1 : #8CEAED;
-    --main-color-2 : #9DB0B0;
-    --main-color-3 : #5F9EA0FF;
-    --main-color-4 : #D3ECED;
-    --main-color-5 : #416C6E;
+    --main-color-1: #8CEAED;
+    --main-color-2: #9DB0B0;
+    --main-color-3: #5F9EA0FF;
+    --main-color-4: #D3ECED;
+    --main-color-5: #416C6E;
     --lecture-color: #BA8677;
     --lab-color: #E3B7B3;
     --physical-color: #ACB094;
-    --border-radius : 0.5rem;
-    --horizontal-li-border-radius : 1rem;
+    --border-radius: 0.5rem;
+    --horizontal-li-border-radius: 1rem;
 }
 
 @font-face {
     font-family: "Onest";
     src: url("../fonts/Onest-VariableFont_wght.ttf");
 }
+
 /* Universal definitions start here */
-body{
+body {
     background-color: var(--main-color-4);
     font-family: Onest, serif;
     background-image: url("../images/circuit-background-desktop.jpg");
@@ -27,19 +28,19 @@ body{
     background-position: center center;
 }
 
-header{
+header {
     border-radius: var(--border-radius);
     background-color: var(--main-color-3);
     padding: 10px 20px;
     text-align: center;
 }
 
-.page-title{
+.page-title {
     float: left;
     margin-top: 6px;
 }
 
-.page-title>a{
+.page-title > a {
     text-decoration: none;
     color: var(--default-print-color);
 }
@@ -53,25 +54,25 @@ header{
     padding: 0;
 }
 
-.main-nav>li {
+.main-nav > li {
     display: flex;
     justify-content: center;
     border-radius: var(--horizontal-li-border-radius);
 }
 
-.main-nav>li>a {
+.main-nav > li > a {
     text-align: center;
     text-decoration: none;
     padding: 1rem;
     color: var(--default-print-color);
 }
 
-.main-nav>li:hover {
+.main-nav > li:hover {
     background-color: var(--main-color-5);
     background-clip: border-box;
 }
 
-footer{
+footer {
     position: fixed;
     left: 0;
     bottom: 0;
@@ -81,16 +82,17 @@ footer{
     text-align: center;
 }
 
-.page-content{
+.page-content {
     margin: 2.5%;
     padding: 10px;
     background-color: var(--main-color-4);
     overflow: auto;
 }
+
 /* Universal definitions end here */
 
 /* Definitions for use at "O mne" start here */
-.index-portrait{
+.index-portrait {
     float: left;
     margin: auto;
     padding: 20px;
@@ -99,22 +101,22 @@ footer{
     width: auto;
 }
 
-.article-text{
+.article-text {
     margin: 10px;
 }
 
-.article-text>aside{
+.article-text > aside {
     float: right;
     background-color: var(--main-color-2);
     max-width: 25%;
     padding: 10px;
 }
 
-.article-text>aside>p{
+.article-text > aside > p {
     margin: 0;
 }
 
-abbr{
+abbr {
     text-decoration: none;
 }
 
@@ -129,25 +131,26 @@ article::after {
     content: "";
     display: block;
 }
+
 /* Definitions for use at "O mne" end here */
 
 /* Definitions for use at "Zivotopis" start here */
-.cv-page-content{
+.cv-page-content {
     background-color: transparent;
 }
 
-.cv-container{
+.cv-container {
     display: flex;
     justify-content: center;
 }
 
-.cv-portrait{
+.cv-portrait {
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
 
-.cv-left{
+.cv-left {
     background-color: var(--main-color-5);
     margin: 10px;
     padding: 10px;
@@ -155,21 +158,21 @@ article::after {
     border-radius: var(--border-radius);
 }
 
-.cv-right{
+.cv-right {
     background-color: var(--main-color-2);
     margin: 10px;
     padding: 10px;
     border-radius: var(--border-radius);
 }
 
-.cv-portrait{
+.cv-portrait {
     max-width: 100%;
     height: auto;
     width: auto;
 }
 
 /* https://www.w3schools.com/howto/howto_css_skill_bar.asp */
-.skills-container{
+.skills-container {
     width: 100%;
     background-color: var(--main-color-4);
 }
@@ -182,114 +185,116 @@ article::after {
     background-color: var(--main-color-3);
 }
 
-.html{
+.html {
     width: 60%;
 }
 
-.css{
+.css {
     width: 30%;
 }
 
-.c{
+.c {
     width: 60%;
 }
 
-.cpp{
+.cpp {
     width: 40%;
 }
 
-.skill-title{
+.skill-title {
     margin: 0;
 }
 
-.heading-title{
+.heading-title {
     margin-bottom: 0;
     font-size: 30px;
 }
 
-.subheading-title{
+.subheading-title {
     margin-top: 0;
     font-size: 15px;
 }
 
-.formatted-list{
+.formatted-list {
     list-style: none;
 }
 
-.formatted-list>li{
+.formatted-list > li {
     display: flex;
     justify-content: space-between;
 }
 
-.formatted-list>li:nth-child(odd){
+.formatted-list > li:nth-child(odd) {
     background-color: var(--main-color-3);
 }
 
-.formatted-list-left{
+.formatted-list-left {
     margin-right: 10px;
 }
+
 /* Definitions for use at "Zivotopis" end here */
 
 /* Definitions for use at "Rozvrh" start here */
 
-.timetable{
+.timetable {
     background-color: var(--main-color-5);
     width: 100%;
     text-align: center;
     border-spacing: 0;
 }
 
-.timetable th{
+.timetable th {
     background-color: var(--main-color-5);
     color: var(--default-print-color);
     padding: 10px;
 }
 
-.timetable td{
+.timetable td {
     padding: 5px;
 }
 
-.timetable>tbody>tr:nth-child(odd){
+.timetable > tbody > tr:nth-child(odd) {
     background-color: var(--main-color-3);
 }
 
-.timetable>tbody>tr:nth-child(even){
+.timetable > tbody > tr:nth-child(even) {
     background-color: var(--main-color-2);
 }
 
-.lecture{
+.lecture {
     background-color: var(--lecture-color);
 }
 
-.lab{
+.lab {
     background-color: var(--lab-color);
 }
 
-.physical{
+.physical {
     background-color: var(--physical-color);
 }
 
-.dot{
+.dot {
     height: 15px;
     width: 15px;
     border-radius: 50%;
     display: inline-block;
 }
+
 /* Definitions for use at "Rozvrh" end here */
 
 /* Definitions for use at "Obrazok" start here */
-.interactive-image-container{
+.interactive-image-container {
     display: block;
     height: auto;
 }
 
-.interactive-image{
+.interactive-image {
     position: relative;
     width: 100%;
     height: 100%;
 }
 
-.box{
+.box {
     position: absolute;
     height: 25px;
     width: 25px;
@@ -298,13 +303,13 @@ article::after {
     transition: background-color 1s;
 }
 
-.box>.hidden-tooltip{
+.box > .hidden-tooltip {
     visibility: hidden;
     opacity: 0;
     transition: opacity 2s;
 }
 
-.box a{
+.box a {
     display: block;
     text-decoration: none;
     text-align: center;
@@ -313,12 +318,12 @@ article::after {
     padding-bottom: 5px;
 }
 
-.box h2{
+.box h2 {
     color: var(--default-print-color);
     margin-bottom: 0;
 }
 
-.box:hover{
+.box:hover {
     width: max-content;
     height: max-content;
     z-index: 10;
@@ -326,199 +331,200 @@ article::after {
     border-radius: var(--border-radius);
 }
 
-.box:hover>.hidden-tooltip{
+.box:hover > .hidden-tooltip {
     visibility: visible;
     opacity: 1;
 }
 
-@media screen and (min-width: 1090px){
-    .interactive-image-container{
+@media screen and (min-width: 1090px) {
+    .interactive-image-container {
         width: 1000px;
     }
 
-    .display-port{
+    .display-port {
         left: 340px;
         top: 460px;
     }
 
-    .ps2-port{
+    .ps2-port {
         left: 210px;
         top: 400px;
     }
 
-    .usb-port{
+    .usb-port {
         left: 210px;
         top: 470px;
     }
 
-    .hdmi-port{
+    .hdmi-port {
         left: 340px;
         top: 530px;
     }
 
-    .usb-c-port{
+    .usb-c-port {
         left: 480px;
         top: 530px;
     }
 
-    .ethernet-port{
+    .ethernet-port {
         left: 590px;
         top: 400px;
     }
 
-    .aux-port{
+    .aux-port {
         left: 830px;
         top: 400px;
     }
 
-    .optical-port{
+    .optical-port {
         left: 820px;
         top: 520px;
     }
 }
 
-@media screen and (min-width: 700px) and (max-width: 1090px){
-    .interactive-image-container{
+@media screen and (min-width: 700px) and (max-width: 1090px) {
+    .interactive-image-container {
         width: 620px;
     }
 
-    .display-port{
+    .display-port {
         left: 220px;
         top: 350px;
     }
 
-    .ps2-port{
+    .ps2-port {
         left: 130px;
         top: 295px;
     }
 
-    .usb-port{
+    .usb-port {
         left: 135px;
         top: 350px;
     }
 
-    .hdmi-port{
+    .hdmi-port {
         left: 220px;
         top: 380px;
     }
 
-    .usb-c-port{
+    .usb-c-port {
         left: 290px;
         top: 385px;
     }
 
-    .ethernet-port{
+    .ethernet-port {
         left: 370px;
         top: 310px;
     }
 
-    .aux-port{
+    .aux-port {
         left: 520px;
         top: 300px;
     }
 
-    .optical-port{
+    .optical-port {
         left: 510px;
         top: 380px;
     }
 }
 
-@media screen and (max-width: 700px){
-    .interactive-image-container{
+@media screen and (max-width: 700px) {
+    .interactive-image-container {
         width: 400px;
     }
 
-    .box{
+    .box {
         height: 10px;
         width: 10px;
     }
 
-    .display-port{
+    .display-port {
         left: 150px;
         top: 555px;
     }
 
-    .ps2-port{
+    .ps2-port {
         left: 100px;
         top: 535px;
     }
 
-    .usb-port{
+    .usb-port {
         left: 100px;
         top: 560px;
     }
 
-    .hdmi-port{
+    .hdmi-port {
         left: 150px;
         top: 580px;
     }
 
-    .usb-c-port{
+    .usb-c-port {
         left: 195px;
         top: 580px;
     }
 
-    .ethernet-port{
+    .ethernet-port {
         left: 245px;
         top: 535px;
     }
 
-    .aux-port{
+    .aux-port {
         left: 345px;
         top: 530px;
     }
 
-    .optical-port{
+    .optical-port {
         left: 335px;
         top: 580px;
     }
 }
+
 /* Definitions for use at "Obrazok" end here */
 
 /* Universal definitions start here */
 @media screen and (max-width: 700px) {
-    body{
+    body {
         background-image: url("../images/circuit-background-mobile.jpg");
     }
 
-    header{
+    header {
         padding-left: 0;
         padding-right: 0;
     }
 
-    .page-title{
+    .page-title {
         width: 100%;
         float: none;
     }
 
-    .main-nav{
+    .main-nav {
         flex-direction: column;
         justify-content: center;
         align-items: center;
     }
 
-    .main-nav>li{
+    .main-nav > li {
         width: 100%;
         border-radius: var(--border-radius);
     }
 
-    .main-nav>li>a{
+    .main-nav > li > a {
         width: 100%;
         height: 100%;
     }
-    /* Universal definitions stop here */
 
+    /* Universal definitions stop here */
     /* Definitions for use at "O mne" start here */
-    .article-text>aside{
+    .article-text > aside {
         max-width: 100px;
     }
+
     /* Definitions for use at "O mne" end here */
-
     /* Definitions for use at "Zivotopis" start here */
-
-    .cv-container{
+    .cv-container {
         flex-direction: column;
         justify-content: initial;
     }
+
     /* Definitions for use at "Zivotopis" end here */
 }

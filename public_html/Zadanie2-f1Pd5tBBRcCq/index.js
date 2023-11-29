@@ -166,7 +166,7 @@ const super_pc = {
     }
 }
 
-window.onload = function (){
+window.onload = function () {
     let countriesSelect = document.getElementById("Countries");
     for (let dataKey in data) {
         let newOption = new Option(dataKey, dataKey);
@@ -192,48 +192,48 @@ window.onload = function (){
     document.getElementById('submit').addEventListener('click', validateForm);
 }
 
-function countries_onchange(selectElement){
+function countries_onchange(selectElement) {
     let regions = document.getElementById("Regions");
     let districts = document.getElementById("Districts");
     regions.selectedIndex = 0;
-    while (regions.options.length > 1){
+    while (regions.options.length > 1) {
         regions.options.remove(1);
     }
     districts.selectedIndex = 0;
     regions_onchange(regions);
-    if(selectElement.selectedIndex === 0){
+    if (selectElement.selectedIndex === 0) {
         return;
     }
-    for(let dataKey in data[selectElement.value]){
+    for (let dataKey in data[selectElement.value]) {
         let newOption = new Option(dataKey, dataKey);
         regions.add(newOption);
     }
 }
 
-function regions_onchange(selectElement){
+function regions_onchange(selectElement) {
     let countries = document.getElementById("Countries");
     let districts = document.getElementById("Districts");
     districts.selectedIndex = 0;
     validateAddressSelection(districts);
-    while (districts.options.length > 1){
+    while (districts.options.length > 1) {
         districts.options.remove(1);
     }
-    if(selectElement.selectedIndex === 0){
+    if (selectElement.selectedIndex === 0) {
         return;
     }
-    for(let dataKey in data[countries.value][selectElement.value]){
+    for (let dataKey in data[countries.value][selectElement.value]) {
         let optionValue = data[countries.value][selectElement.value][dataKey];
         let newOption = new Option(optionValue, optionValue);
         districts.add(newOption);
     }
 }
 
-function districts_onchange(selectElement){
+function districts_onchange(selectElement) {
     validateAddressSelection(selectElement);
     validateAddress(document.getElementById('address-field'));
 }
 
-function computers_onchange(selectElement){
+function computers_onchange(selectElement) {
     let specsClassStyle = document.querySelector(".pc-specifications").style;
     if (!secret_remove_flag)
         validateComputerSelection(selectElement);
@@ -246,7 +246,7 @@ function computers_onchange(selectElement){
     specsClassStyle.visibility = 'visible';
     specsClassStyle.display = 'block'
     let pcSpecs = pcs[selectElement.value];
-    if(selectElement.value === "Secret PC"){
+    if (selectElement.value === "Secret PC") {
         pcSpecs = super_pc["Secret PC"];
     }
     document.getElementById("spec-brand").innerText = pcSpecs["Brand"];
@@ -257,13 +257,13 @@ function computers_onchange(selectElement){
     document.getElementById("spec-price").innerText = pcSpecs["Price"];
 }
 
-function checkInputText(inputItem, regex){
+function checkInputText(inputItem, regex) {
     let pattern = new RegExp(regex);
     return pattern.test(inputItem.value);
 }
 
-function genericRegexCheck(element, regex){
-    if(!checkInputText(element, regex)){
+function genericRegexCheck(element, regex) {
+    if (!checkInputText(element, regex)) {
         element.style.borderColor = 'red';
         return false;
     }
@@ -271,15 +271,14 @@ function genericRegexCheck(element, regex){
     return true;
 }
 
-function validateFirstName(element){
+function validateFirstName(element) {
     document.getElementById('first-name-wc').innerText = element.value.length;
     let alert = document.getElementById('first-name-alert');
-    if(element.value.length === 0){
+    if (element.value.length === 0) {
         alert.style.visibility = 'visible';
         alert.style.display = 'block';
         element.style.borderColor = 'red';
-    }
-    else {
+    } else {
         alert.style.visibility = 'hidden';
         alert.style.display = 'none';
         element.style.borderColor = 'black';
@@ -287,15 +286,14 @@ function validateFirstName(element){
     return genericRegexCheck(element, "^[A-zÀ-úČ-ž]+$");
 }
 
-function validateLastName(element){
+function validateLastName(element) {
     document.getElementById('last-name-wc').innerText = element.value.length;
     let alert = document.getElementById('last-name-alert');
-    if(element.value.length === 0){
+    if (element.value.length === 0) {
         alert.style.visibility = 'visible';
         alert.style.display = 'block';
         element.style.borderColor = 'red';
-    }
-    else {
+    } else {
         alert.style.visibility = 'hidden';
         alert.style.display = 'none';
         element.style.borderColor = 'black';
@@ -303,15 +301,14 @@ function validateLastName(element){
     return genericRegexCheck(element, "^[A-Za-zÀ-úČ-ž]+$");
 }
 
-function validateEmail(element){
+function validateEmail(element) {
     document.getElementById('email-wc').innerText = element.value.length;
     let alert = document.getElementById('email-alert');
-    if(element.value.length === 0){
+    if (element.value.length === 0) {
         alert.style.visibility = 'visible';
         alert.style.display = 'block';
         element.style.borderColor = 'red';
-    }
-    else {
+    } else {
         alert.style.visibility = 'hidden';
         alert.style.display = 'none';
         element.style.borderColor = 'black';
@@ -319,9 +316,9 @@ function validateEmail(element){
     return genericRegexCheck(element, '^([a-z0-9\\-\\_\\.]*[a-z0-9])@([^\\-\\_\\.][a-z0-9\\-\\_]*\\.)([a-z0-9\\-\\_]{2,4})$');
 }
 
-function validateComputerSelection(computerSelect){
+function validateComputerSelection(computerSelect) {
     let container = document.getElementById('computers-select-container');
-    if (computerSelect.selectedIndex === 0){
+    if (computerSelect.selectedIndex === 0) {
         container.style.borderColor = 'red';
         return false;
     }
@@ -329,10 +326,10 @@ function validateComputerSelection(computerSelect){
     return true;
 }
 
-function validateAddressSelection(districts){
+function validateAddressSelection(districts) {
     let addressSelect = document.getElementById('address-select-container');
     validateAddress(document.getElementById('address-field'));
-    if(districts.selectedIndex === 0){
+    if (districts.selectedIndex === 0) {
         addressSelect.style.borderColor = 'red';
         return false;
     }
@@ -340,16 +337,15 @@ function validateAddressSelection(districts){
     return true;
 }
 
-function validateAddress(element){
+function validateAddress(element) {
     document.getElementById('address-wc').innerText = element.value.length;
     let alert = document.getElementById('address-alert');
     let districts = document.getElementById('Districts');
-    if (districts.selectedIndex === 0 || element.value.length === 0){
+    if (districts.selectedIndex === 0 || element.value.length === 0) {
         alert.style.visibility = 'visible';
         alert.style.display = 'block';
         element.style.borderColor = 'red';
-    }
-    else {
+    } else {
         alert.style.visibility = 'hidden';
         alert.style.display = 'none';
         element.style.borderColor = 'black';
@@ -357,32 +353,31 @@ function validateAddress(element){
     return genericRegexCheck(element, "[A-Za-zÀ-úČ-ž,/]+$");
 }
 
-function validatePhone(element){
+function validatePhone(element) {
     document.getElementById('phone-wc').innerText = element.value.length;
-    if(element.value.length === 0){
+    if (element.value.length === 0) {
         element.style.borderColor = 'black';
         return false;
     }
     return genericRegexCheck(element, "^(\\+[0-9]{12,12})$");
 }
 
-function validateDate(element){
-    if(element.value === ""){
+function validateDate(element) {
+    if (element.value === "") {
         return false
     }
     let date = new Date(element.value);
     return date.getUTCFullYear() >= 1900 && date <= (new Date());
 }
 
-function changeDate(element){
+function changeDate(element) {
     let ageField = document.getElementById('age-field');
-    if(element.value === ""){
+    if (element.value === "") {
         document.getElementById('date-alert').style.visibility = 'visible';
-    }
-    else{
+    } else {
         document.getElementById('date-alert').style.visibility = 'hidden';
     }
-    if(!validateDate(element)){
+    if (!validateDate(element)) {
         ageField.value = "";
         element.style.borderColor = 'red';
         return false;
@@ -394,14 +389,12 @@ function changeDate(element){
     return true;
 }
 
-function getGender(){
-    if (document.getElementById('female').checked){
+function getGender() {
+    if (document.getElementById('female').checked) {
         return "Žena";
-    }
-    else if(document.getElementById('male').checked){
+    } else if (document.getElementById('male').checked) {
         return "Muž";
-    }
-    else if(document.getElementById('other').checked){
+    } else if (document.getElementById('other').checked) {
         return "Iné";
     }
     return "";
@@ -409,6 +402,7 @@ function getGender(){
 
 let secret_enable = false;
 let secret_remove_flag = false;
+
 function secretOption() {
     let computers = document.getElementById('Computers');
     if (!secret_enable && getGender() === "Iné") {
@@ -425,7 +419,7 @@ function secretOption() {
     }
 }
 
-function other_checkbox_onchange(element){
+function other_checkbox_onchange(element) {
     let container = document.getElementById('hidden-other-container');
     let textarea = document.getElementById('other-text-area');
     if (element.checked) {
@@ -440,9 +434,10 @@ function other_checkbox_onchange(element){
 }
 
 let revealed = false;
-function revealName(){
+
+function revealName() {
     let hiddenName = document.getElementById('hidden-name-container');
-    if (revealed){
+    if (revealed) {
         hiddenName.style.display = '';
         hiddenName.style.visibility = '';
         revealed = false;
@@ -453,7 +448,7 @@ function revealName(){
     revealed = true
 }
 
-(function() {
+(function () {
     emailjs.init('N0SAp5RgZ3S01lT7X');
 })();
 
@@ -480,57 +475,57 @@ function validateForm() {
 
     let incompleteForm = false;
 
-    if(!validateFirstName(firstName)) incompleteForm = true;
-    if(!validateLastName(lastName)) incompleteForm = true;
-    if(!changeDate(birthDate)) incompleteForm = true;
-    if(!validateEmail(email)) incompleteForm = true;
-    if(!validateAddress(address)) incompleteForm = true;
-    if(!validateAddressSelection(district)) incompleteForm = true;
-    if(!validateComputerSelection(computer)) incompleteForm = true;
+    if (!validateFirstName(firstName)) incompleteForm = true;
+    if (!validateLastName(lastName)) incompleteForm = true;
+    if (!changeDate(birthDate)) incompleteForm = true;
+    if (!validateEmail(email)) incompleteForm = true;
+    if (!validateAddress(address)) incompleteForm = true;
+    if (!validateAddressSelection(district)) incompleteForm = true;
+    if (!validateComputerSelection(computer)) incompleteForm = true;
 
-    if(incompleteForm) return false;
+    if (incompleteForm) return false;
 
-    let summaryHeader  = "<h1> Objednávka info </h1>";
+    let summaryHeader = "<h1> Objednávka info </h1>";
 
     let summarySubmit = "<input type=\"button\" class=\"summary-button all-button cancel-button\" value=\"Späť\" id='cancel'>";
     let summaryCancel = "<input type=\"button\" class=\"summary-button all-button submit-button\" value=\"Objednať\" id='send'>";
 
     message =
-        "<p>"  +    "<b>Krstné meno: </b>" + firstName.value +
-        "<br>" +    "<b>Priezvisko: </b>" + lastName.value +
-        "<br>" +    "<b>Dátum narodenia: </b>" + birthDate.value +
-        "<br>" +    "<b>Email: </b>" + email.value +
-        "<br>" +    "<b>Štát: </b>" + country.options[country.selectedIndex].value +
-        "<br>" +    "<b>Kraj: </b>" + region.options[country.selectedIndex].value +
-        "<br>" +    "<b>Okres: </b>" + district.options[country.selectedIndex].value +
-        "<br>" +    "<b>Adresa: </b>" + address.value +
-        "<br>" +    "<b>Počitač: </b>" + computer.options[computer.selectedIndex].value;
+        "<p>" + "<b>Krstné meno: </b>" + firstName.value +
+        "<br>" + "<b>Priezvisko: </b>" + lastName.value +
+        "<br>" + "<b>Dátum narodenia: </b>" + birthDate.value +
+        "<br>" + "<b>Email: </b>" + email.value +
+        "<br>" + "<b>Štát: </b>" + country.options[country.selectedIndex].value +
+        "<br>" + "<b>Kraj: </b>" + region.options[country.selectedIndex].value +
+        "<br>" + "<b>Okres: </b>" + district.options[country.selectedIndex].value +
+        "<br>" + "<b>Adresa: </b>" + address.value +
+        "<br>" + "<b>Počitač: </b>" + computer.options[computer.selectedIndex].value;
 
 
-    if (validatePhone(phone)){
-        message +=  "<br>" + "<b>Telefón: </b>" + phone.value;
+    if (validatePhone(phone)) {
+        message += "<br>" + "<b>Telefón: </b>" + phone.value;
     }
 
-    if (gender !== ""){
-        message +=  "<br>" + "<b>Pohlavie: </b>" + gender;
+    if (gender !== "") {
+        message += "<br>" + "<b>Pohlavie: </b>" + gender;
     }
 
-    message +=  "<br>" + "<b>Extra: </b>";
+    message += "<br>" + "<b>Extra: </b>";
 
-    if(rgb.checked){
-        message +=  "<br>" + " " + rgb.name;
+    if (rgb.checked) {
+        message += "<br>" + " " + rgb.name;
     }
 
-    if(xStorage.checked){
-        message +=  "<br>" + " " + xStorage.name;
+    if (xStorage.checked) {
+        message += "<br>" + " " + xStorage.name;
     }
 
-    if(xRam.checked){
-        message +=  "<br>" + " " + xRam.name;
+    if (xRam.checked) {
+        message += "<br>" + " " + xRam.name;
     }
 
-    if(other.checked){
-        message +=  "<br>" + "<b>Ostatné inštrukcie: </b>" + textArea.value;
+    if (other.checked) {
+        message += "<br>" + "<b>Ostatné inštrukcie: </b>" + textArea.value;
     }
 
     message += "</p>"
@@ -547,7 +542,7 @@ function validateForm() {
     sendAddress = email.value;
 }
 
-function goBackToForm(){
+function goBackToForm() {
     let summary = document.getElementById('summary');
     summary.innerHTML = "";
     summary.classList.add('hidden');
@@ -556,23 +551,23 @@ function goBackToForm(){
     cleanUp();
 }
 
-function sendEmail(){
-    emailjs.send("service_2024fsw","template_smtfp4j",{
+function sendEmail() {
+    emailjs.send("service_2024fsw", "template_smtfp4j", {
         to_email: sendAddress,
         message: message,
         html: true
-    }).then(function() {
+    }).then(function () {
         cleanUp();
         console.log('SUCCESS!');
         window.location.replace("https://webte1.fei.stuba.sk/~xtothg/Zadanie2-f1Pd5tBBRcCq/success.html");
-    }, function(error) {
+    }, function (error) {
         cleanUp();
         console.log('FAILED...', error);
         window.location.replace("https://webte1.fei.stuba.sk/~xtothg/Zadanie2-f1Pd5tBBRcCq/fail.html");
     });
 }
 
-function cleanUp(){
+function cleanUp() {
     message = "";
     sendAddress = "";
     document.getElementById('cancel').removeEventListener('click', goBackToForm);

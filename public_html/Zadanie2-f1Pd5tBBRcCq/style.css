@@ -2,63 +2,63 @@
     display: none;
 }
 
-body{
+body {
     background-color: #8CEAED;
 }
 
-form{
+form {
     background-color: #9DB0B0;
     border: black 0.5rem solid;
     border-radius: 0.5rem;
 }
 
-.form-header{
+.form-header {
     display: flex;
     justify-content: center;
 }
 
-.form-content{
+.form-content {
     display: flex;
     flex-wrap: nowrap;
     text-align: center;
 }
 
-.form-left-content{
+.form-left-content {
     display: flex;
     flex-wrap: wrap;
     width: 50%;
     height: min-content;
 }
 
-.form-right-content{
+.form-right-content {
     display: flex;
     flex-wrap: wrap;
     width: 50%;
     height: min-content;
 }
 
-.form-flex-container{
+.form-flex-container {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
 }
 
-.form-flex-container:nth-child(2n){
+.form-flex-container:nth-child(2n) {
     flex-basis: 100%;
 }
 
-.field-container{
+.field-container {
     text-align: left;
     width: calc(50% - 2rem);
     height: 3rem;
     margin: 1rem;
 }
 
-.address-container{
+.address-container {
     width: calc(100% - 2rem);
 }
 
-.radio-container{
+.radio-container {
     display: flex;
     height: 3rem;
     margin: 0 1rem 1rem;
@@ -66,22 +66,22 @@ form{
     justify-content: center;
 }
 
-.radio-element{
+.radio-element {
     width: 90%;
     height: 90%;
 }
 
-.label{
+.label {
     height: 20%;
 }
 
-.character-count-container{
+.character-count-container {
     height: 20%;
     float: right;
     text-align: right;
 }
 
-.input-field{
+.input-field {
     height: 70%;
     width: 100%;
     font-size: 100%;
@@ -89,11 +89,11 @@ form{
     border-radius: 0.5rem;
 }
 
-.input-field:focus{
+.input-field:focus {
     outline: none;
 }
 
-.select-container{
+.select-container {
     border: 0.25rem solid black;
     width: 100%;
     height: 3rem;
@@ -103,31 +103,32 @@ form{
     align-items: center;
 }
 
-select{
+select {
     border: none;
 }
 
-select:focus{
+select:focus {
     outline: none;
 }
 
-.computer-select{
+.computer-select {
     width: 100%;
     height: 3rem;
 }
 
-.pc-specifications{
+.pc-specifications {
     width: 100%;
     height: max-content;
     visibility: hidden;
     display: none;
 }
 
-.address-select-elements{
+.address-select-elements {
     width: 100%;
     height: 100%;
 }
-.formatted-list{
+
+.formatted-list {
     list-style: none;
     padding: 0;
     margin: 1rem;
@@ -135,42 +136,42 @@ select:focus{
     border-radius: 0.25vw;
 }
 
-.formatted-list>li{
+.formatted-list > li {
     display: flex;
     justify-content: space-between;
 }
 
-.formatted-list>li:nth-child(odd){
+.formatted-list > li:nth-child(odd) {
     background-color: grey;
 }
 
-.formatted-list-left{
+.formatted-list-left {
     margin-left: 0.25rem;
 }
 
-.formatted-list-right{
+.formatted-list-right {
     margin-right: 0.25rem;
 }
 
-.checkbox-container{
+.checkbox-container {
     width: 100%;
     margin: 1rem;
     text-align: left;
 }
 
-.hidden-alert{
+.hidden-alert {
     color: red;
     visibility: hidden;
 }
 
-.hidden-container{
+.hidden-container {
     display: none;
     visibility: hidden;
     width: calc(100% - 2rem - 0.5rem);
     margin: 1rem;
 }
 
-.text-area{
+.text-area {
     max-width: 100%;
     max-height: 8rem;
 }
@@ -187,7 +188,7 @@ select:focus{
     z-index: 9999;
 }
 
-.all-button{
+.all-button {
     background-color: #416C6E;
     border: 0.25rem black solid;
     color: white;
@@ -197,23 +198,23 @@ select:focus{
     font-size: 100%;
 }
 
-.all-button:hover{
+.all-button:hover {
     background-color: #9DB0B0;
     color: black;
 }
 
-.form-button{
+.form-button {
     width: calc(100% - 2rem);
     margin: 1rem;
     height: 3rem;
 }
 
-.summary-button{
+.summary-button {
     width: calc(50% - 1rem);
     border-width: 0.1rem;
 }
 
-.cancel-button{
+.cancel-button {
     float: left;
     background-color: lightcoral;
 }
@@ -224,19 +225,19 @@ select:focus{
 }
 
 @media screen and (max-width: 768px) {
-    .form-content{
+    .form-content {
         flex-direction: column;
     }
 
-    .form-left-content{
+    .form-left-content {
         width: 100%;
     }
 
-    .form-right-content{
+    .form-right-content {
         width: 100%;
     }
 
-    .field-container{
+    .field-container {
         width: 100%;
     }
 }

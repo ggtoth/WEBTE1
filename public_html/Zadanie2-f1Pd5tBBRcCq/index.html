@@ -2,175 +2,192 @@
 <html lang="sk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta content="width=device-width, initial-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <title>Form</title>
-    <link rel="stylesheet" href="style.css">
+    <link href="style.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script src="index.js"></script>
 </head>
 <body>
-    <form name="order-form" id="form" onsubmit="return false">
-        <article>
-            <div class="form-header">
-                <h1>Objednávka pre Master-PC</h1>
-            </div>
-            <div class="form-content">
-                <div class="form-left-content">
-                    <div class="form-flex-container">
-                        <div class="field-container">
-                            <label for="first-name-field" class="label" id="first-name-label">Krstné meno</label>
-                            <span class="character-count-container" id="first-name-wc-container">
+<form id="form" name="order-form" onsubmit="return false">
+    <article>
+        <div class="form-header">
+            <h1>Objednávka pre Master-PC</h1>
+        </div>
+        <div class="form-content">
+            <div class="form-left-content">
+                <div class="form-flex-container">
+                    <div class="field-container">
+                        <label class="label" for="first-name-field" id="first-name-label">Krstné meno</label>
+                        <span class="character-count-container" id="first-name-wc-container">
                                 <span id="first-name-wc"></span>
                                 /
                                 <span id="first-name-wc-max"></span>
                             </span>
-                            <input type="text" name="first_name" class="input-field" id="first-name-field" maxlength="20" oninput="validateFirstName(this)" placeholder="Janko">
-                            <span class="hidden-alert" id="first-name-alert">*Je povinné pole</span>
-                        </div>
-                        <div class="field-container">
-                            <label for="last-name-field" class="label" id="last-name-label">Priezvisko</label>
-                            <span class="character-count-container" id="last-name-wc-container">
+                        <input class="input-field" id="first-name-field" maxlength="20" name="first_name" oninput="validateFirstName(this)"
+                               placeholder="Janko" type="text">
+                        <span class="hidden-alert" id="first-name-alert">*Je povinné pole</span>
+                    </div>
+                    <div class="field-container">
+                        <label class="label" for="last-name-field" id="last-name-label">Priezvisko</label>
+                        <span class="character-count-container" id="last-name-wc-container">
                                 <span id="last-name-wc"></span>
                                 /
                                 <span id="last-name-wc-max"></span>
                             </span>
-                            <input type="text" name="last_name" class="input-field" id="last-name-field" maxlength="20" oninput="validateLastName(this)" placeholder="Hraško">
-                            <span class="hidden-alert" id="last-name-alert">*Je povinné pole</span>
-                        </div>
-                        <div class="field-container">
-                            <label for="birth-date-field" class="label" id="birth-date-label">Datum narodenia</label>
-                            <input type="date" name="birth_date" class="input-field" id="birth-date-field" onchange="changeDate(this)">
-                            <span class="hidden-alert" id="date-alert">*Je povinné pole</span>
-                        </div>
-                        <div class="field-container">
-                            <label for="age-field" class="label" id="age-label">Vek</label>
-                            <input type="number" name="age" class="input-field" id="age-field" readonly>
-                        </div>
-                        <div class="field-container">
-                            <label class="label centered-label" id="sex-label">Pohlavie</label>
-                            <div class="radio-container">
-                                <div class="radio-element">
-                                    <label for="female">Žena</label>
-                                    <br>
-                                    <input type="radio" name="sex" id="female" class="input-radio" value="female" onchange="secretOption()">
-                                </div>
-                                <div class="radio-element">
-                                    <label for="male">Muž</label>
-                                    <br>
-                                    <input type="radio" name="sex" id="male" class="input-radio" value="male" onchange="secretOption()">
-                                </div>
-                                <div class="radio-element">
-                                    <label for="other">Iné</label>
-                                    <br>
-                                    <input type="radio" name="sex" id="other" class="input-radio" value="other" onchange="secretOption()">
-                                </div>
+                        <input class="input-field" id="last-name-field" maxlength="20" name="last_name" oninput="validateLastName(this)"
+                               placeholder="Hraško" type="text">
+                        <span class="hidden-alert" id="last-name-alert">*Je povinné pole</span>
+                    </div>
+                    <div class="field-container">
+                        <label class="label" for="birth-date-field" id="birth-date-label">Datum narodenia</label>
+                        <input class="input-field" id="birth-date-field" name="birth_date" onchange="changeDate(this)"
+                               type="date">
+                        <span class="hidden-alert" id="date-alert">*Je povinné pole</span>
+                    </div>
+                    <div class="field-container">
+                        <label class="label" for="age-field" id="age-label">Vek</label>
+                        <input class="input-field" id="age-field" name="age" readonly type="number">
+                    </div>
+                    <div class="field-container">
+                        <label class="label centered-label" id="sex-label">Pohlavie</label>
+                        <div class="radio-container">
+                            <div class="radio-element">
+                                <label for="female">Žena</label>
+                                <br>
+                                <input class="input-radio" id="female" name="sex" onchange="secretOption()" type="radio"
+                                       value="female">
+                            </div>
+                            <div class="radio-element">
+                                <label for="male">Muž</label>
+                                <br>
+                                <input class="input-radio" id="male" name="sex" onchange="secretOption()" type="radio"
+                                       value="male">
+                            </div>
+                            <div class="radio-element">
+                                <label for="other">Iné</label>
+                                <br>
+                                <input class="input-radio" id="other" name="sex" onchange="secretOption()" type="radio"
+                                       value="other">
                             </div>
                         </div>
-
                     </div>
-                    <div class="form-flex-container">
-                        <div class="field-container">
-                            <label for="email-field" class="label" id="email-label">Email</label>
-                            <span class="character-count-container" id="email-wc-container">
+
+                </div>
+                <div class="form-flex-container">
+                    <div class="field-container">
+                        <label class="label" for="email-field" id="email-label">Email</label>
+                        <span class="character-count-container" id="email-wc-container">
                                 <span id="email-wc"></span>
                                 /
                                 <span id="email-wc-max"></span>
                             </span>
-                            <input type="email" name="email" class="input-field" id="email-field" maxlength="40" oninput="validateEmail(this)" placeholder="hrasko123@gmail.com">
-                            <span class="hidden-alert" id="email-alert">*Je povinné pole</span>
-                        </div>
-                        <div class="field-container">
-                            <label for="phone-field" class="label" id="phone-label">Telefón</label>
-                            <span class="character-count-container" id="phone-wc-container">
+                        <input class="input-field" id="email-field" maxlength="40" name="email" oninput="validateEmail(this)"
+                               placeholder="hrasko123@gmail.com" type="email">
+                        <span class="hidden-alert" id="email-alert">*Je povinné pole</span>
+                    </div>
+                    <div class="field-container">
+                        <label class="label" for="phone-field" id="phone-label">Telefón</label>
+                        <span class="character-count-container" id="phone-wc-container">
                                 <span id="phone-wc"></span>
                                 /
                                 <span id="phone-wc-max"></span>
                             </span>
-                            <input type="tel" name="phone" class="input-field" id="phone-field" maxlength="13" oninput="validatePhone(this)" placeholder="+421 xxx xxx xxx">
-                        </div>
+                        <input class="input-field" id="phone-field" maxlength="13" name="phone" oninput="validatePhone(this)"
+                               placeholder="+421 xxx xxx xxx" type="tel">
                     </div>
-                    <div class="select-container" id="address-select-container">
-                        <label for="Countries"></label>
-                        <label for="Regions"></label>
-                        <label for="Districts"></label>
-                        <select class="address-select-elements" id="Countries" onchange="countries_onchange(this)">
-                            <option value="">Výber</option>
-                        </select>
-                        <select class="address-select-elements" id="Regions" onchange="regions_onchange(this)">
-                            <option value="">Výber</option>
-                        </select>
-                        <select class="address-select-elements" id="Districts" onchange="districts_onchange(this)">
-                            <option value="">Výber</option>
-                        </select>
-                    </div>
-                    <div class="field-container address-container">
-                        <label for="address-field" class="label" id="address-label">Adresa</label>
-                        <span class="character-count-container" id="address-wc-container">
+                </div>
+                <div class="select-container" id="address-select-container">
+                    <label for="Countries"></label>
+                    <label for="Regions"></label>
+                    <label for="Districts"></label>
+                    <select class="address-select-elements" id="Countries" onchange="countries_onchange(this)">
+                        <option value="">Výber</option>
+                    </select>
+                    <select class="address-select-elements" id="Regions" onchange="regions_onchange(this)">
+                        <option value="">Výber</option>
+                    </select>
+                    <select class="address-select-elements" id="Districts" onchange="districts_onchange(this)">
+                        <option value="">Výber</option>
+                    </select>
+                </div>
+                <div class="field-container address-container">
+                    <label class="label" for="address-field" id="address-label">Adresa</label>
+                    <span class="character-count-container" id="address-wc-container">
                                 <span id="address-wc"></span>
                                 /
                                 <span id="address-wc-max"></span>
                             </span>
-                        <input type="text" name="address" class="input-field" id="address-field" maxlength="20" oninput="validateAddress(this)">
-                    </div>
-                    <div class="field-container">
-                        <span class="hidden-alert" id="address-alert">*Je povinné pole</span>
-                    </div>
-
+                    <input class="input-field" id="address-field" maxlength="20" name="address" oninput="validateAddress(this)"
+                           type="text">
                 </div>
-
-                <div class="form-right-content">
-                    <div class="select-container" id="computers-select-container">
-                        <label for="Computers"></label>
-                        <select class="computer-select" id="Computers" onchange="computers_onchange(this)">
-                            <option value="">Výber</option>
-                        </select>
-                    </div>
-                    <div class="pc-specifications">
-                        <ul class="formatted-list">
-                            <li><span class="formatted-list-left">Brand</span><span class="formatted-list-right" id="spec-brand"></span></li>
-                            <li><span class="formatted-list-left">Processor</span><span class="formatted-list-right" id="spec-processor"></span></li>
-                            <li><span class="formatted-list-left">RAM</span><span class="formatted-list-right" id="spec-ram"></span></li>
-                            <li><span class="formatted-list-left">Storage</span><span class="formatted-list-right" id="spec-storage"></span></li>
-                            <li><span class="formatted-list-left">Graphics</span><span class="formatted-list-right" id="spec-graphics"></span></li>
-                            <li><span class="formatted-list-left">Price</span><span class="formatted-list-right" id="spec-price"></span></li>
-                        </ul>
-                    </div>
-                    <div class="checkbox-container">
-                        <div class="checkbox-entry">
-                            <input type="checkbox" name="Extra ram" id="checkbox-extra-ram">
-                            <label for="checkbox-extra-ram" class="label">Extra RAM</label>
-                        </div>
-                        <div class="checkbox-entry">
-                            <input type="checkbox" name="Extra storage" id="checkbox-extra-storage">
-                            <label for="checkbox-extra-storage" class="label">Extra Storage</label>
-                        </div>
-                        <div class="checkbox-entry">
-                            <input type="checkbox" name="RGB" id="checkbox-rgb">
-                            <label for="checkbox-rgb" class="label">RGB</label>
-                        </div>
-                        <div class="checkbox-entry">
-                            <input type="checkbox" name="Iné" id="checkbox-other" onchange="other_checkbox_onchange(this)">
-                            <label for="checkbox-other" class="label">Iné</label>
-                        </div>
-                    </div>
-                    <div class="hidden-container" id="hidden-other-container">
-                        <label for="other-text-area" class="label"></label>
-                        <textarea class="text-area" id="other-text-area" name="other-text-area" rows="5" cols="40"></textarea>
-                    </div>
-                    <input type="button" class="form-button all-button" value="Show" onclick="revealName()">
-                    <div class="hidden-container" id="hidden-name-container">
-                        <label for="name-area" class="label"></label>
-                        <textarea class="text-area" id="name-area" name="other-text-area" rows="1" cols="15" readonly>Gergely Tóth</textarea>
-                    </div>
-                    <input type="button" name="submit" value="Odoslať" id="submit" class="form-button all-button review-button">
+                <div class="field-container">
+                    <span class="hidden-alert" id="address-alert">*Je povinné pole</span>
                 </div>
 
             </div>
-        </article>
-    </form>
-    <div class="hidden" id="summary">
-    </div>
+
+            <div class="form-right-content">
+                <div class="select-container" id="computers-select-container">
+                    <label for="Computers"></label>
+                    <select class="computer-select" id="Computers" onchange="computers_onchange(this)">
+                        <option value="">Výber</option>
+                    </select>
+                </div>
+                <div class="pc-specifications">
+                    <ul class="formatted-list">
+                        <li><span class="formatted-list-left">Brand</span><span class="formatted-list-right"
+                                                                                id="spec-brand"></span></li>
+                        <li><span class="formatted-list-left">Processor</span><span class="formatted-list-right"
+                                                                                    id="spec-processor"></span></li>
+                        <li><span class="formatted-list-left">RAM</span><span class="formatted-list-right"
+                                                                              id="spec-ram"></span></li>
+                        <li><span class="formatted-list-left">Storage</span><span class="formatted-list-right"
+                                                                                  id="spec-storage"></span></li>
+                        <li><span class="formatted-list-left">Graphics</span><span class="formatted-list-right"
+                                                                                   id="spec-graphics"></span></li>
+                        <li><span class="formatted-list-left">Price</span><span class="formatted-list-right"
+                                                                                id="spec-price"></span></li>
+                    </ul>
+                </div>
+                <div class="checkbox-container">
+                    <div class="checkbox-entry">
+                        <input id="checkbox-extra-ram" name="Extra ram" type="checkbox">
+                        <label class="label" for="checkbox-extra-ram">Extra RAM</label>
+                    </div>
+                    <div class="checkbox-entry">
+                        <input id="checkbox-extra-storage" name="Extra storage" type="checkbox">
+                        <label class="label" for="checkbox-extra-storage">Extra Storage</label>
+                    </div>
+                    <div class="checkbox-entry">
+                        <input id="checkbox-rgb" name="RGB" type="checkbox">
+                        <label class="label" for="checkbox-rgb">RGB</label>
+                    </div>
+                    <div class="checkbox-entry">
+                        <input id="checkbox-other" name="Iné" onchange="other_checkbox_onchange(this)" type="checkbox">
+                        <label class="label" for="checkbox-other">Iné</label>
+                    </div>
+                </div>
+                <div class="hidden-container" id="hidden-other-container">
+                    <label class="label" for="other-text-area"></label>
+                    <textarea class="text-area" cols="40" id="other-text-area" name="other-text-area"
+                              rows="5"></textarea>
+                </div>
+                <input class="form-button all-button" onclick="revealName()" type="button" value="Show">
+                <div class="hidden-container" id="hidden-name-container">
+                    <label class="label" for="name-area"></label>
+                    <textarea class="text-area" cols="15" id="name-area" name="other-text-area" readonly rows="1">Gergely Tóth</textarea>
+                </div>
+                <input class="form-button all-button review-button" id="submit" name="submit" type="button"
+                       value="Odoslať">
+            </div>
+
+        </div>
+    </article>
+</form>
+<div class="hidden" id="summary">
+</div>
 </body>
 </html>
