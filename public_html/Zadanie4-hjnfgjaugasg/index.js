@@ -239,7 +239,7 @@ function handleRoute(){
             let totalDistance = event.routes[0].summary.totalDistance / 1000;
 
             let distanceSpan = document.getElementById('distance-span');
-            distanceSpan.innerText = `Total distance: ${totalDistance} km`;
+            distanceSpan.innerText = `Total distance: ${truncateDecimal(totalDistance, 2)} km`;
             distanceSpan.classList.remove('hidden');
         });
     }
