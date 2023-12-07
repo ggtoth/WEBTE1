@@ -1,0 +1,21 @@
+.employee-container{
+    margin: 10px;
+}
+.employee-element{
+    cursor: pointer;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+}
+
+#small-salary{
+    background-color: indianred;
+}
+
+#big-salary{
+    background-color: lightgreen;
+}
+
+.hidden{
+    display: none;
+}
